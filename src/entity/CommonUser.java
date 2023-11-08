@@ -1,2 +1,4 @@
-package entity;public class CommonUser {
+package entity;
+
+public class CommonUser {
 }

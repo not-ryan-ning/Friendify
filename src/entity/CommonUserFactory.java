@@ -1,2 +1,4 @@
-package entity;public class CommonUserFactory {
+package entity;
+
+public class CommonUserFactory {
 }
