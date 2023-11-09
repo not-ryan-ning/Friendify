@@ -1,4 +1,4 @@
-package use_case.matching.logout;
+package use_case.logout;
 
 import entity.User;
 

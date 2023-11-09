@@ -1,4 +1,4 @@
-package use_case.matching.logout;
+package use_case.logout;
 
 public class LogoutInteractor implements LogoutInputBoundary {
     final LogoutUserDataAccessInterface userDataAccessObject;

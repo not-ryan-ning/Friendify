@@ -1,4 +1,4 @@
-package use_case.matching;
+package use_case;
 
 import java.util.ArrayList;
 
