@@ -21,7 +21,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     public void prepareSuccessView(LogoutOutputData response) {
         // On success, switch to the logged out view.
         LoggedOutState loggedOutState = loggedOutViewModel.getState();
-  //      logoutState.setLoggedOutUsers(response.getLoggedoutUser());
+  //    logoutState.setLoggedOutUsers(response.getLoggedoutUser());
         this.loggedOutViewModel.setState(loggedOutState);
         this.loggedOutViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(loggedOutViewModel.getViewName());
