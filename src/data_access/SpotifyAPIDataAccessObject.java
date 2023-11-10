@@ -2,20 +2,23 @@ package data_access;
 
 import use_case.matching.SpotifyAPIDataAccessInterface;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
-    private static final String CLIENT_SECRETE = "c85c0140606943c698f2cddaf49b082e";
-    // Need to modify
-    private static final String redirectURL = "https://github.com/not-ryan-ning/Friendify";
+    private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
+    private static final String REDIRECT_URL = "https://github.com/not-ryan-ning/Friendify";
+    private static final String scope = "playlist-read-private playlist-read-collaborative";
+    private static final String authUrl = "https://accounts.spotify.com/authorize";
+    private static final String tokenUrl = "https://accounts.spotify.com/api/token";
 
-    public String[] requestUserAuthorization(String clientId, String responseType, String redirectUrl, String state, String scope, boolean showDialog) {
-        // need a separate class for this implementation
-        // should receive something like https://my-domain.com/callback?code=NApCCg..BkWtQ&state=34fFs29kd09
-        String returnedValue = "";
-        String code = "";
-        return new String[] {code, state};
+    // Step 1: Redirect the user to the authorization URL
+    public String getRequestUserAuthorizationUrl() {
+        String state = generateRandomState();
+        return authUrl + "?client_id=" + CLIENT_ID + "&response_type=code&redirect_uri=" + REDIRECT_URL +
+                "&scope=" + scope + "&state=" + state;
     }
 
     public Object[] requestAccessToken(String grantType, String code, String redirectUrl) {
@@ -64,5 +67,11 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
     @Override
     public String getGenre(String playlistId) {
         return "iu";
+    }
+
+    private static String generateRandomState() {
+        byte[] bytes = new byte[16];
+        new SecureRandom().nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 }
