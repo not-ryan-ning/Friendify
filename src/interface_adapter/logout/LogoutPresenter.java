@@ -9,16 +9,26 @@ import interface_adapter.login.LoginState;
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
+    private LogoutViewModel logoutViewModel;
 
-    public LogoutPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel) {
+    public LogoutPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, LogoutViewModel logoutViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
+        this.logoutViewModel = logoutViewModel;
     }
 
     @Override
     public void prepareSuccessView(LogoutOutputData response) {
-        // On success, switch to log in view as they are now logged out.
+        LogoutState logoutState = logoutViewModel.getState();
 
+
+        this.logoutViewModel.setState(logoutState);
+        this.logoutViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(logoutViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+
+        // now switch to login screen
         LoginState loginState = loginViewModel.getState();
         this.loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
