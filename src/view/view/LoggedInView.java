@@ -74,7 +74,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
+        if (evt.getPropertyName().equals("state")) {
+            LoggedInState state = (LoggedInState) evt.getNewValue();
+            username.setText(state.getUsername());
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "You have logged out");
+        }
     }
 }
