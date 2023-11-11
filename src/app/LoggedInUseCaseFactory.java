@@ -6,6 +6,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.logout.LogoutViewModel;
+
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
@@ -22,7 +23,7 @@ public class LoggedInUseCaseFactory {
             LogoutUserDataAccessInterface logoutUserDataAccessInterface, LoginViewModel loginViewModel) {
 
         try {
-            LogoutController logoutController = createLogoutUseCase(viewManagerModel, logoutUserDataAccessInterface, loginViewModel);
+            LogoutController logoutController = createLogoutUseCase(viewManagerModel, logoutUserDataAccessInterface, loginViewModel, logoutViewModel);
             return new LoggedInView(loggedInViewModel, logoutViewModel, logoutController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -31,11 +32,11 @@ public class LoggedInUseCaseFactory {
         return null;
     }
 
-                           
+
 private static LogoutController createLogoutUseCase(ViewManagerModel viewManagerModel, LogoutUserDataAccessInterface logoutUserDataAccessInterface,
-                                                    LoginViewModel loginViewModel) throws IOException {
-        LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel, loginViewModel);
-        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUserDataAccessInterface, logoutOutputBoundary);
-        return new LogoutController(logoutInteractor);
-    }
+                                                    LoginViewModel loginViewModel, LogoutViewModel logoutViewModel) throws IOException {
+    LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel, loginViewModel, logoutViewModel);
+    LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUserDataAccessInterface, logoutOutputBoundary);
+    return new LogoutController(logoutInteractor);
+}
 }
