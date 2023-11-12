@@ -117,6 +117,11 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
         return null;
     }
 
+    // get an array of all tracks' ids in a playlist
+    public String[] getTrackIds(String playlistId) {
+        return null;
+    }
+
     @Override
     public ArrayList<String> getArtists() {
         ArrayList<String> artists = new ArrayList<String>();
