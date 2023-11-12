@@ -59,22 +59,14 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
 
             if (tokenResponse.statusCode() == 200) {
                 // responseBody will have a JSON-formatted response
-                /*
-                {
-                    "access_token": "your_access_token",
-                    "token_type": "Bearer",
-                    "expires_in": 3600,
-                    "refresh_token": "your_refresh_token",
-                    "scope": "playlist-read-private"
-                }
-                 */
                 String responseBody = tokenResponse.body();
-                ACCESS_TOKEN = responseBody.split("\"access_token\": \"")[1].split("\"")[0];
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                ACCESS_TOKEN = jsonResponse.getString("access_token");
 
                 // need to figure out how refresh token works
                 String refreshToken = null;
                 if (responseBody.contains("refresh_token")) {
-                    refreshToken = responseBody.split("\"refresh_token\": \"")[1].split("\"")[0];
+                    refreshToken = jsonResponse.getString("refresh_token");
                 }
             } else {
                 System.out.println("Error obtaining access token. Status code: " + tokenResponse.statusCode() + ", Response: " + tokenResponse.body());
