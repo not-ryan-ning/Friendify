@@ -1,5 +1,8 @@
 package data_access;
 
+// added the json jar library in order to import this
+import org.json.JSONObject;
+import org.json.JSONArray;
 import use_case.matching.SpotifyAPIDataAccessInterface;
 
 import java.net.URI;
@@ -9,6 +12,8 @@ import java.net.http.HttpResponse;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+
 
 public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
@@ -45,6 +50,7 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
                 .uri(URI.create(tokenUrl))
                 .header("Authorization", "Basic " + authHeader)
                 .header("Content-Type", "application/x-www-form-urlencoded")
+                // Specifies that the request method is POST (for exchanging an authorization code for an access token)
                 .POST(HttpRequest.BodyPublishers.ofString(tokenRequestBody))
                 .build();
 
@@ -63,12 +69,12 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
                 }
                  */
                 String responseBody = tokenResponse.body();
-                String accessToken = responseBody.split("\"access_token\":\"")[1].split("\"")[0];
-                ACCESS_TOKEN = accessToken;
+                ACCESS_TOKEN = responseBody.split("\"access_token\": \"")[1].split("\"")[0];
 
+                // need to figure out how refresh token works
                 String refreshToken = null;
                 if (responseBody.contains("refresh_token")) {
-                    refreshToken = responseBody.split("\"refresh_token\":\"")[1].split("\"")[0];
+                    refreshToken = responseBody.split("\"refresh_token\": \"")[1].split("\"")[0];
                 }
             } else {
                 System.out.println("Error obtaining access token. Status code: " + tokenResponse.statusCode() + ", Response: " + tokenResponse.body());
@@ -76,6 +82,47 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Return all the playlists the user has - probably need this when asking the user to choose one of their playlists (edit profile use case)
+    // hashMap <playlistId, playlistName>
+    public HashMap<String, String> getPlaylists(String userName) {
+        String playlistUrl = "https://api.spotify.com/v1/me/playlists";
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(playlistUrl))
+                .header("Authorization", "Bearer " + ACCESS_TOKEN)
+                .GET()
+                .build();
+
+        try {
+            HashMap<String, String> playlists = new HashMap<>();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                JSONObject jsonResponse = new JSONObject(responseBody);
+
+                // Access the 'items' array - each item is a playlist
+                JSONArray itemsArray = jsonResponse.getJSONArray("items");
+
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject playlistObject = itemsArray.getJSONObject(i);
+                    String playlistId = playlistObject.getString("id");
+                    String playlistName = playlistObject.getString("name");
+                    playlists.put(playlistId, playlistName);
+                }
+            } else {
+                System.out.println("Error getting user playlists. Status code: " + response.statusCode() +
+                        ", Response: " + response.body());
+            }
+            // fileUserDateAccessObject.storePlaylists(userName, playlists);
+            return playlists;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
