@@ -1,9 +1,8 @@
 package use_case.editProfile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface SpotifyAPIDataAccessInterface {
+public interface EditProfileSpotifyAPIDataAccessInterface {
     String getRequestUserAuthorizationUrl();
     String getAccessToken(String authorizationCode);
 
