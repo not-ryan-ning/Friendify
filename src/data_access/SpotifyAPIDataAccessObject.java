@@ -3,7 +3,7 @@ package data_access;
 // added the json jar library in order to import this
 import org.json.JSONObject;
 import org.json.JSONArray;
-import use_case.matching.SpotifyAPIDataAccessInterface;
+import use_case.editProfile.SpotifyAPIDataAccessInterface;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -19,7 +19,6 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
     private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
     private static final String REDIRECT_URI = "https://github.com/not-ryan-ning/Friendify";
-    private String ACCESS_TOKEN;
     private static final String scope = "playlist-read-private playlist-read-collaborative";
     private static final String authUrl = "https://accounts.spotify.com/authorize";
     private static final String tokenUrl = "https://accounts.spotify.com/api/token";
@@ -38,7 +37,7 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
     }
 
     // Set access token using the authorization code
-    public void setAccessToken(String authorizationCode) {
+    public String getAccessToken(String authorizationCode) {
         String tokenRequestBody = "grant_type=authorization_code&code=" + authorizationCode + "&redirect_uri=" + REDIRECT_URI;
         String authHeader = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -61,30 +60,32 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
                 // responseBody will have a JSON-formatted response
                 String responseBody = tokenResponse.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
-                ACCESS_TOKEN = jsonResponse.getString("access_token");
+                String access_token = jsonResponse.getString("access_token");
 
                 // need to figure out how refresh token works
                 String refreshToken = null;
                 if (responseBody.contains("refresh_token")) {
                     refreshToken = jsonResponse.getString("refresh_token");
                 }
+                return access_token;
             } else {
                 System.out.println("Error obtaining access token. Status code: " + tokenResponse.statusCode() + ", Response: " + tokenResponse.body());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     // Return all the playlists the user has - probably need this when asking the user to choose one of their playlists (edit profile use case)
     // hashMap <playlistId, playlistName>
-    public HashMap<String, String> getPlaylists(String userName) {
+    public HashMap<String, String> getPlaylists(String userName, String access_token) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(playlistUrl))
-                .header("Authorization", "Bearer " + ACCESS_TOKEN)
+                .header("Authorization", "Bearer " + access_token)
                 .GET()
                 .build();
 
@@ -120,43 +121,6 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
     // get an array of all tracks' ids in a playlist
     public String[] getTrackIds(String playlistId) {
         return null;
-    }
-
-    @Override
-    public ArrayList<String> getArtists() {
-        ArrayList<String> artists = new ArrayList<String>();
-        return artists;
-    }
-
-    @Override
-    public ArrayList<String> getTitles() {
-        ArrayList<String> titles = new ArrayList<String>();
-        return titles;
-    }
-
-    @Override
-    public double getAcousticness(String playlistId) {
-        return -1.0;
-    }
-
-    @Override
-    public double getEnergy(String playlistId) {
-        return -1.0;
-    }
-
-    @Override
-    public double getInstrumentalness(String playlistId) {
-        return -1.0;
-    }
-
-    @Override
-    public double getValence(String playlistId) {
-        return -1.0;
-    }
-
-    @Override
-    public String getGenre(String playlistId) {
-        return "iu";
     }
 
     // Generates a random and unique state parameter for the OAuth 2.0 authorization request
