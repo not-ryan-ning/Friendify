@@ -1,23 +1,12 @@
-package use_case.matching;
+package use_case.editProfile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface SpotifyAPIDataAccessInterface {
-    // returns all artists from the playlist
-    ArrayList<String> getArtists();
-    // returns all song titles from the playlist
-    ArrayList<String> getTitles();
+    String getRequestUserAuthorizationUrl();
+    String getAccessToken(String authorizationCode);
 
-    // getAcousticness(Playlist.playlistId)
-    // 0-1
-    double getAcousticness(String playlistId);
-    // 0-1
-    double getEnergy(String playlistId);
-    // 0-1
-    double getInstrumentalness(String playlistId);
-    // 0-1
-    double getValence(String playlistId);
-    // String
-    String getGenre(String playlistId);
-
+    HashMap<String, String> getPlaylists(String access_token);
+    void storePlaylistInfo(String username, String playlistId, String access_token);
 }
