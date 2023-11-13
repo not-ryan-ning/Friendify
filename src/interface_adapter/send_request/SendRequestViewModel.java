@@ -1,4 +1,6 @@
 package interface_adapter.send_request;
 
-public class SendRequestViewModel {
+import interface_adapter.ViewModel;
+
+public class SendRequestViewModel extends ViewModel {
 }
