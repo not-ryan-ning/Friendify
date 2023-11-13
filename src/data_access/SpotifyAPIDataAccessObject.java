@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 
-
 public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
     private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
@@ -42,9 +41,6 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
         String authHeader = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
         HttpClient httpClient = HttpClient.newHttpClient();
 
-        // Header Parameters:
-        // Authorization = 'Authorization': 'Basic' + <base64 encoded client_id:client_secret>
-        // Content-Type = 'content-type': 'application/x-www-form-urlencoded'
         HttpRequest tokenRequest = HttpRequest.newBuilder()
                 .uri(URI.create(tokenUrl))
                 .header("Authorization", "Basic " + authHeader)
@@ -60,14 +56,7 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
                 // responseBody will have a JSON-formatted response
                 String responseBody = tokenResponse.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
-                String access_token = jsonResponse.getString("access_token");
-
-                // need to figure out how refresh token works
-                String refreshToken = null;
-                if (responseBody.contains("refresh_token")) {
-                    refreshToken = jsonResponse.getString("refresh_token");
-                }
-                return access_token;
+                return jsonResponse.getString("access_token");
             } else {
                 System.out.println("Error obtaining access token. Status code: " + tokenResponse.statusCode() + ", Response: " + tokenResponse.body());
             }
@@ -79,7 +68,7 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
 
     // Return all the playlists the user has - probably need this when asking the user to choose one of their playlists (edit profile use case)
     // hashMap <playlistId, playlistName>
-    public HashMap<String, String> getPlaylists(String userName, String access_token) {
+    public HashMap<String, String> getPlaylists(String access_token) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
         HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -118,10 +107,30 @@ public class SpotifyAPIDataAccessObject implements SpotifyAPIDataAccessInterface
         return null;
     }
 
-    // get an array of all tracks' ids in a playlist
-    public String[] getTrackIds(String playlistId) {
+    // obtain all information about the chosen playlist from the API and store it in the playlist csv file and the users csv file (playlist id only)
+    public void storePlaylistInfo(String username, String playlistId, String access_token) {
+        ArrayList<String> trackIds = getTrackIds(playlistId);
+        ArrayList<String> artists = getArtists(trackIds);
+        ArrayList<String> titles = getTitles(trackIds);
+        double acousticness = getAcousticness(trackIds);
+        double energy = getEnergy(trackIds);
+        double instrumentalness = getInstrumentalness(trackIds);
+        double valence = getValence(trackIds);
+        // not sure if genre works like this
+        String genre = getGenre(trackIds);
+    }
+
+    // get an arrayList of all tracks' ids in a playlist
+    private ArrayList<String> getTrackIds(String playlistId) {
         return null;
     }
+    private ArrayList<String> getArtists(ArrayList<String> trackIds) { return null; }
+    private ArrayList<String> getTitles(ArrayList<String> trackIds) { return null; }
+    private double getAcousticness(ArrayList<String> trackIds) { return 1.0; }
+    private double getEnergy (ArrayList<String> trackIds) { return 1.0; }
+    private double getInstrumentalness (ArrayList<String> trackIds) { return 1.0; }
+    private double getValence (ArrayList<String> trackIds) { return 1.0; }
+    private String getGenre (ArrayList<String> trackIds) { return null; }
 
     // Generates a random and unique state parameter for the OAuth 2.0 authorization request
     private static String generateRandomState() {
