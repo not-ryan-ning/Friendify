@@ -109,28 +109,58 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
 
     // obtain all information about the chosen playlist from the API and store it in the playlist csv file and the users csv file (playlist id only)
     public void storePlaylistInfo(String username, String playlistId, String access_token) {
-        ArrayList<String> trackIds = getTrackIds(playlistId);
-        ArrayList<String> artists = getArtists(trackIds);
-        ArrayList<String> titles = getTitles(trackIds);
-        double acousticness = getAcousticness(trackIds);
-        double energy = getEnergy(trackIds);
-        double instrumentalness = getInstrumentalness(trackIds);
-        double valence = getValence(trackIds);
-        // not sure if genre works like this
-        String genre = getGenre(trackIds);
+        ArrayList<String> trackIds = getTrackIds(playlistId, access_token);
+        ArrayList<String> artists = getArtists(trackIds, access_token);
+        ArrayList<String> titles = getTitles(trackIds, access_token);
+        double acousticness = getAcousticness(trackIds, access_token);
+        double energy = getEnergy(trackIds, access_token);
+        double instrumentalness = getInstrumentalness(trackIds, access_token);
+        double valence = getValence(trackIds, access_token);
+
+        // store the playlist info by calling FileUserDataAccessObject
     }
 
     // get an arrayList of all tracks' ids in a playlist
-    private ArrayList<String> getTrackIds(String playlistId) {
+    private ArrayList<String> getTrackIds(String playlistId, String access_token) {
+        String playlistUrl = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(playlistId))
+                .header("Authorization", "Bearer " + access_token)
+                .GET()
+                .build();
+
+        try {
+            ArrayList<String> trackIds = new ArrayList<>();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                JSONObject jsonResponse = new JSONObject(responseBody);
+
+                JSONArray itemsArray = jsonResponse.getJSONArray("items");
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject trackObject = itemsArray.getJSONObject(i);
+                    String trackId = trackObject.getJSONObject("track").getString("id");
+                    trackIds.add(trackId);
+                }
+            } else {
+                System.out.println("Error getting playlist tracks. Status code: " + response.statusCode() +
+                        ", Response: " + response.body());
+            }
+            return trackIds;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
-    private ArrayList<String> getArtists(ArrayList<String> trackIds) { return null; }
-    private ArrayList<String> getTitles(ArrayList<String> trackIds) { return null; }
-    private double getAcousticness(ArrayList<String> trackIds) { return 1.0; }
-    private double getEnergy (ArrayList<String> trackIds) { return 1.0; }
-    private double getInstrumentalness (ArrayList<String> trackIds) { return 1.0; }
-    private double getValence (ArrayList<String> trackIds) { return 1.0; }
-    private String getGenre (ArrayList<String> trackIds) { return null; }
+    private ArrayList<String> getArtists(ArrayList<String> trackIds, String access_token) { return null; }
+    private ArrayList<String> getTitles(ArrayList<String> trackIds, String access_token) { return null; }
+    private double getAcousticness(ArrayList<String> trackIds, String access_token) { return 1.0; }
+    private double getEnergy (ArrayList<String> trackIds, String access_token) { return 1.0; }
+    private double getInstrumentalness (ArrayList<String> trackIds, String access_token) { return 1.0; }
+    private double getValence (ArrayList<String> trackIds, String access_token) { return 1.0; }
 
     // Generates a random and unique state parameter for the OAuth 2.0 authorization request
     private static String generateRandomState() {
