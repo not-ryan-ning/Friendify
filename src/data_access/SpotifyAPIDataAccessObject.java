@@ -35,30 +35,30 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
         return authCode;
     }
 
-    // Set access token using the authorization code
+    // Get access token using the authorization code
     public String getAccessToken(String authorizationCode) {
         String tokenRequestBody = "grant_type=authorization_code&code=" + authorizationCode + "&redirect_uri=" + REDIRECT_URI;
         String authHeader = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
-        HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest tokenRequest = HttpRequest.newBuilder()
                 .uri(URI.create(tokenUrl))
                 .header("Authorization", "Basic " + authHeader)
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                // Specifies that the request method is POST (for exchanging an authorization code for an access token)
                 .POST(HttpRequest.BodyPublishers.ofString(tokenRequestBody))
                 .build();
 
-        try {
-            HttpResponse<String> tokenResponse = httpClient.send(tokenRequest, HttpResponse.BodyHandlers.ofString());
+        HttpClient httpClient = HttpClient.newHttpClient();
 
-            if (tokenResponse.statusCode() == 200) {
-                // responseBody will have a JSON-formatted response
-                String responseBody = tokenResponse.body();
+        try {
+            HttpResponse<String> response = httpClient.send(tokenRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
                 return jsonResponse.getString("access_token");
             } else {
-                System.out.println("Error obtaining access token. Status code: " + tokenResponse.statusCode() + ", Response: " + tokenResponse.body());
+                System.out.println("Error obtaining access token. Status code: " + response.statusCode() +
+                        ", Response: " + response.body());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,17 +66,17 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
         return null;
     }
 
-    // Return all the playlists the user has - probably need this when asking the user to choose one of their playlists (edit profile use case)
-    // hashMap <playlistId, playlistName>
+    // Return all the playlists the user has that maps playlistId to playlistName
     public HashMap<String, String> getPlaylists(String access_token) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
-        HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(playlistUrl))
                 .header("Authorization", "Bearer " + access_token)
                 .GET()
                 .build();
+
+        HttpClient httpClient = HttpClient.newHttpClient();
 
         try {
             HashMap<String, String> playlists = new HashMap<>();
@@ -85,8 +85,6 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
-
-                // Access the 'items' array - each item is a playlist
                 JSONArray itemsArray = jsonResponse.getJSONArray("items");
 
                 for (int i = 0; i < itemsArray.length(); i++) {
@@ -95,19 +93,20 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
                     String playlistName = playlistObject.getString("name");
                     playlists.put(playlistId, playlistName);
                 }
+                // fileUserDateAccessObject.storePlaylists(userName, playlists);
+                return playlists;
             } else {
                 System.out.println("Error getting user playlists. Status code: " + response.statusCode() +
                         ", Response: " + response.body());
             }
-            // fileUserDateAccessObject.storePlaylists(userName, playlists);
-            return playlists;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    // obtain all information about the chosen playlist from the API and store it in the playlist csv file and the users csv file (playlist id only)
+    // Get all information about the chosen playlist from the API and store them in the playlist csv file and the users
+    // csv file (playlist id only)
     public void storePlaylistInfo(String username, String playlistId, String access_token) {
         ArrayList<String> trackIds = getTrackIds(playlistId, access_token);
         ArrayList<String> artists = getTracksArtistsTitles(trackIds, access_token).get(0);
@@ -120,16 +119,17 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
         // store the playlist info by calling FileUserDataAccessObject
     }
 
-    // get an arrayList of all tracks' ids in a playlist
+    // Get an arrayList of all tracks' ids in a playlist
     private ArrayList<String> getTrackIds(String playlistId, String access_token) {
         String playlistUrl = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
-        HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(playlistId))
                 .header("Authorization", "Bearer " + access_token)
                 .GET()
                 .build();
+
+        HttpClient httpClient = HttpClient.newHttpClient();
 
         try {
             ArrayList<String> trackIds = new ArrayList<>();
@@ -138,33 +138,33 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
-
                 JSONArray itemsArray = jsonResponse.getJSONArray("items");
+
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject trackObject = itemsArray.getJSONObject(i);
                     String trackId = trackObject.getJSONObject("track").getString("id");
                     trackIds.add(trackId);
                 }
+                return trackIds;
             } else {
                 System.out.println("Error getting playlist tracks. Status code: " + response.statusCode() +
                         ", Response: " + response.body());
             }
-            return trackIds;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    // get an arraylist of artists names and song titles from all track ids
+    // Get an arraylist of artists names and song titles from all track ids
     private ArrayList<ArrayList<String>> getTracksArtistsTitles(ArrayList<String> trackIds, String access_token) {
+        ArrayList<ArrayList<String>> artistsTitles = new ArrayList<>();
         ArrayList<String> artists = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
 
+        // Need to run through each track
         for (String trackId: trackIds) {
             String trackUrl = "https://api.spotify.com/v1/tracks/" + trackId;
-
-            HttpClient httpClient = HttpClient.newHttpClient();
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(trackUrl))
@@ -172,14 +172,16 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
                     .GET()
                     .build();
 
+            HttpClient httpClient = HttpClient.newHttpClient();
+
             try {
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() == 200) {
                     String responseBody = response.body();
                     JSONObject jsonResponse = new JSONObject(responseBody);
-
                     JSONArray artistsArray = jsonResponse.getJSONArray("artists");
+
                     for (int i = 0; i < artistsArray.length(); i++) {
                         JSONObject artistObject = artistsArray.getJSONObject(i);
                         String artistName = artistObject.getString("name");
@@ -188,30 +190,29 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
 
                     String title = jsonResponse.getString("name");
                     titles.add(title);
+
+                    artistsTitles.add(artists);
+                    artistsTitles.add(titles);
                 } else {
                     System.out.println("Error getting track details of the tracks. Status code: " + response.statusCode() +
                             ", Response: " + response.body());
                 }
-                ArrayList<ArrayList<String>> artistsTitles = new ArrayList<>();
-                artistsTitles.add(artists);
-                artistsTitles.add(titles);
-                return artistsTitles;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return null;
+        return artistsTitles;
     }
     private ArrayList<Double> getAttributes(ArrayList<String> trackIds, String access_token) {
         String audioFeatureUrl = "https://api.spotify.com/v1/audio-features?ids=" + String.join(",", trackIds);
-
-        HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(audioFeatureUrl))
                 .header("Authorization", "Bearer " + access_token)
                 .GET()
                 .build();
+
+        HttpClient httpClient = HttpClient.newHttpClient();
 
         try {
             double acousticnessSum = 0;
@@ -228,13 +229,11 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
 
                 for (int i = 0; i < audioFeaturesArray.length(); i++) {
                     JSONObject audioFeaturesObject = audioFeaturesArray.getJSONObject(i);
-
                     acousticnessSum += audioFeaturesObject.getDouble("acousticness");
                     energySum += audioFeaturesObject.getDouble("energy");
                     instrumentalnessSum = audioFeaturesObject.getDouble("instrumentalness");
                     valenceSum = audioFeaturesObject.getDouble("valence");
                 }
-
                 ArrayList<Double> attributes = new ArrayList<Double>();
 
                 // adding the mean of each attribute score to attributes arrayList
@@ -242,7 +241,6 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
                 attributes.add(energySum/numOfTracks);
                 attributes.add(instrumentalnessSum/numOfTracks);
                 attributes.add(valenceSum/numOfTracks);
-
                 return attributes;
             } else {
                 System.out.println("Error getting audio features. Status code: " + response.statusCode() +
