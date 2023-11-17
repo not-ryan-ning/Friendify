@@ -110,12 +110,12 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
     // obtain all information about the chosen playlist from the API and store it in the playlist csv file and the users csv file (playlist id only)
     public void storePlaylistInfo(String username, String playlistId, String access_token) {
         ArrayList<String> trackIds = getTrackIds(playlistId, access_token);
-        ArrayList<String> artists = getTracksInfo(trackIds, access_token).get(0);
-        ArrayList<String> titles = getTracksInfo(trackIds, access_token).get(1);
-        double acousticness = getAcousticness(trackIds, access_token);
-        double energy = getEnergy(trackIds, access_token);
-        double instrumentalness = getInstrumentalness(trackIds, access_token);
-        double valence = getValence(trackIds, access_token);
+        ArrayList<String> artists = getTracksArtistsTitles(trackIds, access_token).get(0);
+        ArrayList<String> titles = getTracksArtistsTitles(trackIds, access_token).get(1);
+        double acousticness = getAttributes(trackIds, access_token).get(0);
+        double energy = getAttributes(trackIds, access_token).get(1);
+        double instrumentalness = getAttributes(trackIds, access_token).get(2);
+        double valence = getAttributes(trackIds, access_token).get(3);
 
         // store the playlist info by calling FileUserDataAccessObject
     }
@@ -157,7 +157,7 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
     }
 
     // get an arraylist of artists names and song titles from all track ids
-    private ArrayList<ArrayList<String>> getTracksInfo(ArrayList<String> trackIds, String access_token) {
+    private ArrayList<ArrayList<String>> getTracksArtistsTitles(ArrayList<String> trackIds, String access_token) {
         ArrayList<String> artists = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
 
@@ -202,10 +202,57 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
         }
         return null;
     }
-    private double getAcousticness(ArrayList<String> trackIds, String access_token) { return 1.0; }
-    private double getEnergy (ArrayList<String> trackIds, String access_token) { return 1.0; }
-    private double getInstrumentalness (ArrayList<String> trackIds, String access_token) { return 1.0; }
-    private double getValence (ArrayList<String> trackIds, String access_token) { return 1.0; }
+    private ArrayList<Double> getAttributes(ArrayList<String> trackIds, String access_token) {
+        String audioFeatureUrl = "https://api.spotify.com/v1/audio-features?ids=" + String.join(",", trackIds);
+
+        HttpClient httpClient = HttpClient.newHttpClient();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(audioFeatureUrl))
+                .header("Authorization", "Bearer " + access_token)
+                .GET()
+                .build();
+
+        try {
+            double acousticnessSum = 0;
+            double energySum = 0;
+            double instrumentalnessSum = 0;
+            double valenceSum = 0;
+            int numOfTracks = trackIds.size();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String responseBody = response.body();
+                JSONArray audioFeaturesArray = new JSONArray(responseBody);
+
+                for (int i = 0; i < audioFeaturesArray.length(); i++) {
+                    JSONObject audioFeaturesObject = audioFeaturesArray.getJSONObject(i);
+
+                    acousticnessSum += audioFeaturesObject.getDouble("acousticness");
+                    energySum += audioFeaturesObject.getDouble("energy");
+                    instrumentalnessSum = audioFeaturesObject.getDouble("instrumentalness");
+                    valenceSum = audioFeaturesObject.getDouble("valence");
+                }
+
+                ArrayList<Double> attributes = new ArrayList<Double>();
+
+                // adding the mean of each attribute score to attributes arrayList
+                attributes.add(acousticnessSum/numOfTracks);
+                attributes.add(energySum/numOfTracks);
+                attributes.add(instrumentalnessSum/numOfTracks);
+                attributes.add(valenceSum/numOfTracks);
+
+                return attributes;
+            } else {
+                System.out.println("Error getting audio features. Status code: " + response.statusCode() +
+                        ", Response: " + response.body());
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     // Generates a random and unique state parameter for the OAuth 2.0 authorization request
     private static String generateRandomState() {
