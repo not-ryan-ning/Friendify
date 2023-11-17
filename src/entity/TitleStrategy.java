@@ -16,6 +16,8 @@ public class TitleStrategy implements MatchingStrategy {
         // Calculate the percentage of common song titles
         double percentageInCommon = (double) intersection.size() /
                 Math.min(playlist1Titles.size(), playlist2Titles.size()) * 100.0;
+        // Denominator is the minimum of the two lists
+        // Allows % in common to reach 100%
 
         return percentageInCommon;
     }
