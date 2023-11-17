@@ -110,8 +110,8 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
     // obtain all information about the chosen playlist from the API and store it in the playlist csv file and the users csv file (playlist id only)
     public void storePlaylistInfo(String username, String playlistId, String access_token) {
         ArrayList<String> trackIds = getTrackIds(playlistId, access_token);
-        ArrayList<String> artists = getArtists(trackIds, access_token);
-        ArrayList<String> titles = getTitles(trackIds, access_token);
+        ArrayList<String> artists = getTracksInfo(trackIds, access_token).get(0);
+        ArrayList<String> titles = getTracksInfo(trackIds, access_token).get(1);
         double acousticness = getAcousticness(trackIds, access_token);
         double energy = getEnergy(trackIds, access_token);
         double instrumentalness = getInstrumentalness(trackIds, access_token);
@@ -155,8 +155,53 @@ public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAcce
         }
         return null;
     }
-    private ArrayList<String> getArtists(ArrayList<String> trackIds, String access_token) { return null; }
-    private ArrayList<String> getTitles(ArrayList<String> trackIds, String access_token) { return null; }
+
+    // get an arraylist of artists names and song titles from all track ids
+    private ArrayList<ArrayList<String>> getTracksInfo(ArrayList<String> trackIds, String access_token) {
+        ArrayList<String> artists = new ArrayList<>();
+        ArrayList<String> titles = new ArrayList<>();
+
+        for (String trackId: trackIds) {
+            String trackUrl = "https://api.spotify.com/v1/tracks/" + trackId;
+
+            HttpClient httpClient = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(trackUrl))
+                    .header("Authorization", "Bearer " + access_token)
+                    .GET()
+                    .build();
+
+            try {
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    String responseBody = response.body();
+                    JSONObject jsonResponse = new JSONObject(responseBody);
+
+                    JSONArray artistsArray = jsonResponse.getJSONArray("artists");
+                    for (int i = 0; i < artistsArray.length(); i++) {
+                        JSONObject artistObject = artistsArray.getJSONObject(i);
+                        String artistName = artistObject.getString("name");
+                        artists.add(artistName);
+                    }
+
+                    String title = jsonResponse.getString("name");
+                    titles.add(title);
+                } else {
+                    System.out.println("Error getting track details of the tracks. Status code: " + response.statusCode() +
+                            ", Response: " + response.body());
+                }
+                ArrayList<ArrayList<String>> artistsTitles = new ArrayList<>();
+                artistsTitles.add(artists);
+                artistsTitles.add(titles);
+                return artistsTitles;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
     private double getAcousticness(ArrayList<String> trackIds, String access_token) { return 1.0; }
     private double getEnergy (ArrayList<String> trackIds, String access_token) { return 1.0; }
     private double getInstrumentalness (ArrayList<String> trackIds, String access_token) { return 1.0; }
