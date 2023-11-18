@@ -1,9 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
-import entity.Playlist;
-
 public interface MatchingStrategy {
     double getSimilarityScore(Playlist playlist1, Playlist playlist2);
-    // calculates the similarity score of two users
+    // calculates the similarity score of two users' playlists
 }
