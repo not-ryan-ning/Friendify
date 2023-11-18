@@ -3,6 +3,6 @@ package entity;
 import java.util.ArrayList;
 
 public interface Playlist {
-    public String getPlaylistId();
+    public String getPlaylistID();
     public ArrayList<String> getTopThreeArtists();
 }
