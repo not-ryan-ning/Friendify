@@ -1,4 +1,4 @@
-package use_case.editProfile;
+package use_case.edit_profile;
 
 import java.util.HashMap;
 

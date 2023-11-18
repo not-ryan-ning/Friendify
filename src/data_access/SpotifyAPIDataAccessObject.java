@@ -3,7 +3,7 @@ package data_access;
 // added the json jar library in order to import this
 import org.json.JSONObject;
 import org.json.JSONArray;
-import use_case.editProfile.EditProfileSpotifyAPIDataAccessInterface;
+import use_case.edit_profile.EditProfileSpotifyAPIDataAccessInterface;
 
 import java.net.URI;
 import java.net.http.HttpClient;
