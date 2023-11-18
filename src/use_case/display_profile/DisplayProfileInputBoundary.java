@@ -1,4 +1,5 @@
 package use_case.display_profile;
 
-public class DisplayProfileInputBoundary {
+public interface DisplayProfileInputBoundary {
+    void execute();
 }
