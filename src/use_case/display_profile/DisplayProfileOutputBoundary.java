@@ -1,4 +1,4 @@
 package use_case.display_profile;
 
-public class DisplayProfileOutputBoundary {
+public interface DisplayProfileOutputBoundary {
 }
