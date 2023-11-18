@@ -30,8 +30,10 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
         // now switch to login screen
         LoginState loginState = loginViewModel.getState();
+        loginState.setUsername("");
+        loginState.setPassword("");
         this.loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
+        this.loginViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
