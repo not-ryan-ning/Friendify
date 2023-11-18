@@ -4,12 +4,8 @@ import java.util.ArrayList;
 
 public class ArtistStrategy implements MatchingStrategy {
 
-    private ArrayList playlist1;
-    private ArrayList playlist2;
-
-
     @Override
-    public double getSimilarityScore() {
+    public double getSimilarityScore(ArrayList playlist1, ArrayList playlist2) {
         ArrayList<String> intersection = new ArrayList<>(playlist1);
         intersection.retainAll(playlist2);
         // Calculating the percentage of common elements by dividing it by the minimum size of the 2 playlists
