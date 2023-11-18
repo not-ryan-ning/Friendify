@@ -3,28 +3,20 @@ package entity;
 import java.util.ArrayList;
 
 public class TitleStrategy implements MatchingStrategy {
-    private ArrayList<String> playlist1Titles;
-    private ArrayList<String> playlist2Titles;
 
     @Override
-    public double getSimilarityScore() {
+    public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
 
         // Find the intersection (common song titles) between the two lists
-        ArrayList<String> intersection = new ArrayList<>(playlist1Titles);
-        playlist1Titles.retainAll(playlist2Titles);
+        ArrayList<String> intersection = new ArrayList<>(playlist1.getTitles());
+        playlist1.getTitles().retainAll(playlist2.getTitles());
 
         // Calculate the percentage of common song titles
         double percentageInCommon = (double) intersection.size() /
-                Math.min(playlist1Titles.size(), playlist2Titles.size()) * 100.0;
+                Math.min(playlist1.getTitles().size(), playlist2.getTitles().size()) * 100.0;
         // Denominator is the minimum of the two lists
         // Allows % in common to reach 100%
 
         return percentageInCommon;
-    }
-
-    @Override
-    public void setPlaylistInfo(ArrayList<Object> playlist1Features, ArrayList<Object> playlist2Features) {
-        this.playlist1Titles = (ArrayList<String>) playlist1Features.get(0);
-        this.playlist2Titles = (ArrayList<String>) playlist2Features.get(0);
     }
 }
