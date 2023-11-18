@@ -5,7 +5,7 @@ public class SignupOutputData {
     private final String username;
     private boolean useCaseSuccess;
 
-    public SignupOutputData(String username, boolean useCaseFailed {
+    public SignupOutputData(String username, boolean useCaseFailed) {
         this.username = username;
         this.useCaseSuccess = useCaseSuccess;
     }
