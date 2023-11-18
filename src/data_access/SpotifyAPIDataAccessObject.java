@@ -136,20 +136,6 @@ public class SpotifyAPIDataAccessObject {
         return playlistInfo;
     }
 
-    private static HashMap<String, Integer> arrayListToHashMap(ArrayList<String> arrayList) {
-        HashMap<String, Integer> hashMap = new HashMap<>();
-
-        for (String item : arrayList) {
-            if (hashMap.containsKey(item)) {
-                hashMap.put(item, hashMap.get(item) + 1);
-            } else {
-                hashMap.put(item, 1);
-            }
-        }
-
-        return hashMap;
-    }
-
     // Get an arrayList of all tracks' ids in a playlist
     private ArrayList<String> getTrackIds(String playlistId, String access_token) {
         String playlistUrl = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
