@@ -10,8 +10,8 @@ public class DisplayProfileController {
         this.displayProfileUseCaseInteractor = displayProfileUseCaseInteractor;
     }
 
-    public void execute(String username) {
-        DisplayProfileInputData displayProfileInputData = new DisplayProfileInputData(username);
+    public void execute(String username, String otherUsername) {
+        DisplayProfileInputData displayProfileInputData = new DisplayProfileInputData(username, otherUsername);
         displayProfileUseCaseInteractor.execute(displayProfileInputData);
     }
 }
