@@ -15,10 +15,11 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
 
 
     @Override
-    public void prepareSuccessView(DisplayProfileOutputData user) {
-        // switch to what?
-    }
-    public void prepareFailView(String error) {
+    public void prepareSuccessViewFriends(DisplayProfileOutputData user) {
+        // switch to the friends-only profile of the user
 
+    }
+    public void prepareSuccessViewCommon(DisplayProfileOutputData user) {
+        // switch to the common view profile of the user
     }
 }

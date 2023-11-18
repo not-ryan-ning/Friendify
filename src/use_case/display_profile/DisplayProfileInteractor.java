@@ -21,12 +21,15 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
         User user = userDataAccessObject.get(otherUsername);
         ArrayList<String> otherUserFriends = user.getFriendNames();
 
-        // if user is in friends, then they can view the profile
+        DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData();
+        // if user is a friend, then they can view the friends-only user profile:
         if (otherUserFriends.contains(username)) {
-            DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData();
-            displayProfilePresenter.prepareSuccessView(displayProfileOutputData);
-        } else {
-            displayProfilePresenter.prepareFailView("You cannot view this user's profile.");
+            displayProfilePresenter.prepareSuccessViewFriends(displayProfileOutputData);
+        }
+        // else the user can only see the common user profile:
+        else {
+            displayProfilePresenter.prepareSuccessViewCommon(displayProfileOutputData);
+            //displayProfilePresenter.prepareFailView("You cannot view this user's profile.");
         }
 
 

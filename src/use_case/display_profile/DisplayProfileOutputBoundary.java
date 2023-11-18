@@ -1,6 +1,6 @@
 package use_case.display_profile;
 
 public interface DisplayProfileOutputBoundary {
-    void prepareSuccessView(DisplayProfileOutputData user);
-    void prepareFailView(String error);
+    void prepareSuccessViewFriends(DisplayProfileOutputData user);
+    void prepareSuccessViewCommon(DisplayProfileOutputData user);
 }
