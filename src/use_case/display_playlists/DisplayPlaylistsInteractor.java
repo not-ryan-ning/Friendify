@@ -17,12 +17,14 @@ public class DisplayPlaylistsInteractor implements DisplayPlaylistsInputBoundary
 
     @Override
     public void execute() {
-        String redirectUrl = spotifyAuthenticationDataAccessObject.getRequestUserAuthorizationUrl();
-        String authorizationCode = "";
-        String accessToken = spotifyAuthenticationDataAccessObject.getAccessToken(authorizationCode);
-
-        HashMap<String, String> playlistIdName = spotifyAPIDataAccessObject.getPlaylists(accessToken);
-        DisplayPlaylistsOutputData displayPlaylistsOutputData = new DisplayPlaylistsOutputData(playlistIdName);
-        displayPlaylistsPresenter.prepareSuccessView(displayPlaylistsOutputData);
+        // accessToken can return null if the authentication process fails
+        String accessToken = spotifyAuthenticationDataAccessObject.getAccessToken();
+        if (accessToken != null) {
+            HashMap<String, String> playlistIdName = spotifyAPIDataAccessObject.getPlaylists(accessToken);
+            DisplayPlaylistsOutputData displayPlaylistsOutputData = new DisplayPlaylistsOutputData(playlistIdName);
+            displayPlaylistsPresenter.prepareSuccessView(displayPlaylistsOutputData);
+        } else {
+            displayPlaylistsPresenter.prepareFailView("Unable to complete authentication process successfully.");
+        }
     }
 }
