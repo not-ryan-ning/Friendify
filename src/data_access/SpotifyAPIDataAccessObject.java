@@ -13,12 +13,12 @@ import java.util.HashMap;
 
 public class SpotifyAPIDataAccessObject {
     // Return all the playlists the user has that maps playlistId to playlistName
-    public HashMap<String, String> getPlaylists(String access_token) {
+    public HashMap<String, String> getPlaylists(String accessToken) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(playlistUrl))
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .GET()
                 .build();
 
@@ -52,11 +52,11 @@ public class SpotifyAPIDataAccessObject {
 
     // Get all information about the chosen playlist from the API and store them in the playlist csv file and the users
     // csv file (playlist id only)
-    public ArrayList<Object> returnPlaylistInfo(String username, String playlistId, String access_token) {
+    public ArrayList<Object> returnPlaylistInfo(String username, String playlistId, String accessToken) {
         ArrayList<Object> playlistInfo = new ArrayList<>();
-        ArrayList<String> trackIds = getTrackIds(playlistId, access_token);
-        ArrayList<Object> titlesArtists = getTracksTitlesArtists(trackIds, access_token);
-        ArrayList<Double> attributes = getAttributes(trackIds, access_token);
+        ArrayList<String> trackIds = getTrackIds(playlistId, accessToken);
+        ArrayList<Object> titlesArtists = getTracksTitlesArtists(trackIds, accessToken);
+        ArrayList<Double> attributes = getAttributes(trackIds, accessToken);
 
         ArrayList<String> titles = (ArrayList<String>) titlesArtists.get(0);
         playlistInfo.add(titles);
@@ -67,7 +67,7 @@ public class SpotifyAPIDataAccessObject {
         // not adding this to playlistInfo - just for getGenres() method
         ArrayList<String> artistIds = (ArrayList<String>) titlesArtists.get(2);
 
-        HashMap<String, Integer> genres = getGenres(artistIds, access_token);
+        HashMap<String, Integer> genres = getGenres(artistIds, accessToken);
         playlistInfo.add(genres);
 
         double acousticness = attributes.get(0);
@@ -83,12 +83,12 @@ public class SpotifyAPIDataAccessObject {
     }
 
     // Get an arrayList of all tracks' ids in a playlist
-    private ArrayList<String> getTrackIds(String playlistId, String access_token) {
+    private ArrayList<String> getTrackIds(String playlistId, String accessToken) {
         String playlistUrl = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(playlistUrl))
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .GET()
                 .build();
 
@@ -120,7 +120,7 @@ public class SpotifyAPIDataAccessObject {
     }
 
     // Get an arraylist of an arraylist of song titles, a hash map of artists names, and an arraylist of artist ids from all track ids
-    private ArrayList<Object> getTracksTitlesArtists(ArrayList<String> trackIds, String access_token) {
+    private ArrayList<Object> getTracksTitlesArtists(ArrayList<String> trackIds, String accessToken) {
         ArrayList<Object> titlesArtists = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
         HashMap<String, Integer> artists = new HashMap<>();
@@ -133,7 +133,7 @@ public class SpotifyAPIDataAccessObject {
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(trackUrl))
-                    .header("Authorization", "Bearer " + access_token)
+                    .header("Authorization", "Bearer " + accessToken)
                     .GET()
                     .build();
 
@@ -179,14 +179,14 @@ public class SpotifyAPIDataAccessObject {
         return titlesArtists;
     }
 
-    private HashMap<String, Integer> getGenres(ArrayList<String> artistIds, String access_token) {
+    private HashMap<String, Integer> getGenres(ArrayList<String> artistIds, String accessToken) {
         HashMap<String, Integer> genres = new HashMap<>();
 
         String artistUrl = "https://api.spotify.com/v1/artists?ids=" + String.join(",", artistIds);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(artistUrl))
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .GET()
                 .build();
 
@@ -221,12 +221,12 @@ public class SpotifyAPIDataAccessObject {
     }
 
     // Get all the attributes at once to reduce running time
-    private ArrayList<Double> getAttributes(ArrayList<String> trackIds, String access_token) {
+    private ArrayList<Double> getAttributes(ArrayList<String> trackIds, String accessToken) {
         String audioFeatureUrl = "https://api.spotify.com/v1/audio-features?ids=" + String.join(",", trackIds);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(audioFeatureUrl))
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .GET()
                 .build();
 
