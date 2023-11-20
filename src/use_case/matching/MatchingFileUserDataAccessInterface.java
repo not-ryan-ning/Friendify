@@ -2,7 +2,7 @@ package use_case.matching;
 
 import java.util.ArrayList;
 
-public interface SpotifyAPIDataAccessInterface {
+public interface MatchingFileUserDataAccessInterface {
     // returns all artists from the playlist
     ArrayList<String> getArtists();
     // returns all song titles from the playlist
@@ -10,14 +10,11 @@ public interface SpotifyAPIDataAccessInterface {
 
     // getAcousticness(Playlist.playlistId)
     // 0-1
-    float getAcousticness(String playlistId);
+    double getAcousticness(String playlistId);
     // 0-1
-    float getEnergy(String playlistId);
+    double getEnergy(String playlistId);
     // 0-1
-    float getInstrumentalness(String playlistId);
+    double getInstrumentalness(String playlistId);
     // 0-1
-    float getValence(String playlistId);
-    // String
-    String getGenre(String playlistId);
-
+    double getValence(String playlistId);
 }
