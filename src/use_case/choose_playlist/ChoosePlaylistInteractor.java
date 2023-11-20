@@ -1,7 +1,7 @@
 package use_case.choose_playlist;
 
 import entity.Playlist;
-import entity.User;
+import entity.PlaylistFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,15 +11,18 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
     final ChoosePlaylistPlaylistDataAccessInterface playlistDataAccessObject;
     final ChoosePlaylistSpotifyAPIDataAccessInterface spotifyDataAccessObject;
     final ChoosePlaylistOutputBoundary choosePlaylistPresenter;
+    final PlaylistFactory playlistFactory;
 
     public ChoosePlaylistInteractor(ChoosePlaylistUserDataAccessInterface choosePlaylistUserDataAccessInterface,
                                     ChoosePlaylistPlaylistDataAccessInterface choosePlaylistPlaylistDataAccessInterface,
                                     ChoosePlaylistSpotifyAPIDataAccessInterface choosePlaylistSpotifyAPIDataAccessInterface,
-                                    ChoosePlaylistOutputBoundary choosePlaylistOutputBoundary) {
+                                    ChoosePlaylistOutputBoundary choosePlaylistOutputBoundary,
+                                    PlaylistFactory playlistFactory) {
         this.userDataAccessObject = choosePlaylistUserDataAccessInterface;
         this.playlistDataAccessObject = choosePlaylistPlaylistDataAccessInterface;
         this.spotifyDataAccessObject = choosePlaylistSpotifyAPIDataAccessInterface;
         this.choosePlaylistPresenter = choosePlaylistOutputBoundary;
+        this.playlistFactory = playlistFactory;
     }
 
     @Override
@@ -36,13 +39,16 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         double energy = (double) playlistInfo.get(4);
         double instrumentalness = (double) playlistInfo.get(5);
         double valence = (double) playlistInfo.get(6);
+        ArrayList<String> topTreeArtists = (ArrayList<String>) playlistInfo.get(7);
 
-        userDataAccessObject.editPlaylist(username, playlistId, artists); // this one also changes top three artists data
-        playlistDataAccessObject.addPlaylist(playlistId, titles, artists, genres, acousticness, energy, instrumentalness, valence);
-        String playlistName = playlistDataAccessObject.gerPlaylistName(playlistId);
+        Playlist playlist = playlistFactory.create(playlistId, titles, artists, genres, acousticness,
+                energy, instrumentalness, valence, topTreeArtists);
+
+        userDataAccessObject.editPlaylist(username, playlist);
+        playlistDataAccessObject.storePlaylist(playlist);
+        String playlistName = playlistDataAccessObject.getPlaylistName(playlistId);
 
         ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName);
         choosePlaylistPresenter.prepareSuccessView(choosePlaylistOutputData);
     }
-
 }
