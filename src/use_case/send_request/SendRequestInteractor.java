@@ -15,14 +15,15 @@ public class SendRequestInteractor implements SendRequestInputBoundary {
         String senderUsername = sendRequestInputData.getSenderUsername();
         String receiverUsername = sendRequestInputData.getReceiverUsername();
 
-        //execute if the sender and receiver are already friends
-        if (sendRequestUserDAO.isFriend(senderUsername, receiverUsername)) {
-            sendRequestPresenter.prepareFailView("Already friends with" + receiverUsername);
+        User sender = sendRequestUserDAO.get(senderUsername);
+        User receiver = sendRequestUserDAO.get(receiverUsername);
 
-        //execute if the sender and receiver are not friends
+        //execute if the sender has already requested the receiver
+        if (sendRequestUserDAO.isRequested(sender, receiver)) {
+            sendRequestPresenter.prepareFailView("You have already requested" + receiverUsername);
+
+        //execute if the sender has not previously requested the receiver
         } else {
-            User sender = sendRequestUserDAO.get(senderUsername);
-            User receiver = sendRequestUserDAO.get(receiverUsername);
             sendRequestUserDAO.sendFriendRequest(sender, receiver);
 
             SendRequestOutputData sendRequestOutputData = new SendRequestOutputData(receiver.getUsername(), false);
