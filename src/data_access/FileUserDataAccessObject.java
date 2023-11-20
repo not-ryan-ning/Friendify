@@ -94,22 +94,10 @@ public class FileUserDataAccessObject {
         return accounts.get(username);
     }
 
-    /**
-     * Checks for the sender's username in the receiver's list of friend requests, and returns
-     * whether the sender has previously requested the receiver.
-     * @param sender
-     * @param receiver
-     * @return true if previously requested (false otherwise)
-     */
     public boolean isRequested(User sender, User receiver) {
         return receiver.getRequests().contains(sender.getUsername());
     }
 
-    /**
-     * Sends a friend request by adding the sender's username into the receiver's list of friend requests.
-     * @param sender
-     * @param receiver
-     */
     public void sendFriendRequest(User sender, User receiver) {
         //if (receiver.getRequests().contains(sender.getUsername())) {
         //    throw new IllegalStateException("You have already sent a request to this user.");
