@@ -2,6 +2,7 @@ package use_case.choose_playlist;
 
 import entity.Playlist;
 import entity.PlaylistFactory;
+import entity.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +27,8 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
     }
 
     @Override
-    public void execute(ChoosePlaylistInputData choosePlaylistInputData) {
-        String username = choosePlaylistInputData.getUsername();
+    public void execute(User user, ChoosePlaylistInputData choosePlaylistInputData) {
+        String username = user.getUsername();
         String playlistId = choosePlaylistInputData.getPlaylistId();
         String accessToken = choosePlaylistInputData.getAccessToken();
 
