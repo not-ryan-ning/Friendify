@@ -1,7 +1,7 @@
 package interface_adapter.display_friends;
 
+import entity.User;
 import use_case.display_friends.DisplayFriendsInputBoundary;
-import use_case.display_friends.DisplayFriendsInputData;
 
 public class DisplayFriendsController {
 
@@ -10,9 +10,7 @@ public class DisplayFriendsController {
         this.displayFriendsInteractor = displayFriendsInteractor;
     }
 
-    public void execute(String username) {
-        DisplayFriendsInputData displayFriendsInputData = new DisplayFriendsInputData(username);
-
-        displayFriendsInteractor.execute(displayFriendsInputData);
+    public void execute(User user) {
+        displayFriendsInteractor.execute(user);
     }
 }

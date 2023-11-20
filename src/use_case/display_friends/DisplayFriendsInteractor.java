@@ -2,6 +2,8 @@ package use_case.display_friends;
 
 import entity.User;
 
+import java.util.ArrayList;
+
 public class DisplayFriendsInteractor implements DisplayFriendsInputBoundary {
     final DisplayFriendsUserDataAccessInterface userDataAccessObject;
     final DisplayFriendsOutputBoundary displayFriendsPresenter;
@@ -13,12 +15,10 @@ public class DisplayFriendsInteractor implements DisplayFriendsInputBoundary {
     }
 
     @Override
-    public void execute(DisplayFriendsInputData displayFriendsInputData) {
-        String username = displayFriendsInputData.getUsername();
+    public void execute(User user) {
+        ArrayList<String> friendNames = user.getFriendNames();
 
-        User user = userDataAccessObject.get(username);
-
-        DisplayFriendsOutputData displayFriendsOutputData = new DisplayFriendsOutputData(user.getFriendNames());
+        DisplayFriendsOutputData displayFriendsOutputData = new DisplayFriendsOutputData(friendNames);
         displayFriendsPresenter.prepareSuccessView(displayFriendsOutputData);
     }
 }
