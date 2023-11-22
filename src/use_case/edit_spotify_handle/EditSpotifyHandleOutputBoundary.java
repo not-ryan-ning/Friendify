@@ -1,5 +1,5 @@
 package use_case.edit_spotify_handle;
 
-public class EditSpotifyHandleOutputBoundary {
+public interface EditSpotifyHandleOutputBoundary {
     void prepareSuccessView(EditSpotifyHandleOutputData updatedSpotifyHandle);
 }
