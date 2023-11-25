@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.choose_playlist;
 
 import entity.User;
 import use_case.choose_playlist.ChoosePlaylistInputBoundary;
