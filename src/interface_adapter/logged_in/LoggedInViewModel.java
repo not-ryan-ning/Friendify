@@ -1,5 +1,6 @@
 package interface_adapter.logged_in;
 
+import entity.User;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -11,7 +12,7 @@ public class LoggedInViewModel extends ViewModel {
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
-    private String loggedInUser;
+    private User loggedInUser;
 
     public LoggedInViewModel() {
         super("logged in");
@@ -37,12 +38,11 @@ public class LoggedInViewModel extends ViewModel {
         return state;
     }
 
-
-    public String getLoggedInUser() {
+    public User getLoggedInUser() {
         return loggedInUser;
     }
 
-    public void setLoggedInUser(String loggedInUser) {
+    public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
 }
