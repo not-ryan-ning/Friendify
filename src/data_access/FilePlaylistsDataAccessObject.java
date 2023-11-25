@@ -85,6 +85,10 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
         this.save();
     }
 
+    public Playlist getPlaylist(String playlistId) {
+        return playlists.get(playlistId);
+    }
+
     private void save() {
         BufferedWriter writer;
         try {
