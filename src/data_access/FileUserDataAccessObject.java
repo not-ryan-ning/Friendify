@@ -15,9 +15,11 @@ public class FileUserDataAccessObject {
     private final Map<String, User> accounts = new HashMap<>();
 
     private UserFactory userFactory;
+    private MatchingStrategy matchingStrategy;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, MatchingStrategy matchingStrategy) throws IOException {
         this.userFactory = userFactory;
+        this.matchingStrategy = matchingStrategy;
         this.usersFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("password", 1);
@@ -78,7 +80,7 @@ public class FileUserDataAccessObject {
                 String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
                         user.getUsername(), user.getPassword(), user.getProfile().getBio(),
                         user.getProfile().getTopThreeArtists(), user.getProfile().getSpotifyHandle(),
-                        user.getPlaylist().getPlaylistId(), user.getFriendNames(), user.getRequests());
+                        user.getPlaylist().getPlaylistId(), user.getFriends(), user.getRequests());
                 writer.write(line);
                 writer.newLine();
             }
@@ -103,5 +105,20 @@ public class FileUserDataAccessObject {
         //    throw new IllegalStateException("You have already sent a request to this user.");
         // }
         receiver.getRequests().add(sender.getUsername());
+    }
+
+    ArrayList<String> getMatches(User currentUser) {
+        ArrayList<String> matches = new ArrayList<>();
+
+        for (User user : accounts.values()) {
+            if (!user.getFriends().contains(user.getUsername())) {
+                Playlist playlistToCheck = user.getPlaylist();
+                Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
+                if (similarityScore >= 0.5) {
+                    matches.add(user.getUsername());
+                }
+            }
+        }
+        return matches;
     }
 }
