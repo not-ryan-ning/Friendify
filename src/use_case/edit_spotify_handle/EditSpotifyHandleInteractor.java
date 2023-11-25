@@ -19,7 +19,7 @@ public class EditSpotifyHandleInteractor implements EditSpotifyHandleInputBounda
         //set the current user's profile's bio attribute to the new bio
         currentUser.getProfile().setSpotifyHandle(newSpotifyHandle);
         //save the new bio in the csv
-        editSpotifyHandleUserDAO.saveSpotifyHandle(currentUser, newSpotifyHandle);
+        editSpotifyHandleUserDAO.editFile(currentUser.getUsername(), "4", newSpotifyHandle);
 
         //output data
         EditSpotifyHandleOutputData editSpotifyHandleOutputData =
