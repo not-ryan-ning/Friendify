@@ -1,2 +1,86 @@
-package data_access;public class FilePlaylistsDataAccessObject {
+package data_access;
+
+import entity.Playlist;
+import entity.PlaylistFactory;
+import use_case.choose_playlist.ChoosePlaylistPlaylistDataAccessInterface;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistDataAccessInterface {
+    private final File playlistsFile;
+
+    // Contains the content in each column
+    private final Map<String, Integer> headers = new LinkedHashMap<>();
+
+    // Maps playlistId to the Playlist object
+    private final Map<String, Playlist> playlists = new HashMap<>();
+
+    private PlaylistFactory playlistFactory;
+
+    public FilePlaylistsDataAccessObject(String csvPath, PlaylistFactory playlistFactory) throws IOException {
+        this.playlistFactory = playlistFactory;
+        this.playlistsFile = new File(csvPath);
+        headers.put("playlistId", 0);
+        headers.put("titles", 1);
+        headers.put("artists", 2);
+        headers.put("genres", 3);
+        headers.put("acousticness", 4);
+        headers.put("energy", 5);
+        headers.put("instrumentalness", 6);
+        headers.put("valence", 7);
+        headers.put("topThreeArtists", 8);
+
+        if (this.playlistsFile.length() == 0) {
+            save();
+        } else {
+            try (BufferedReader reader = new BufferedReader(new FileReader(playlistsFile))) {
+
+                String row;
+                while ((row = reader.readLine()) != null) {
+                    String[] col = row.split("\\|");
+                    String playlistId = String.valueOf(col[headers.get("playlistId")]);
+                    String titles = String.valueOf(col[headers.get("titles")]);
+                    String artists = String.valueOf(col[headers.get("artists")]);
+                    String genres = String.valueOf(col[headers.get("genres")]);
+                    String acousticness = String.valueOf(col[headers.get("acousticness")]);
+                    String energy = String.valueOf(col[headers.get("energy")]);
+                    String instrumentalness = String.valueOf(col[headers.get("instrumentalness")]);
+                    String valence = String.valueOf(col[headers.get("valence")]);
+                    String topThreeArtists = String.valueOf(col[headers.get("topThreeArtists")]);
+
+                    // column format: playlistId, titles, artists, genres, acousticness, energy, instrumentalness, valence, topThreeArtists
+
+                    // Convert CSV string to Arraylist<String> for titles and topThreeArtists
+                    String[] titlesSplit = titles.split(",");
+                    ArrayList<String> titlesArrayList = new ArrayList<String>(Arrays.asList(titlesSplit));
+
+                    String[] topTreeArtistsSplit = topThreeArtists.split(",");
+                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<String>(Arrays.asList(topTreeArtistsSplit));
+
+                    // Convert CSV string to HashMap<String, Integer> for artists and genres
+                    HashMap<String, Integer> artistsMap = (HashMap<String, Integer>) Arrays.stream(artists.split("\n"))
+                            .map(entry -> entry.split(","))
+                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+
+                    HashMap<String, Integer> genresMap = (HashMap<String, Integer>) Arrays.stream(genres.split("\n"))
+                            .map(entry -> entry.split(","))
+                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+
+                    Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsMap, genresMap,
+                            Double.parseDouble(acousticness), Double.parseDouble(energy), Double.parseDouble(instrumentalness),
+                            Double.parseDouble(valence), topThreeArtistsArrayList);
+
+                    playlists.put(playlistId, playlist);
+                }
+            }
+        }
+    }
+    public void storePlaylist(Playlist playlist) {
+
+    }
 }
