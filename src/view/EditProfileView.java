@@ -9,6 +9,11 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import interface_adapter.EditProfileController;
+import interface_adapter.EditProfileViewModel;
+import interface_adapter.EditProfileState;
+
+
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Edit Profile";
     private final JTextField changeBioInputField = new JTextField(15);
