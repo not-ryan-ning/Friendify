@@ -280,10 +280,18 @@ public class SpotifyAPIDataAccessObject {
         artistsList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
 
         ArrayList<String> topThreeArtists = new ArrayList<>();
-        topThreeArtists.add(artistsList.get(0).getKey());
-        topThreeArtists.add(artistsList.get(1).getKey());
-        topThreeArtists.add(artistsList.get(2).getKey());
 
+        // Check if there are at least three elements in the sorted ArrayList
+        if (artistsList.size() >= 3) {
+            topThreeArtists.add(artistsList.get(0).getKey());
+            topThreeArtists.add(artistsList.get(1).getKey());
+            topThreeArtists.add(artistsList.get(2).getKey());
+        } else {
+            // Handle the case where there are fewer than three elements
+            for (Map.Entry<String, Integer> entry : artistsList) {
+                topThreeArtists.add(entry.getKey());
+            }
+        }
         return topThreeArtists;
     }
 }
