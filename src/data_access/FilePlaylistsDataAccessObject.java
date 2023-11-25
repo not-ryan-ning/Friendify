@@ -2,12 +2,10 @@ package data_access;
 
 import entity.Playlist;
 import entity.PlaylistFactory;
+import entity.User;
 import use_case.choose_playlist.ChoosePlaylistPlaylistDataAccessInterface;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,7 +78,33 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
             }
         }
     }
-    public void storePlaylist(Playlist playlist) {
 
+    @Override
+    public void storePlaylist(Playlist playlist) {
+        playlists.put(playlist.getPlaylistId(), playlist);
+        this.save();
+    }
+
+    private void save() {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(playlistsFile));
+            writer.write(String.join("\\|", headers.keySet()));
+            writer.newLine();
+
+            for (Playlist playlist : playlists.values()) {
+                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                        playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists(), playlist.getGenres(),
+                        playlist.getAcousticness(), playlist.getEnergy(),
+                        playlist.getInstrumentalness(), playlist.getValence(), playlist.getTopThreeArtists());
+                writer.write(line);
+                writer.newLine();
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
