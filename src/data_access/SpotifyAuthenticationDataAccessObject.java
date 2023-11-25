@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpServer;
 
 // added the json jar library in order to import this
 import org.json.JSONObject;
+import use_case.authorize.AuthorizeSpotifyAuthenticationDataAccessInterface;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,7 +19,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpotifyAuthenticationDataAccessObject {
+public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAuthenticationDataAccessInterface {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
     private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
     private static final String REDIRECT_URI = "http://localhost:8080/callback";
