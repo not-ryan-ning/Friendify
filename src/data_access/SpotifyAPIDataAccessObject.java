@@ -8,8 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class SpotifyAPIDataAccessObject {
     // Return all the playlists the user has that maps playlistId to playlistName
@@ -78,6 +77,9 @@ public class SpotifyAPIDataAccessObject {
         playlistInfo.add(energy);
         playlistInfo.add(instrumentalness);
         playlistInfo.add(valence);
+
+        ArrayList<String> topThreeArtists = getTopThreeArtists(artists);
+        playlistInfo.add(topThreeArtists);
 
         return playlistInfo;
     }
@@ -268,5 +270,20 @@ public class SpotifyAPIDataAccessObject {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private ArrayList<String> getTopThreeArtists(HashMap<String, Integer> artists) {
+        // Map.Entry is an interface that represents a key-value pair in a Map
+        ArrayList<Map.Entry<String, Integer>> artistsList = new ArrayList<>(artists.entrySet());
+
+        // Sort the ArrayList in descending order based on the value of the map
+        artistsList.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+
+        ArrayList<String> topThreeArtists = new ArrayList<>();
+        topThreeArtists.add(artistsList.get(0).getKey());
+        topThreeArtists.add(artistsList.get(1).getKey());
+        topThreeArtists.add(artistsList.get(2).getKey());
+
+        return topThreeArtists;
     }
 }
