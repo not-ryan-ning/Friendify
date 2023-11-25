@@ -8,11 +8,14 @@ import java.util.*;
 public class FileUserDataAccessObject {
     private final File usersFile;
 
-    // contains the content in each column
+    // Contains the content in each column
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    // mapping username to User
+    // Maps username to User
     private final Map<String, User> accounts = new HashMap<>();
+
+    // Maps username to Playlist
+    private final Map<String, Playlist> usernamePlaylist = new HashMap<>();
 
     private UserFactory userFactory;
     private MatchingStrategy matchingStrategy;
@@ -49,17 +52,23 @@ public class FileUserDataAccessObject {
                     String requests = String.valueOf(col[headers.get("requests")]);
 
                     // column format: username, password, bio, artists, spotifyHandle, playlistId, friends, requests
-                    String[] artistsSplit = artists.split(" ");
+                    String[] artistsSplit = artists.split(",");
                     ArrayList<String> topThreeArtists = new ArrayList<String>(Arrays.asList(artistsSplit));
 
-                    String[] friendsSplit = friends.split(" ");
+                    String[] friendsSplit = friends.split(",");
                     ArrayList<String> friendsArrayList = new ArrayList<String>(Arrays.asList(friendsSplit));
 
-                    String[] requestsSplit = requests.split(" ");
+                    String[] requestsSplit = requests.split(",");
                     ArrayList<String> requestsArrayList = new ArrayList<String>(Arrays.asList(requestsSplit));
 
                     Profile profile = new CommonProfile(bio, topThreeArtists, spotifyHandle);
-                    Playlist playlist = new CommonPlaylist(playlistId, topThreeArtists);
+                    Playlist playlist = new CommonPlaylist(); // need to put an empty constructor for CommonPlaylist
+
+                    if (playlistId != null) {
+                        // access the playlistDAO by using the playlistId to get playlist attributes
+                        playlist = new CommonPlaylist(playlistId, titles, artists, genres, acousticness,
+                                energy, instrumentalness, valence, topThreeArtists);
+                    }
 
                     User user = userFactory.create(username, password, profile, playlist, friendsArrayList, requestsArrayList);
                     accounts.put(username, user);
@@ -96,6 +105,10 @@ public class FileUserDataAccessObject {
         return accounts.get(username);
     }
 
+    public boolean existsByName(String identifier) {
+        return accounts.containsKey(identifier);
+    }
+
     public boolean isRequested(User sender, User receiver) {
         return receiver.getRequests().contains(sender.getUsername());
     }
@@ -120,5 +133,40 @@ public class FileUserDataAccessObject {
             }
         }
         return matches;
+    }
+
+    public void editPlaylist(String username, Playlist playlist) {
+        // Update the usernamePlaylist map to the new playlist
+        usernamePlaylist.put(username, playlist);
+        ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
+        String artists = ""; // need to convert the arrayList into a String
+        String playlistId = playlist.getPlaylistId();
+
+        // Update the users csv file
+        editFile(username,"artists", artists);
+        editFile(username,"playlistId", playlistId);
+    }
+
+    private void editFile(String username, String column, String newValue) {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userInfo = line.split(",");
+
+                if (userInfo[headers.get("username")].equals(username)) {
+                    // get the column we want to edit the info
+                    int columnIndex = headers.get(column);
+                    userInfo[columnIndex] = newValue;
+                }
+
+                writer.write(String.join(",", userInfo));
+                writer.newLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
