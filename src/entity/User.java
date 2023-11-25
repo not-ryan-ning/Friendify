@@ -6,6 +6,6 @@ public interface User {
     String getPassword();
     Profile getProfile();
     Playlist getPlaylist();
-    ArrayList<String> getFriendNames();
+    ArrayList<String> getFriends();
     ArrayList<String> getRequests();
 }
