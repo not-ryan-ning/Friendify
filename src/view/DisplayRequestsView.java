@@ -20,20 +20,24 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayRequestsController displayRequestsController;
     private final DisplayProfileController displayProfileController;
+    private final LoggedInViewModel loggedInViewModel;
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel, DisplayRequestsController displayRequestsController,
-                               DisplayProfileController displayProfileController) {
+                               DisplayProfileController displayProfileController, LoggedInViewModel loggedInViewModel) {
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayRequestsController = displayRequestsController;
         this.displayProfileController = displayProfileController;
+        this.loggedInViewModel = loggedInViewModel;
 
         JLabel title = new JLabel(DisplayRequestsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
+        LoggedInState currentState = loggedInViewModel.getState();
+        User user = currentState.getUser();
 
         // Assuming that there is a user object being passed around
-        ArrayList<String> requests = user.getRequests;
+        ArrayList<String> requests = user.getRequests();
         for (String request : requests) {
             JButton view = new JButton("view " + request + "'s profile");
             buttons.add(view);
@@ -42,7 +46,6 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(view)) {
-                                DisplayRequestsState currentState = displayRequestsViewModel.getState();
 
                                 displayProfileController.execute();
                             }

@@ -1,5 +1,6 @@
 package use_case.display_requests;
+import entity.User;
 
 public interface DisplayRequestsInputBoundary {
-    void execute(DisplayRequestsInputData displayRequestsInputData);
+    void execute(User user);
 }

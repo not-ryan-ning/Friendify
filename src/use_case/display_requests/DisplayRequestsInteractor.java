@@ -12,13 +12,9 @@ public class DisplayRequestsInteractor implements DisplayRequestsInputBoundary {
     }
 
     @Override
-    public void execute(DisplayRequestsInputData displayRequestsInputData) {
-        String username = displayRequestsInputData.getUsername();
-
-        User user = userDataAccessObject.get(username);
-
-        DisplayRequestsOutputData displayFriendsOutputData = new DisplayRequestsOutputData(user.getFriendNames());
-        displayRequestsPresenter.prepareSuccessView(displayFriendsOutputData);
+    public void execute(User user) {
+        DisplayRequestsOutputData displayRequestsOutputData = new DisplayRequestsOutputData(user.getRequests());
+        displayRequestsPresenter.prepareSuccessView(displayRequestsOutputData);
     }
 }
 
