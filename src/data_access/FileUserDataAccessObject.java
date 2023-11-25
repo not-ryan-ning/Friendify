@@ -61,14 +61,8 @@ public class FileUserDataAccessObject {
                     String[] requestsSplit = requests.split(",");
                     ArrayList<String> requestsArrayList = new ArrayList<String>(Arrays.asList(requestsSplit));
 
-                    Profile profile = new CommonProfile(bio, topThreeArtists, spotifyHandle);
-                    Playlist playlist = new CommonPlaylist(); // need to put an empty constructor for CommonPlaylist
-
-                    if (playlistId != null) {
-                        // access the playlistDAO by using the playlistId to get playlist attributes
-                        playlist = new CommonPlaylist(playlistId, titles, artists, genres, acousticness,
-                                energy, instrumentalness, valence, topThreeArtists);
-                    }
+                    Profile profile = ProfileFactory.create(bio, topThreeArtists, spotifyHandle);
+                    Playlist playlist = FilePlaylistsDataAccessObject.getPlaylist(playlistId);
 
                     User user = userFactory.create(username, password, profile, playlist, friendsArrayList, requestsArrayList);
                     accounts.put(username, user);
