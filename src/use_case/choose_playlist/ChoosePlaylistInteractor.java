@@ -30,10 +30,11 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
     public void execute(User user, ChoosePlaylistInputData choosePlaylistInputData) {
         String username = user.getUsername();
         String playlistId = choosePlaylistInputData.getPlaylistId();
+        String playlistName = choosePlaylistInputData.getPlaylistName();
         String accessToken = choosePlaylistInputData.getAccessToken();
 
         ArrayList<Object> playlistInfo = spotifyDataAccessObject.getPlaylistInfo(username, playlistId, accessToken);
-        HashMap<String, Integer> titles = (HashMap<String, Integer>) playlistInfo.get(0);
+        ArrayList<String> titles = (ArrayList<String>) playlistInfo.get(0);
         HashMap<String, Integer> artists = (HashMap<String, Integer>) playlistInfo.get(1);
         HashMap<String, Integer> genres = (HashMap<String, Integer>) playlistInfo.get(2);
         double acousticness = (double) playlistInfo.get(3);
@@ -47,7 +48,6 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
 
         userDataAccessObject.editPlaylist(username, playlist);
         playlistDataAccessObject.storePlaylist(playlist);
-        String playlistName = playlistDataAccessObject.getPlaylistName(playlistId);
 
         ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName);
         choosePlaylistPresenter.prepareSuccessView(choosePlaylistOutputData);
