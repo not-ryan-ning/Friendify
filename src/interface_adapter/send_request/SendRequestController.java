@@ -1,5 +1,6 @@
 package interface_adapter.send_request;
 
+import entity.User; // I don't think this is allowed
 import use_case.send_request.SendRequestInputBoundary;
 import use_case.send_request.SendRequestInputData;
 public class SendRequestController {
@@ -9,8 +10,8 @@ public class SendRequestController {
         this.sendRequestInteractor = sendRequestInteractor;
     }
 
-    public void execute(String senderUsername, String receiverUsername) {
-        SendRequestInputData sendRequestInputData = new SendRequestInputData(senderUsername, receiverUsername);
-        sendRequestInteractor.execute(sendRequestInputData);
+    public void execute(User sender, String receiverUsername) {
+        SendRequestInputData sendRequestInputData = new SendRequestInputData(receiverUsername);
+        sendRequestInteractor.execute(sender, sendRequestInputData);
     }
 }
