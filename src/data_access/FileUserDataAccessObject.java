@@ -120,6 +120,10 @@ public class FileUserDataAccessObject {
         receiver.getRequests().add(sender.getUsername());
     }
 
+    public void setMatchingStrategy(MatchingStrategy matchingStrategy) {
+        this.matchingStrategy = matchingStrategy;
+    }
+
     ArrayList<String> getMatches(User currentUser) {
         ArrayList<String> matches = new ArrayList<>();
 
