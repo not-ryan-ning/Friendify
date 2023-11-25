@@ -12,13 +12,14 @@ public class EditBioInteractor implements EditBioInputBoundary{
         this.editBioPresenter = editBioOutputBoundary;
     }
     @Override
-    public void execute(User currentUser, EditBioInputData editBioInputData) {
+    public void execute(String currentUsername, EditBioInputData editBioInputData) {
         //get the new bio from the input data
         String newBio = editBioInputData.getNewBio();
         //set the current user's profile's bio attribute to the new bio
+        User currentUser = editBioUserDAO.get(currentUsername);
         currentUser.getProfile().setBio(newBio);
         //save the new bio in the csv
-        editBioUserDAO.saveBio(currentUser, newBio);
+        editBioUserDAO.editFile(currentUsername, "2", newBio);
 
         //output data
         EditBioOutputData editBioOutputData = new EditBioOutputData(currentUser.getProfile().getBio());
