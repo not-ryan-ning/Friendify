@@ -12,8 +12,8 @@ public class EditProfilePresenter implements EditProfileOutputBoundary{
         this.viewManagerModel.setActiveView(editProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
 
-        // We now switch back to the Profile View after user is done editing their profile
-        viewManagerModel.setActiveView(profileViewModel.getViewName()); // assuming there is a "profile view"
+        // We now switches to the Logged In View after user is done editing their profile
+        viewManagerModel.setActiveView(loggedinViewModel.getViewName()); // assuming there is a "profile view"
         viewManagerModel.firePropertyChanged();
     }
 }
