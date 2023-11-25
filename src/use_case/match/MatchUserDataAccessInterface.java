@@ -1,11 +1,10 @@
-package use_case.matching;
+package use_case.match;
 
 import entity.User;
 
 import java.util.ArrayList;
 
-public interface MatchingUserDataAccessInterface {
-    User get(String currentUsername);
+public interface MatchUserDataAccessInterface {
 
     /**
      * Loops through users who are not the current user's friends, and compares their playlists with
