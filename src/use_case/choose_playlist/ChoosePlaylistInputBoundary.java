@@ -1,5 +1,7 @@
 package use_case.choose_playlist;
 
+import entity.User;
+
 public interface ChoosePlaylistInputBoundary {
-    void execute(ChoosePlaylistInputData choosePlaylistInputData);
+    void execute(User user, ChoosePlaylistInputData choosePlaylistInputData);
 }
