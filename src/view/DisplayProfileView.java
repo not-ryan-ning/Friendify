@@ -65,12 +65,11 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if
         DisplayProfileState state = (DisplayProfileState) evt.getNewValue();
         username.setText(state.getCommonProfile().getUsername());
         bio.setText(state.getCommonProfile().getBio());
         spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
-        // Need some way
-            state.getCommonProfile().getTopThreeArtists();
+        // Need some way to differentiate between displaying common vs friend
+
     }
 }
