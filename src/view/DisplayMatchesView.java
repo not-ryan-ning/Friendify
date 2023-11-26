@@ -36,19 +36,43 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
         HashMap<String, Double> matches = currentState.getMatches();
 
         for (String username : matches.keySet()) {
-            JButton request = new JButton(DisplayMatchesViewModel.REQUEST_BUTTON_LABEL);
-            buttons.add(request);
             JLabel matchUsername = new JLabel(username);
             JLabel similarityScore = new JLabel(matches.get(username).toString());
+
+            this.add(matchUsername);
+            this.add(similarityScore);
+
+            JButton request = new JButton(DisplayMatchesViewModel.REQUEST_BUTTON_LABEL);
+            buttons.add(request);
+
+            request.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(request)) {
+                                DisplayMatchesState currentState = displayMatchesViewModel.getState();
+
+                                sendRequestController.execute(currentState.getReceiverUsername());
+                            }
+                        }
+                    }
+            );
         }
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+        this.add(buttons);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        JOptionPane.showConfirmDialog(this, "Friend Request Sent");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        DisplayMatchesState state = (DisplayMatchesState) evt.getNewValue();
+        if (state.getRequestError() != null) {
+            JOptionPane.showMessageDialog(this, state.getRequestError());
+        }
     }
 }
