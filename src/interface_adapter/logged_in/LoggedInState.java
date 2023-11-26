@@ -1,4 +1,4 @@
-package interface_adapters.logged_in;
+package interface_adapter.logged_in;
 
 import entity.User;
 

@@ -1,7 +1,7 @@
-package interface_adapters.logged_in;
+package interface_adapter.logged_in;
 
 import entity.User;
-import interface_adapters.ViewModel;
+import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
