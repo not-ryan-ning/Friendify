@@ -1,21 +1,11 @@
-package interface_adapter;
+package interface_adapter.edit_profile;
 
 public class EditProfileState {
     public EditProfileState(EditProfileState copy) {
-        
-    }
-
-    public ClearState() {
 
     }
 
-    public void setUsernames(String usernames) {
-        this.usernames = usernames;
+    public EditProfileState() {
+
     }
-
-    public String getUsernames() {
-        return usernames;
-    }
-
-
 }

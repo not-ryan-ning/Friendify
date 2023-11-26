@@ -1,5 +1,6 @@
-package interface_adapter;
+package interface_adapter.edit_profile;
 
+import interface_adapter.ViewManagerModel;
 import use_case.edit_profile.EditProfileOutputBoundary;
 
 public class EditProfilePresenter implements EditProfileOutputBoundary{
@@ -14,10 +15,9 @@ public class EditProfilePresenter implements EditProfileOutputBoundary{
 
     @Override
     public void prepareSuccessView() {
-        ClearState clearState = clearViewModel.getState();
-        clearState.setUsernames(usernames.getUsernames());
-        this.clearViewModel.setState(clearState);
-        this.clearViewModel.firePropertyChanged();
+        EditProfileState editProfileState = editProfileViewModel.getState();
+        this.editProfileViewModel.setState(editProfileState);
+        this.editProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(editProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
