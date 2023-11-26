@@ -9,6 +9,8 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
 
 
     private ViewManagerModel viewManagerModel;
+    private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
+    private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
 
     public DisplayProfilePresenter(DisplayProfileViewModel displayProfileViewModel, ViewManagerModel viewManagerModel) {
         this.displayProfileViewModel = displayProfileViewModel;
@@ -17,16 +19,25 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
 
 
     @Override
-    public void prepareSuccessView(DisplayProfileOutputData response) {
+    public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
         DisplayProfileState displayProfileState = displayProfileViewModel.getState();
         displayProfileState.setFriendProfile(response.getFriendProfile()); // firend profile will be like loggedin form ca
         this.displayProfileViewModel.setState(displayProfileState);
         this.displayProfileViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setActiveView();
+        this.viewManagerModel.setActiveView(displayFriendProfileViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
+    @Override
     public void prepareSuccessViewCommon(DisplayProfileOutputData user) {
         // switch to the common view profile of the user
+        DisplayProfileState displayProfileState = displayProfileViewModel.getState();
+        displayProfileState.setCommonProfile(response.getCommonProfile()); // firend profile will be like loggedin form ca
+        this.displayProfileViewModel.setState(displayProfileState);
+        this.displayProfileViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(displayCommonProfileViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 }

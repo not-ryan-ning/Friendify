@@ -70,5 +70,7 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
         username.setText(state.getCommonProfile().getUsername());
         bio.setText(state.getCommonProfile().getBio());
         spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
+
+            state.getCommonProfile().getTopThreeArtists();
     }
 }
