@@ -1,9 +1,9 @@
-package interface_adapters.match;
+package interface_adapter.match;
 
-import interface_adapters.ViewManagerModel;
-import interface_adapters.display_matches.DisplayMatchesState;
-import interface_adapters.display_matches.DisplayMatchesViewModel;
-import interface_adapters.logged_in.LoggedInViewModel;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.display_matches.DisplayMatchesState;
+import interface_adapter.display_matches.DisplayMatchesViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.match.MatchOutputBoundary;
 import use_case.match.MatchOutputData;
 
