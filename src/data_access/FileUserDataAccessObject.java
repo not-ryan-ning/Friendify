@@ -118,15 +118,15 @@ public class FileUserDataAccessObject {
         this.matchingStrategy = matchingStrategy;
     }
 
-    ArrayList<String> getMatches(User currentUser) {
-        ArrayList<String> matches = new ArrayList<>();
+    HashMap<String, Double> getMatches(User currentUser) {
+        HashMap<String, Double> matches = new HashMap<>();
 
         for (User user : accounts.values()) {
-            if (!user.getFriends().contains(user.getUsername())) {
+            if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
                 if (similarityScore >= 0.5) {
-                    matches.add(user.getUsername());
+                    matches.put(user.getUsername(), similarityScore);
                 }
             }
         }
