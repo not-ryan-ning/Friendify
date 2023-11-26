@@ -3,7 +3,6 @@ package data_access;
 // added the json jar library in order to import this
 import org.json.JSONObject;
 import org.json.JSONArray;
-import use_case.editProfile.EditProfileSpotifyAPIDataAccessInterface;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 
-public class SpotifyAPIDataAccessObject implements EditProfileSpotifyAPIDataAccessInterface {
+public class SpotifyAPIDataAccessObject {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
     private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
     private static final String REDIRECT_URI = "https://github.com/not-ryan-ning/Friendify";
