@@ -6,6 +6,8 @@ import use_case.display_profile.DisplayProfileOutputData;
 
 public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     private final DisplayProfileViewModel displayProfileViewModel;
+
+
     private ViewManagerModel viewManagerModel;
 
     public DisplayProfilePresenter(DisplayProfileViewModel displayProfileViewModel, ViewManagerModel viewManagerModel) {
@@ -15,9 +17,14 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
 
 
     @Override
-    public void prepareSuccessViewFriends(DisplayProfileOutputData user) {
+    public void prepareSuccessView(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
+        DisplayProfileState displayProfileState = displayProfileViewModel.getState();
+        displayProfileState.setFriendProfile(response.getFriendProfile()); // firend profile will be like loggedin form ca
+        this.displayProfileViewModel.setState(displayProfileState);
+        this.displayProfileViewModel.firePropertyChanged();
 
+        this.viewManagerModel.setActiveView();
     }
     public void prepareSuccessViewCommon(DisplayProfileOutputData user) {
         // switch to the common view profile of the user
