@@ -1,2 +1,5 @@
-package use_case.edit_profile;public interface EditProfileInputBoundary {
+package use_case.edit_profile;
+
+public interface EditProfileInputBoundary {
+    void execute();
 }
