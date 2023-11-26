@@ -33,14 +33,20 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
-        LoggedInState currentState = loggedInViewModel.getState();
-        User user = currentState.getUser();
 
-        // Assuming that there is a user object being passed around
-        ArrayList<String> requests = user.getRequests();
+
+        // Adding view profile and accept request buttons for every request
+        DisplayRequestsState currentState = displayRequestsViewModel.getState();
+        ArrayList<String> requests = currentState.getRequests();
         for (String request : requests) {
-            JButton view = new JButton("view " + request + "'s profile");
+            JLabel requestUsername = new JLabel(request);
+            this.add(requestUsername);
+
+            JButton view = new JButton(DisplayRequestsViewModel.VIEW_BUTTON_LABEL);
             buttons.add(view);
+
+            JButton accept = new JButton(DisplayRequestsViewModel.ACCEPT_BUTTON_LABEL);
+            buttons.add(accept);
 
             view.addActionListener(
                     new ActionListener() {
@@ -48,6 +54,17 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                             if (evt.getSource().equals(view)) {
 
                                 displayProfileController.execute();
+                            }
+                        }
+                    }
+            );
+
+            accept.addActionListener(
+                    new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(accept)) {
+
+                                acceptRequestController.execute(); // Ryan's use case
                             }
                         }
                     }

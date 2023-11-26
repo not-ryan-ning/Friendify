@@ -2,7 +2,7 @@ package interface_adapter.display_requests;
 import java.util.ArrayList;
 
 public class DisplayRequestsState {
-    private ArrayList<String> requests; // how should we store most recent list of requests?
+    private ArrayList<String> requests;
     public DisplayRequestsState(DisplayRequestsState copy) {
         this.requests = requests;
     }
