@@ -3,6 +3,7 @@ package use_case.match;
 import entity.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface MatchUserDataAccessInterface {
 
@@ -17,7 +18,7 @@ public interface MatchUserDataAccessInterface {
      * @param currentUser
      * @return an array list of the usernames of the top 10 matches
      */
-    ArrayList<String> match(User currentUser);
+    HashMap<String, Double> match(User currentUser);
     // Loop through all the non-friend users' playlists, and runs the matching strategy or strategies.
     // Return an array list of matches
     // Still need to think of the threshold for scores
