@@ -1,5 +1,8 @@
 package interface_adapter.display_profile;
 
+import interface_adapter.ViewModel;
+import interface_adapter.display_profile.DisplayProfileState;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

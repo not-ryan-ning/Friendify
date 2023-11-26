@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -66,11 +65,12 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if
         DisplayProfileState state = (DisplayProfileState) evt.getNewValue();
         username.setText(state.getCommonProfile().getUsername());
         bio.setText(state.getCommonProfile().getBio());
         spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
-
+        // Need some way
             state.getCommonProfile().getTopThreeArtists();
     }
 }

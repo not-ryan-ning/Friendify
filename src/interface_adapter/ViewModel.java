@@ -1,4 +1,4 @@
-package interface_adapter.display_profile;
+package interface_adapter;
 
 import java.beans.PropertyChangeListener;
 

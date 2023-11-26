@@ -1,6 +1,6 @@
 package interface_adapter.display_profile;
 
-import use_case.display_profile.DisplayProfileInputData;
+import interface_adapter.ViewManagerModel;
 import use_case.display_profile.DisplayProfileOutputBoundary;
 import use_case.display_profile.DisplayProfileOutputData;
 
