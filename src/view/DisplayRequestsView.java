@@ -52,7 +52,6 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(view)) {
-
                                 displayProfileController.execute();
                             }
                         }
@@ -78,11 +77,12 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        JOptionPane.showConfirmDialog(this, "You have accepted this request.");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        //does not display anything for either state...
 
     }
 }
