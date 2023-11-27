@@ -18,7 +18,7 @@ public class EditBioInteractor implements EditBioInputBoundary{
         //set the current user's profile's bio attribute to the new bio
         currentUser.getProfile().setBio(newBio);
         //save the new bio in the csv
-        editBioUserDAO.saveBio(currentUser, newBio);
+        editBioUserDAO.editFile(currentUser.getUsername(), "2", newBio);
 
         //output data
         EditBioOutputData editBioOutputData = new EditBioOutputData(currentUser.getProfile().getBio());
