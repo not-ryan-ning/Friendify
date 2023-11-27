@@ -1,6 +1,7 @@
 package interface_adapter.logged_in;
 
 import interface_adapter.ViewModel;
+import interface_adapter.login.LoginState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -35,14 +36,5 @@ public class LoggedInViewModel extends ViewModel {
 
     public LoggedInState getState() {
         return state;
-    }
-
-
-    public String getLoggedInUser() {
-        return loggedInUser;
-    }
-
-    public void setLoggedInUser(String loggedInUser) {
-        this.loggedInUser = loggedInUser;
     }
 }
