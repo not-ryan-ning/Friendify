@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class DisplayPlaylistsViewModel extends ViewModel {
 
-    public static final String PLAYLIST_LABEL = "Display Playlists";
+    public static final String DISPLAY_PLAYLISTS_LABEL = "Display Playlists";
 
     private DisplayPlaylistsState state = new DisplayPlaylistsState();
 

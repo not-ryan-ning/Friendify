@@ -14,9 +14,19 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import interface_adapter.authorize.AuthorizeController;
+import interface_adapter.choose_playlist.ChoosePlaylistController;
+import interface_adapter.choose_playlist.ChoosePlaylistState;
+import interface_adapter.choose_playlist.ChoosePlaylistViewModel;
+import interface_adapter.display_playlists.DisplayPlaylistsController;
+import interface_adapter.display_playlists.DisplayPlaylistsState;
+import interface_adapter.display_playlists.DisplayPlaylistsViewModel;
+import interface_adapter.edit_bio.EditBioController;
+import interface_adapter.edit_bio.EditBioViewModel;
 import interface_adapter.edit_profile.EditProfileController;
 import interface_adapter.edit_profile.EditProfileState;
 import interface_adapter.edit_profile.EditProfileViewModel;
+import interface_adapter.edit_spotify_handle.EditSpotifyHandleController;
 
 
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -39,6 +49,12 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
 
+    private final JButton saveBio;
+    private final JButton displayPlaylists;
+    private final JButton savePlaylist;
+    private final JButton saveSpotifyHandle;
+    private final JButton goBack;
+
     public EditProfileView(EditProfileController editProfileController, EditProfileViewModel editProfileViewModel,
                            EditBioController editBioController, EditBioViewModel editBioViewModel,
                            AuthorizeController authorizeController, AuthorizeViewModel authorizeViewModel,
@@ -46,20 +62,28 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                            ChoosePlaylistController choosePlaylistController, ChoosePlaylistViewModel choosePlaylistViewModel,
                            EditSpotifyHandleController editSpotifyHandleController, EditSpotifyHandleViewModel editSpotifyHandleViewModel,
                            GoBackController goBackController, GoBackViewModel goBackViewModel) {
+        // EditProfile
         this.editProfileController = editProfileController;
         this.editProfileViewModel = editProfileViewModel;
+        // EditBio
         this.editBioController = editBioController;
         this.editBioViewModel = editBioViewModel;
+        // Authorize
         this.authorizeController = authorizeController;
         this.authorizeViewModel = authorizeViewModel;
+        // DisplayPlaylists
         this.displayPlaylistsController = displayPlaylistsController;
         this.displayPlaylistsViewModel = displayPlaylistsViewModel;
+        // ChoosePlaylist
         this.choosePlaylistController = choosePlaylistController;
         this.choosePlaylistViewModel = choosePlaylistViewModel;
+        // EditSpotifyHandle
         this.editSpotifyHandleController = editSpotifyHandleController;
         this.editSpotifyHandleViewModel = editSpotifyHandleViewModel;
+        // GoBack
         this.goBackController = goBackController;
         this.goBackViewModel = goBackViewModel;
+
         editProfileViewModel.addPropertyChangeListener(this);
         editBioViewModel.addPropertyChangeListener(this);
         authorizeViewModel.addPropertyChangeListener(this);
@@ -72,28 +96,30 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel bioInfo = new LabelTextPanel(
-                new JLabel(EditProfileViewModel.BIO_LABEL), changeBioInputField);
+                new JLabel(EditBioViewModel.BIO_LABEL), changeBioInputField);
         LabelTextPanel playlistInfo = new LabelTextPanel(
-                new JLabel(EditProfileViewModel.PLAYLIST_LABEL), changePlaylistInputField );
+                new JLabel(DisplayPlaylistsViewModel.PLAYLIST_LABEL), changePlaylistInputField );
         LabelTextPanel spotifyInfo = new LabelTextPanel(
-                new JLabel(EditProfileViewModel.SPOTIY_HANDLE_LABEL), changeSpotifyInputField);
+                new JLabel(EditSpotifyHandleViewModel.SPOTIY_HANDLE_LABEL), changeSpotifyInputField);
 
+        // Creating all the buttons
         JPanel buttons = new JPanel();
 
-        saveBio = new JButton(EditProfileViewModel.SAVE_BIO_LABEL);
+        saveBio = new JButton(EditBioViewModel.SAVE_BIO_LABEL);
         buttons.add(saveBio);
 
-        displayPlaylists = new JButton(EditProfileViewModel.DISPLAY_PLAYLISTS_LABEL);
+        displayPlaylists = new JButton(DisplayPlaylistsViewModel.DISPLAY_PLAYLISTS_LABEL);
         buttons.add(displayPlaylists);
 
-        savePlaylist = new JButton(EditProfileViewModel.SAVE_PLAYLIST_LABEL);
+        savePlaylist = new JButton(ChoosePlaylistViewModel.SAVE_PLAYLIST_LABEL);
         buttons.add(savePlaylist);
 
-        saveSpotifyHandle = new JButton(EditProfileViewModel.SAVE_SPOTIFY_HANDLE_LABEL);
-        buttons.add(saveSpotify);
+        saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_LABEL);
+        buttons.add(saveSpotifyHandle);
 
-        goBack = new JButton(EditProfileViewModel.GO_BACK_LABEL);
+        goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
         buttons.add(goBack);
+
 
         saveBio.addActionListener(
                 new ActionListener() {
