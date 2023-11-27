@@ -1,20 +1,19 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class CommonProfile implements Profile {
-    final String bio;
-    final ArrayList<String> topThreeArtists;
-    final String spotifyHandle;
+public class CommonProfile implements Profile{
+    private final String bio;
+    private final ArrayList<String> topThreeArtists;
+    private final String spotifyHandle;
 
-    CommonProfile(String bio,
-                  ArrayList<String> topThreeArtists,
-                  String spotifyHandle) {
+    public CommonProfile(String bio, ArrayList<String> topThreeArtists, String spotifyHandle) {
         this.bio = bio;
         this.topThreeArtists = topThreeArtists;
         this.spotifyHandle = spotifyHandle;
-
     }
+
     @Override
     public String getBio() {
         return bio;

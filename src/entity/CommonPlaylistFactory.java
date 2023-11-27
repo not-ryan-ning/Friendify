@@ -2,9 +2,15 @@ package entity;
 
 import java.util.ArrayList;
 
-public class CommonPlaylistFactory implements PlaylistFactory{
+import java.util.HashMap;
+
+public class CommonPlaylistFactory implements PlaylistFactory {
     @Override
-    public CommonPlaylist create(String playlistID, ArrayList<String> topThreeArtists) {
-        return new CommonPlaylist(playlistID, topThreeArtists);
+    public CommonPlaylist create(String playlistId, ArrayList<String> titles, HashMap<String, Integer> artists,
+                                 HashMap<String, Integer> genres, double acousticness, double energy,
+                                 double instrumentalness, double valence, ArrayList<String> topThreeArtists) {
+        return new CommonPlaylist(playlistId, titles, artists, genres, acousticness, energy, instrumentalness,
+                valence, topThreeArtists);
+
     }
 }
