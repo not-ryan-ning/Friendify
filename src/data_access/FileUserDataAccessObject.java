@@ -18,10 +18,13 @@ public class FileUserDataAccessObject {
     private final Map<String, Playlist> usernamePlaylist = new HashMap<>();
 
     private UserFactory userFactory;
+    private ProfileFactory profileFactory;
+    private FilePlaylistsDataAccessObject playlistsDataAccessObject;
     private MatchingStrategy matchingStrategy;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, MatchingStrategy matchingStrategy) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, ProfileFactory profileFactory, MatchingStrategy matchingStrategy) throws IOException {
         this.userFactory = userFactory;
+        this.profileFactory = profileFactory;
         this.matchingStrategy = matchingStrategy;
         this.usersFile = new File(csvPath);
         headers.put("username", 0);
@@ -61,8 +64,8 @@ public class FileUserDataAccessObject {
                     String[] requestsSplit = requests.split(",");
                     ArrayList<String> requestsArrayList = new ArrayList<String>(Arrays.asList(requestsSplit));
 
-                    Profile profile = ProfileFactory.create(bio, topThreeArtists, spotifyHandle);
-                    Playlist playlist = FilePlaylistsDataAccessObject.getPlaylist(playlistId);
+                    Profile profile = profileFactory.create(bio, topThreeArtists, spotifyHandle);
+                    Playlist playlist = playlistsDataAccessObject.getPlaylist(playlistId);
 
                     User user = userFactory.create(username, password, profile, playlist, friendsArrayList, requestsArrayList);
                     accounts.put(username, user);
