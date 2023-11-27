@@ -1,19 +1,18 @@
 package view;
 
-import interface_adapter.display_profile.DisplayProfileState;
-import interface_adapter.display_profile.DisplayProfileViewModel;
+import interface_adapter.display_common_profile.DisplayFriendProfileViewModel;
+import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class DisplayProfileView extends JPanel implements ActionListener, PropertyChangeListener {
-
+public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
-    private final DisplayProfileViewModel displayProfileViewModel;
+    private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
 
     final JButton back;
 
@@ -21,13 +20,9 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
     JLabel spotifyHandle;
     JLabel bio;
     JLabel topThreeArtists;
-
-    /**
-     * A window with a title and JButton
-     */
-    public DisplayProfileView(DisplayProfileViewModel displayProfileViewModel) {
-        this.displayProfileViewModel = displayProfileViewModel;
-        this.displayProfileViewModel.addPropertyChangeListener(this);
+    public DisplayFriendProfileView(DisplayFriendProfileViewModel displayFriendProfileViewModel) {
+        this.displayFriendProfileViewModel = displayFriendProfileViewModel;
+        this.displayFriendProfileViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("User's Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -42,14 +37,23 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
         spotifyHandle = new JLabel();
 
         JLabel topThreeArtists = new JLabel("Top 3 Artists: ");
-        // initializing this label, so if not a friend, we don't need to update this label
-        topThreeArtists = new JLabel("You need to be friends to see this...");
+        topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
         back = new JButton("back");
         buttons.add(back);
 
         back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            ...
+                        }
+                    }
+                }
+        );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -63,18 +67,19 @@ public class DisplayProfileView extends JPanel implements ActionListener, Proper
         this.add(buttons);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        // for back button
         System.out.println("Click " + e.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayProfileState state = (DisplayProfileState) evt.getNewValue();
-        username.setText(state.getCommonProfile().getUsername());
-        bio.setText(state.getCommonProfile().getBio());
-        spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
-        // Need some way to differentiate between displaying common vs friend
-
+        DisplayFriendProfileState state = (DisplayFriendProfileState) evt.getNewValue();
+        username.setText(state.getUsername().getUsername());
+        bio.setText(state.getBio());
+        spotifyHandle.setText(state.getSpotifyHandle());
+        topThreeArtists.setText(state.getTopThreeArtists());
     }
 }
