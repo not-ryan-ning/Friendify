@@ -1,4 +1,4 @@
-package interface_adapter.display_common_profile;
+package interface_adapter.display_friend_profile;
 
 import interface_adapter.ViewModel;
 
