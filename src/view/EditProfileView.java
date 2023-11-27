@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import interface_adapter.authorize.AuthorizeController;
+import interface_adapter.authorize.AuthorizeState;
+import interface_adapter.authorize.AuthorizeViewModel;
 import interface_adapter.choose_playlist.ChoosePlaylistController;
 import interface_adapter.choose_playlist.ChoosePlaylistState;
 import interface_adapter.choose_playlist.ChoosePlaylistViewModel;
@@ -22,6 +24,7 @@ import interface_adapter.display_playlists.DisplayPlaylistsController;
 import interface_adapter.display_playlists.DisplayPlaylistsState;
 import interface_adapter.display_playlists.DisplayPlaylistsViewModel;
 import interface_adapter.edit_bio.EditBioController;
+import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.edit_bio.EditBioViewModel;
 import interface_adapter.edit_profile.EditProfileController;
 import interface_adapter.edit_profile.EditProfileState;
@@ -98,23 +101,23 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         LabelTextPanel bioInfo = new LabelTextPanel(
                 new JLabel(EditBioViewModel.BIO_LABEL), changeBioInputField);
         LabelTextPanel playlistInfo = new LabelTextPanel(
-                new JLabel(DisplayPlaylistsViewModel.PLAYLIST_LABEL), changePlaylistInputField );
+                new JLabel(DisplayPlaylistsViewModel.DISPLAY_PLAYLISTS_LABEL), changePlaylistInputField );
         LabelTextPanel spotifyInfo = new LabelTextPanel(
                 new JLabel(EditSpotifyHandleViewModel.SPOTIY_HANDLE_LABEL), changeSpotifyInputField);
 
         // Creating all the buttons
         JPanel buttons = new JPanel();
 
-        saveBio = new JButton(EditBioViewModel.SAVE_BIO_LABEL);
+        saveBio = new JButton(EditBioViewModel.SAVE_BIO_BUTTON_LABEL);
         buttons.add(saveBio);
 
-        displayPlaylists = new JButton(DisplayPlaylistsViewModel.DISPLAY_PLAYLISTS_LABEL);
+        displayPlaylists = new JButton(DisplayPlaylistsViewModel.DISPLAY_PLAYLISTS_BUTTON_LABEL);
         buttons.add(displayPlaylists);
 
-        savePlaylist = new JButton(ChoosePlaylistViewModel.SAVE_PLAYLIST_LABEL);
+        savePlaylist = new JButton(ChoosePlaylistViewModel.SAVE_PLAYLIST_BUTTON_LABEL);
         buttons.add(savePlaylist);
 
-        saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_LABEL);
+        saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
         buttons.add(saveSpotifyHandle);
 
         goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
@@ -125,9 +128,13 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(saveBio)) {
+                            String username = editProfileViewModel.getState().getUsername();
                             EditBioState currentState = editBioViewModel.getState();
 
-                            editBioController.execute(currentState.getBio());
+                            editBioController.execute(
+                                    username,
+                                    currentState.getBio()
+                            );
                         }
                     }
                 }
@@ -153,10 +160,15 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(savePlaylist)) {
+                            String username = editProfileViewModel.getState().getUsername();
                             ChoosePlaylistState currentState = choosePlaylistViewModel.getState();
 
-                            choosePlaylistController.execute(currentState.getPlaylistId(), currentState.getPlaylistName,
-                                    currentState.getAccessToken());
+                            choosePlaylistController.execute(
+                                    username,
+                                    currentState.getPlaylistId(),
+                                    currentState.getPlaylistName(),
+                                    currentState.getAccessToken()
+                            );
                         }
                     }
                 }
@@ -166,9 +178,13 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(saveSpotify)) {
+                            String username = editProfileViewModel.getState().getUsername();
                             EditSpotifyHandleState currentState = editSpotifyHandleViewModel.getState();
 
-                            editSpotifyHandleController.execute(currentState.getSpotifyHandle());
+                            editSpotifyHandleController.execute(
+                                    username,
+                                    currentState.getSpotifyHandle()
+                            );
                         }
                     }
                 }
@@ -243,18 +259,19 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             AuthorizeState authorizeState = (AuthorizeState) evt.getNewValue();
             DisplayPlaylistsState displayPlaylistsState = new DisplayPlaylistsState();
             displayPlaylistsState.setAccessToken(authorizeState.getAccessToken());
+            displayPlaylistsViewModel.setState(displayPlaylistsState);
 
         } else if (evt.getPropertyName().equals("displayPlaylistsState")) {
             DisplayPlaylistsState displayPlaylistsState = (DisplayPlaylistsState) evt.getNewValue();
-            List playlistNames = new ArrayList<String>(displayPlaylistsState.getPlaylistIdNames().values());
+            List<String> playlistNames = new ArrayList<>(displayPlaylistsState.getPlaylistIdName().values());
 
             // Create a JList with a single selection model
             JList<String> playlistSelectList = new JList<String>((ListModel<String>) playlistNames);
             playlistSelectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-            // Get the selected playlist name and its id
+            // Get the selected playlist name and its id, and username
             String playlistName = playlistSelectList.getSelectedValue();
-            String playlistId = getKeyByValue(displayPlaylistsState.getPlaylistIdNames(), playlistName);
+            String playlistId = getKeyByValue(displayPlaylistsState.getPlaylistIdName(), playlistName);
 
             // Update the choosePlaylistViewModel
             ChoosePlaylistState choosePlaylistState = new ChoosePlaylistState();
@@ -267,7 +284,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             ChoosePlaylistState choosePlaylistState = (ChoosePlaylistState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, choosePlaylistState.getPlaylistName());
 
-        } else if (evt.getPropertyName().equals("editSpotifyHandle")) {
+        } else if (evt.getPropertyName().equals("editSpotifyHandleState")) {
             EditSpotifyHandleState editSpotifyHandleState = (EditSpotifyHandleState) evt.getNewValue();
             changeSpotifyInputField.setText(editSpotifyHandleState.getSpotifyHandle());
         }
