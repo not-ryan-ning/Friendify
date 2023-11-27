@@ -9,7 +9,7 @@ public class SendRequestOutputData {
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String requestSent() {
-        return "Friend Request Sent to" + receiverUsername;
+    public String getReceiverUsername() {
+        return receiverUsername;
     }
 }
