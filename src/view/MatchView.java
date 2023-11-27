@@ -1,8 +1,9 @@
 package view;
 
-import interface_adapter.display_matches.DisplayMatchesState;
-import interface_adapter.display_matches.DisplayMatchesViewModel;
-import interface_adapter.match.MatchController;
+import interface_adapter.match.MatchState;
+import interface_adapter.match.MatchViewModel;
+import interface_adapter.send_request.SendRequestController;
+import interface_adapter.send_request.SendRequestState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,26 +13,26 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-public class DisplayMatchesView extends JPanel implements ActionListener, PropertyChangeListener {
+public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
-    private final DisplayMatchesViewModel displayMatchesViewModel;
-    private final MatchController matchController;
+    private final MatchViewModel matchViewModel;
+    private final SendRequestController sendRequestController;
 
-    public DisplayMatchesView(DisplayMatchesViewModel displayMatchesViewModel,
-                              MatchController matchController) {
+    public MatchView(MatchViewModel matchViewModel,
+                     SendRequestController sendRequestController) {
 
-        this.displayMatchesViewModel = displayMatchesViewModel;
-        this.matchController = matchController;
+        this.matchViewModel = matchViewModel;
+        this.sendRequestController = sendRequestController;
 
-        displayMatchesViewModel.addPropertyChangeListener(this);
+        matchViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(DisplayMatchesViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
 
         // Adding request buttons for all the matches from the current state
-        DisplayMatchesState currentState = displayMatchesViewModel.getState();
+        MatchState currentState = matchViewModel.getState();
         HashMap<String, Double> matches = currentState.getMatches();
 
         for (String username : matches.keySet()) {
@@ -41,16 +42,17 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
             this.add(matchUsername);
             this.add(similarityScore);
 
-            JButton request = new JButton(DisplayMatchesViewModel.REQUEST_BUTTON_LABEL);
+            JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
             buttons.add(request);
 
             request.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {
-                                DisplayMatchesState currentState = displayMatchesViewModel.getState();
-
-                                sendRequestController.execute(currentState.getReceiverUsername());
+                                SendRequestState currentState = sendRequestViewModel.getState();
+                                String senderUsername = currentState.getUsername();
+                                String receiverUsername = currentState.getRecieverUsername();
+                                sendRequestController.execute(senderUsername, receiverUsername);
                             }
                         }
                     }
@@ -63,13 +65,13 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showConfirmDialog(this, "Friend Request Sent");
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayMatchesState state = (DisplayMatchesState) evt.getNewValue();
+        sendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         }
