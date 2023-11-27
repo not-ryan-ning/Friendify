@@ -13,13 +13,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-public class DisplayMatchesView extends JPanel implements ActionListener, PropertyChangeListener {
+public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
     private final SendRequestController sendRequestController;
 
-    public DisplayMatchesView(MatchViewModel matchViewModel,
-                              SendRequestController sendRequestController) {
+    public MatchView(MatchViewModel matchViewModel,
+                     SendRequestController sendRequestController) {
 
         this.matchViewModel = matchViewModel;
         this.sendRequestController = sendRequestController;
@@ -50,8 +50,9 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {
                                 SendRequestState currentState = sendRequestViewModel.getState();
-
-                                sendRequestController.execute(currentState.getReceiverUsername());
+                                String senderUsername = currentState.getUsername();
+                                String receiverUsername = currentState.getRecieverUsername();
+                                sendRequestController.execute(senderUsername, receiverUsername);
                             }
                         }
                     }
@@ -64,13 +65,13 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showConfirmDialog(this, "Friend Request Sent");
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayMatchesState state = (DisplayMatchesState) evt.getNewValue();
+        sendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         }
