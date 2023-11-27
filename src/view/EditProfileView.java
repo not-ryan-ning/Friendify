@@ -41,10 +41,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     private final EditProfileViewModel editProfileViewModel;
     private final EditBioController editBioController;
     private final EditBioViewModel editBioViewModel;
-    private final AuthorizeController authorizeController;
-    private final AuthorizeViewModel authorizeViewModel;
     private final DisplayPlaylistsController displayPlaylistsController;
     private final DisplayPlaylistsViewModel displayPlaylistsViewModel;
+    private final AuthorizeController authorizeController;
+    private final AuthorizeViewModel authorizeViewModel;
     private final ChoosePlaylistController choosePlaylistController;
     private final ChoosePlaylistViewModel choosePlaylistViewModel;
     private final EditSpotifyHandleController editSpotifyHandleController;
@@ -60,8 +60,8 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
 
     public EditProfileView(EditProfileController editProfileController, EditProfileViewModel editProfileViewModel,
                            EditBioController editBioController, EditBioViewModel editBioViewModel,
-                           AuthorizeController authorizeController, AuthorizeViewModel authorizeViewModel,
                            DisplayPlaylistsController displayPlaylistsController, DisplayPlaylistsViewModel displayPlaylistsViewModel,
+                           AuthorizeController authorizeController, AuthorizeViewModel authorizeViewModel,
                            ChoosePlaylistController choosePlaylistController, ChoosePlaylistViewModel choosePlaylistViewModel,
                            EditSpotifyHandleController editSpotifyHandleController, EditSpotifyHandleViewModel editSpotifyHandleViewModel,
                            GoBackController goBackController, GoBackViewModel goBackViewModel) {
