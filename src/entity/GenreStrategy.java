@@ -31,7 +31,6 @@ public class GenreStrategy implements MatchingStrategy {
         }
     }
 
-    // calculating the length of
     private double calculateMagnitude(HashMap<String, Integer> genreFrequency) {
         double magtinude = 0.0;
         for (int frequency: genreFrequency.values()) {
