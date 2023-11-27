@@ -1,8 +1,9 @@
 package view;
 
-import interface_adapter.display_matches.DisplayMatchesState;
-import interface_adapter.display_matches.DisplayMatchesViewModel;
+import interface_adapter.match.MatchState;
+import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestController;
+import interface_adapter.send_request.SendRequestState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,24 +15,24 @@ import java.util.HashMap;
 
 public class DisplayMatchesView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
-    private final DisplayMatchesViewModel displayMatchesViewModel;
+    private final MatchViewModel matchViewModel;
     private final SendRequestController sendRequestController;
 
-    public DisplayMatchesView(DisplayMatchesViewModel displayMatchesViewModel,
+    public DisplayMatchesView(MatchViewModel matchViewModel,
                               SendRequestController sendRequestController) {
 
-        this.displayMatchesViewModel = displayMatchesViewModel;
+        this.matchViewModel = matchViewModel;
         this.sendRequestController = sendRequestController;
 
-        displayMatchesViewModel.addPropertyChangeListener(this);
+        matchViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(DisplayMatchesViewModel.TITLE_LABEL);
+        JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
 
         // Adding request buttons for all the matches from the current state
-        DisplayMatchesState currentState = displayMatchesViewModel.getState();
+        MatchState currentState = matchViewModel.getState();
         HashMap<String, Double> matches = currentState.getMatches();
 
         for (String username : matches.keySet()) {
@@ -41,14 +42,14 @@ public class DisplayMatchesView extends JPanel implements ActionListener, Proper
             this.add(matchUsername);
             this.add(similarityScore);
 
-            JButton request = new JButton(DisplayMatchesViewModel.REQUEST_BUTTON_LABEL);
+            JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
             buttons.add(request);
 
             request.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {
-                                DisplayMatchesState currentState = displayMatchesViewModel.getState();
+                                SendRequestState currentState = sendRequestViewModel.getState();
 
                                 sendRequestController.execute(currentState.getReceiverUsername());
                             }
