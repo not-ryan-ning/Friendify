@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class CommonPlaylist implements Playlist{
     private final String playlistId;
-    private final HashMap<String, Integer> titles;
+    private final ArrayList<String> titles;
     private final HashMap<String, Integer> artists;
     private final HashMap<String, Integer> genres;
     private final double acousticness;
@@ -14,7 +14,7 @@ public class CommonPlaylist implements Playlist{
     private final double valence;
     private final ArrayList<String> topThreeArtists;
 
-    public CommonPlaylist(String playlistId, HashMap<String, Integer> titles, HashMap<String, Integer> artists,
+    public CommonPlaylist(String playlistId, ArrayList<String> titles, HashMap<String, Integer> artists,
                           HashMap<String, Integer> genres, double acousticness, double energy,
                           double instrumentalness, double valence, ArrayList<String> topThreeArtists) {
         this.playlistId = playlistId;
@@ -32,7 +32,7 @@ public class CommonPlaylist implements Playlist{
         return playlistId;
     }
     @Override
-    public HashMap<String, Integer> getTitles() {
+    public ArrayList<String> getTitles() {
         return titles;
     }
     @Override

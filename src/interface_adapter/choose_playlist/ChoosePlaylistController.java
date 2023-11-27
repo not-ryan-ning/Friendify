@@ -12,7 +12,8 @@ public class ChoosePlaylistController {
     }
 
     public void execute(User user, String playlistId, String access_token) {
-        ChoosePlaylistInputData choosePlaylistInputData = new ChoosePlaylistInputData(playlistId, access_token);
+        ChoosePlaylistInputData choosePlaylistInputData = new ChoosePlaylistInputData(playlistId, user.getUsername(),
+                access_token);
 
         choosePlaylistInputInteractor.execute(user, choosePlaylistInputData);
     }
