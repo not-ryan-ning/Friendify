@@ -1,21 +1,26 @@
 package interface_adapter.display_common_profile;
 
+import entity.Profile;
+import interface_adapter.display_friend_profile.DisplayFriendProfileState;
+import interface_adapter.display_profile.DisplayProfileState;
+
 public class DisplayCommonProfileState {
-    private String username = "";
+    private Profile commonProfile;
 
 
     public DisplayCommonProfileState(DisplayCommonProfileState copy) {
-        username = copy.username;
+        this.commonProfile = copy.commonProfile;
+
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
     public DisplayCommonProfileState() {}
 
-    public String getUsername() {
-        return username;
+    public Profile getCommonProfile() {
+        return commonProfile;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCommonProfile(Profile commonProfile) {
+        this.commonProfile = commonProfile;
     }
 }

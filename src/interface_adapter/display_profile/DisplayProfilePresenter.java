@@ -1,6 +1,7 @@
 package interface_adapter.display_profile;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 import use_case.display_profile.DisplayProfileOutputBoundary;
 import use_case.display_profile.DisplayProfileOutputData;
 
@@ -21,10 +22,10 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     @Override
     public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
-        DisplayProfileState displayProfileState = displayProfileViewModel.getState();
-        displayProfileState.setFriendProfile(response.getFriendProfile()); // firend profile will be like loggedin form ca
-        this.displayProfileViewModel.setState(displayProfileState);
-        this.displayProfileViewModel.firePropertyChanged();
+        DisplayFriendProfileState displayFriendProfileState = displayFriendProfileViewModel.getState();
+        displayProfileState.setFriendProfile(response.getFriendProfile()); // friend profile will be like loggedin form ca
+        this.displayFriendProfileViewModel.setState(displayFriendProfileViewModel);
+        this.displayFriendProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(displayFriendProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
@@ -32,10 +33,10 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     @Override
     public void prepareSuccessViewCommon(DisplayProfileOutputData user) {
         // switch to the common view profile of the user
-        DisplayProfileState displayProfileState = displayProfileViewModel.getState();
-        displayProfileState.setCommonProfile(response.getCommonProfile()); // firend profile will be like loggedin form ca
-        this.displayProfileViewModel.setState(displayProfileState);
-        this.displayProfileViewModel.firePropertyChanged();
+        DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
+        displayCommonProfileState.setCommonProfile(response.getCommonProfile()); // firend profile will be like loggedin form ca
+        this.displayCommonProfileViewModel.setState(displayCommonProfileState);
+        this.displayCommonProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(displayCommonProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
