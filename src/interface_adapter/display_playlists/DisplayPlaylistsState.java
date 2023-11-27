@@ -8,6 +8,7 @@ public class DisplayPlaylistsState {
 
     public DisplayPlaylistsState(DisplayPlaylistsState copy) {
         playlistIdName = copy.playlistIdName;
+        accessToken = copy.accessToken;
     }
 
     public DisplayPlaylistsState() {}
@@ -18,7 +19,6 @@ public class DisplayPlaylistsState {
     public void setPlaylistIdName(HashMap<String, String> playlistIdName) {
         this.playlistIdName = playlistIdName;
     }
-
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
