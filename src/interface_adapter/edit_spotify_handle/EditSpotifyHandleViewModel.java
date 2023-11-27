@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class EditSpotifyHandleViewModel extends ViewModel {
     public static final String SPOTIFY_HANDLE_LABEL = "Type Spotify Handle";
-    public static final String SAVE_SPOTIFY_HANDLE_LABEL = "Save Spotify Handle";
+    public static final String SAVE_SPOTIFY_HANDLE_BUTTON_LABEL = "Save Spotify Handle";
     private EditSpotifyHandleState state = new EditSpotifyHandleState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
