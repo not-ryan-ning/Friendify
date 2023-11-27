@@ -143,7 +143,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         // need multiple if branches to map each button click to the corresponding action
         if (evt.getPropertyName().equals("state")) {
             LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
+            username.setText(state.getCurrentUser().getUsername());
         }
         else {
             JOptionPane.showMessageDialog(this, "You have logged out");

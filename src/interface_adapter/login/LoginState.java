@@ -48,4 +48,3 @@ public class LoginState {
         this.passwordError = passwordError;
     }
 }
-
