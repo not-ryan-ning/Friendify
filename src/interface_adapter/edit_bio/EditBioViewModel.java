@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class EditBioViewModel extends ViewModel {
 
     public static final String BIO_LABEL = "Type Bio";
-    public static final String SAVE_BIO_LABEL = "Save Bio";
+    public static final String SAVE_BIO_BUTTON_LABEL = "Save Bio";
     private EditBioState state = new EditBioState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
