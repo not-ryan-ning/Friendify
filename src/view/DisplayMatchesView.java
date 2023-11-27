@@ -2,7 +2,7 @@ package view;
 
 import interface_adapter.display_matches.DisplayMatchesState;
 import interface_adapter.display_matches.DisplayMatchesViewModel;
-import interface_adapter.match.MatchController;
+import interface_adapter.send_request.SendRequestController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ import java.util.HashMap;
 public class DisplayMatchesView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final DisplayMatchesViewModel displayMatchesViewModel;
-    private final MatchController matchController;
+    private final SendRequestController sendRequestController;
 
     public DisplayMatchesView(DisplayMatchesViewModel displayMatchesViewModel,
-                              MatchController matchController) {
+                              SendRequestController sendRequestController) {
 
         this.displayMatchesViewModel = displayMatchesViewModel;
-        this.matchController = matchController;
+        this.sendRequestController = sendRequestController;
 
         displayMatchesViewModel.addPropertyChangeListener(this);
 
