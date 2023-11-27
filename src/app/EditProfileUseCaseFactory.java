@@ -65,7 +65,7 @@ import view.SignupView;
 import javax.swing.*;
 import java.io.IOException;
 
-public class SignupUseCaseFactory {
+public class EditProfileUseCaseFactory {
 
     /** Prevent instantiation. */
     private EditProfileUseCaseFactory() {}
@@ -95,6 +95,7 @@ public class SignupUseCaseFactory {
                     choosePlaylistPlaylistDataAccessObject, choosePlaylistSpotifyAPIDataAccessObject);
             EditSpotifyHandleController editSpotifyHandleController = createEditSpotifyHandleUseCase(viewManagerModel, editSpotifyHandleViewModel, editSpotifyHandleUserDataAccessObject);
             GoBackController goBackController = createGoBackUseCase(viewManagerModel, goBackViewModel);
+
             return new EditProfileView(editProfileController, editProfileViewModel, editBioController, editBioViewModel,
                     displayPlaylistsController, displayPlaylistsViewModel, authorizeController, authorizeViewModel,
                     choosePlaylistController, choosePlaylistViewModel, editSpotifyHandleController, editSpotifyHandleViewModel,
@@ -150,4 +151,3 @@ public class SignupUseCaseFactory {
         return new EditSpotifyHandleController(editSpotifyHandleInteractor);
     }
 }
-
