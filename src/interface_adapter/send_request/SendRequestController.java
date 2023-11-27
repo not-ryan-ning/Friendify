@@ -10,10 +10,9 @@ public class SendRequestController {
         this.sendRequestInteractor = sendRequestInteractor;
     }
 
-    public void execute(String receiverUsername) {
+    public void execute(String senderUsername, String receiverUsername) {
         // Retrieve current user from LoggedInState
-        User sender = LoggedInState.getCurrentUser();
         SendRequestInputData sendRequestInputData = new SendRequestInputData(receiverUsername);
-        sendRequestInteractor.execute(sender, sendRequestInputData);
+        sendRequestInteractor.execute(senderUsername, sendRequestInputData);
     }
 }
