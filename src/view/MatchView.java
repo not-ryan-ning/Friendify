@@ -4,6 +4,7 @@ import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
+import interface_adapter.send_request.SendRequestViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +17,15 @@ import java.util.HashMap;
 public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
+    private final SendRequestViewModel sendRequestViewModel;
     private final SendRequestController sendRequestController;
 
     public MatchView(MatchViewModel matchViewModel,
+                     SendRequestViewModel sendRequestViewModel,
                      SendRequestController sendRequestController) {
 
         this.matchViewModel = matchViewModel;
+        this.sendRequestViewModel = sendRequestViewModel;
         this.sendRequestController = sendRequestController;
 
         matchViewModel.addPropertyChangeListener(this);
@@ -51,7 +55,7 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                             if (evt.getSource().equals(request)) {
                                 SendRequestState currentState = sendRequestViewModel.getState();
                                 String senderUsername = currentState.getUsername();
-                                String receiverUsername = currentState.getRecieverUsername();
+                                String receiverUsername = currentState.getReceiverUsername();
                                 sendRequestController.execute(senderUsername, receiverUsername);
                             }
                         }
@@ -71,9 +75,10 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        sendRequestState state = (SendRequestState) evt.getNewValue();
+        SendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         }
+        JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
     }
 }
