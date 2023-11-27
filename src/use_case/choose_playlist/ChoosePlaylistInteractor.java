@@ -27,8 +27,7 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
     }
 
     @Override
-    public void execute(User user, ChoosePlaylistInputData choosePlaylistInputData) {
-        String username = user.getUsername();
+    public void execute(String username, ChoosePlaylistInputData choosePlaylistInputData) {
         String playlistId = choosePlaylistInputData.getPlaylistId();
         String playlistName = choosePlaylistInputData.getPlaylistName();
         String accessToken = choosePlaylistInputData.getAccessToken();
@@ -46,7 +45,8 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         Playlist playlist = playlistFactory.create(playlistId, titles, artists, genres, acousticness,
                 energy, instrumentalness, valence, topTreeArtists);
 
-        userDataAccessObject.editPlaylist(username, playlist);
+        User user = userDataAccessObject.getUser(username);
+        userDataAccessObject.editPlaylist(user.getUsername(), playlist);
         playlistDataAccessObject.storePlaylist(playlist);
 
         ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName);
