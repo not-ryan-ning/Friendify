@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public interface MatchUserDataAccessInterface {
 
+    User get(String username);
+
     /**
      * Loops through users who are not the current user's friends, and compares their playlists with
      * the current user's playlist using the matching strategies in the following order:

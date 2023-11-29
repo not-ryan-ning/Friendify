@@ -21,8 +21,8 @@ public class MatchInteractor implements MatchInputBoundary {
     }
 
     @Override
-    public void execute(User currentUser) {
-
+    public void execute(String currentUsername) {
+        User currentUser = matchUserDAO.get(currentUsername);
         HashMap<String, Double> similarityScores = new HashMap<>();
 
         TitleStrategy titleStrategy = new TitleStrategy();
