@@ -30,9 +30,9 @@ public class MatchInteractor implements MatchInputBoundary {
         AttributeStrategy attributeStrategy = new AttributeStrategy();
 
         HashMap<String, Double> titleScores = matchUserDAO.getScores(currentUser, titleStrategy);
-        HashMap<String, Double> artistScores = matchUserDAO.getScores(currentUser, titleStrategy);
-        HashMap<String, Double>  genreScores= matchUserDAO.getScores(currentUser, titleStrategy);
-        HashMap<String, Double> attributeScores = matchUserDAO.getScores(currentUser, titleStrategy);
+        HashMap<String, Double> artistScores = matchUserDAO.getScores(currentUser, artistStrategy);
+        HashMap<String, Double>  genreScores= matchUserDAO.getScores(currentUser, genreStrategy);
+        HashMap<String, Double> attributeScores = matchUserDAO.getScores(currentUser, attributeStrategy);
 
         for (HashMap.Entry<String, Double> entry : titleScores.entrySet()) {
            Double score = 0.4 * titleScores.get(entry.getKey()) + 0.3 * artistScores.get(entry.getKey()) +
