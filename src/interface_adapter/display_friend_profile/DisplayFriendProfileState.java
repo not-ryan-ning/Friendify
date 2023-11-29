@@ -5,10 +5,11 @@ import interface_adapter.display_common_profile.DisplayCommonProfileState;
 
 public class DisplayFriendProfileState {
     private Profile friendProfile;
-
+    private String username;
 
     public DisplayFriendProfileState(DisplayFriendProfileState copy) {
         this.friendProfile = copy.friendProfile;
+        this.username = copy.username;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -20,5 +21,9 @@ public class DisplayFriendProfileState {
 
     public void setFriendProfile(Profile friendProfile) {
         this.friendProfile = friendProfile;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

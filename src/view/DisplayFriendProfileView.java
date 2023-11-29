@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.display_common_profile.DisplayFriendProfileViewModel;
+import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
 import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 
 import javax.swing.*;
@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
@@ -36,7 +37,7 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         JLabel spotifyInfo = new JLabel("Spotify handle: ");
         spotifyHandle = new JLabel();
 
-        JLabel topThreeArtists = new JLabel("Top 3 Artists: ");
+        JLabel topThreeArtistsInfo = new JLabel("Top 3 Artists: ");
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
@@ -49,7 +50,7 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)) {
-                            ...
+                            backController.execute();
                         }
                     }
                 }
@@ -65,6 +66,8 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         this.add(spotifyInfo);
         this.add(spotifyHandle);
         this.add(buttons);
+        this.add(topThreeArtistsInfo);
+        this.add(topThreeArtists);
     }
 
 
@@ -77,9 +80,14 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayFriendProfileState state = (DisplayFriendProfileState) evt.getNewValue();
-        username.setText(state.getUsername().getUsername());
-        bio.setText(state.getBio());
-        spotifyHandle.setText(state.getSpotifyHandle());
-        topThreeArtists.setText(state.getTopThreeArtists());
+        username.setText(state.getUsername());
+        bio.setText(state.getFriendProfile().getBio());
+        spotifyHandle.setText(state.getFriendProfile().getSpotifyHandle());
+
+        ArrayList<String> topThreeArtistsList = state.getFriendProfile().getTopThreeArtists();
+
+        // Using String.join to concatenate the elements with a separator (e.g., comma and space)
+        String topThreeArtistsText = String.join(", ", topThreeArtistsList);
+        topThreeArtists.setText(topThreeArtistsText);
     }
 }

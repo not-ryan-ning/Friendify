@@ -1,8 +1,8 @@
 package view;
 
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
-import interface_adapter.display_common_profile.DisplayFriendProfileViewModel;
-import interface_adapter.display_friend_profile.DisplayFriendProfileState;
+import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
+import interface_adapter.display_common_profile.DisplayCommonProfileState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,7 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
     JLabel username;
     JLabel spotifyHandle;
     JLabel bio;
+    JLabel topThreeArtists;
     public DisplayCommonProfileView(DisplayCommonProfileViewModel displayCommonProfileViewModel) {
         this.displayCommonProfileViewModel = displayCommonProfileViewModel;
         this.displayCommonProfileViewModel.addPropertyChangeListener(this);
@@ -36,6 +37,10 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         JLabel spotifyInfo = new JLabel("Spotify handle: ");
         spotifyHandle = new JLabel();
 
+        JLabel topThreeArtistsInfo = new JLabel("Top 3 Artists: ");
+        // initializing this label, so if not a friend, we don't need to update this label
+        topThreeArtists = new JLabel("You need to be friends to see this...");
+
         JPanel buttons = new JPanel();
         back = new JButton("back");
         buttons.add(back);
@@ -46,7 +51,7 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)) {
-                            ...
+                            backController.execute();
                         }
                     }
                 }
@@ -62,6 +67,8 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         this.add(spotifyInfo);
         this.add(spotifyHandle);
         this.add(buttons);
+        this.add(topThreeArtistsInfo);
+        this.add(topThreeArtists);
     }
 
 
@@ -74,8 +81,8 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayCommonProfileState state = (DisplayCommonProfileState) evt.getNewValue();
-        username.setText(state.getUsername().getUsername());
-        bio.setText(state.getBio());
-        spotifyHandle.setText(state.getSpotifyHandle());
+        username.setText(state.getUsername());
+        bio.setText(state.getCommonProfile().getBio());
+        spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
     }
 }

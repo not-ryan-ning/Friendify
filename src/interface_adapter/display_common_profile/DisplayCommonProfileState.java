@@ -6,14 +6,14 @@ import interface_adapter.display_profile.DisplayProfileState;
 
 public class DisplayCommonProfileState {
     private Profile commonProfile;
-
+    private String username;
 
     public DisplayCommonProfileState(DisplayCommonProfileState copy) {
         this.commonProfile = copy.commonProfile;
+        this.username = copy.username;
 
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
     public DisplayCommonProfileState() {}
 
     public Profile getCommonProfile() {
@@ -22,5 +22,9 @@ public class DisplayCommonProfileState {
 
     public void setCommonProfile(Profile commonProfile) {
         this.commonProfile = commonProfile;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
