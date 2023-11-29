@@ -43,15 +43,21 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
             this.add(similarityScore);
 
             JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
+
+            // Associate each request button with the corresponding top similar username
+            request.putClientProperty("userString", username);
             buttons.add(request);
 
-            request.addActionListener(
-                    new ActionListener() {
+            request.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {
+                                // Retrieve the associated username
+                                String associatedString = (String) request.getClientProperty("userString");
                                 SendRequestState currentState = sendRequestViewModel.getState();
                                 String senderUsername = currentState.getUsername();
+                                currentState.setRecieverUsername(associatedString);
                                 String receiverUsername = currentState.getRecieverUsername();
+
                                 sendRequestController.execute(senderUsername, receiverUsername);
                             }
                         }
@@ -74,6 +80,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         sendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
+        } else {
+            JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
         }
     }
 }
