@@ -1,6 +1,5 @@
 package use_case.match;
 
-import entity.ArtistStrategy;
 import entity.User;
 import entity.TitleStrategy;
 import entity.ArtistStrategy;
