@@ -15,8 +15,9 @@ public class MatchInteractor implements MatchInputBoundary {
     }
 
     @Override
-    public void execute(User currentUser) {
-        HashMap<String, Double> matches = matchUserDAO.match(currentUser);
+    public void execute(String currentUsername) {
+        User currentUser = matchUserDAO.get(currentUsername);
+        HashMap<String, Double> matches = matchUserDAO.getMatches(currentUser);
 
         MatchOutputData matchingOutputData = new MatchOutputData(matches);
         matchPresenter.prepareSuccessView(matchingOutputData);

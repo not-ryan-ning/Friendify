@@ -6,6 +6,6 @@ import entity.User;
 import java.util.HashMap;
 
 public interface ChoosePlaylistUserDataAccessInterface {
-    User getUser(String username);
+    User get(String username);
     void editPlaylist(String username, Playlist playlist);
 }
