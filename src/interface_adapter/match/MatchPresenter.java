@@ -22,7 +22,7 @@ public class MatchPresenter implements MatchOutputBoundary {
     @Override
     public void prepareSuccessView(MatchOutputData response) {
         MatchState matchState = matchViewModel.getState();
-        matchState.setMatches(response.getMatches());
+        matchState.setTopSimilarUsers(response.getTopSimilarUsers());
         matchViewModel.setState(matchState);
         matchViewModel.firePropertyChanged();
 
