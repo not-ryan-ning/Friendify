@@ -13,9 +13,6 @@ public class FriendProfile implements Profile {
         this.spotifyHandle = spotifyHandle;
     }
 
-    public FriendProfile() {
-    }
-
     @Override
     public String getBio() {
         return bio;

@@ -27,7 +27,7 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
         DisplayFriendProfileState displayFriendProfileState = displayFriendProfileViewModel.getState();
-        displayFriendProfileState.setFriendProfile(response.getFriendProfile());
+        displayFriendProfileState.setFriendProfile(response.getProfile());
         this.displayFriendProfileViewModel.setState(displayFriendProfileState);
         this.displayFriendProfileViewModel.firePropertyChanged();
 
@@ -38,7 +38,7 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     public void prepareSuccessViewCommon(DisplayProfileOutputData response) {
         // switch to the common view profile of the user
         DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
-        displayCommonProfileState.setCommonProfile(response.getCommonProfile());
+        displayCommonProfileState.setCommonProfile(response.getProfile());
         this.displayCommonProfileViewModel.setState(displayCommonProfileState);
         this.displayCommonProfileViewModel.firePropertyChanged();
 

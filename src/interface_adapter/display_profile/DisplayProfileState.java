@@ -1,17 +1,17 @@
 package interface_adapter.display_profile;
 import entity.Profile;
 public class DisplayProfileState {
-    private Profile commonProfile;
+    private Profile profile;
     private Profile friendProfile;
 
     public DisplayProfileState(DisplayProfileState copy) {
-        this.commonProfile = copy.commonProfile;
+        this.profile = copy.profile;
         this.friendProfile = copy.friendProfile;
     }
     public DisplayProfileState() {}
 
-    public Profile getCommonProfile() {
-        return this.commonProfile;
+    public Profile getProfile() {
+        return this.profile;
     }
     public Profile getFriendProfile() {
         return this.friendProfile;

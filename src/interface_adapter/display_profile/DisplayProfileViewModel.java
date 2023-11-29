@@ -22,7 +22,7 @@ public class DisplayProfileViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("displayProfileState", null, this.state);
     }
 
     @Override
