@@ -1,4 +1,4 @@
-package view;
+//package view;
 
 import interface_adapter.display_profile.DisplayProfileState;
 import interface_adapter.display_profile.DisplayProfileViewModel;
