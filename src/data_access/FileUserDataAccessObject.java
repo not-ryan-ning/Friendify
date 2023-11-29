@@ -18,11 +18,9 @@ public class FileUserDataAccessObject {
     private final Map<String, Playlist> usernamePlaylist = new HashMap<>();
 
     private UserFactory userFactory;
-    private MatchingStrategy matchingStrategy;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, MatchingStrategy matchingStrategy) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
-        this.matchingStrategy = matchingStrategy;
         this.usersFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("password", 1);
@@ -114,23 +112,17 @@ public class FileUserDataAccessObject {
         receiver.getRequests().add(sender.getUsername());
     }
 
-    public void setMatchingStrategy(MatchingStrategy matchingStrategy) {
-        this.matchingStrategy = matchingStrategy;
-    }
-
-    HashMap<String, Double> getMatches(User currentUser) {
-        HashMap<String, Double> matches = new HashMap<>();
+    HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
+        HashMap<String, Double> scores = new HashMap<>();
 
         for (User user : accounts.values()) {
             if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
-                if (similarityScore >= 0.5) {
-                    matches.put(user.getUsername(), similarityScore);
-                }
+                scores.put(user.getUsername(), similarityScore);
             }
         }
-        return matches;
+        return scores;
     }
 
     public void editPlaylist(String username, Playlist playlist) {
