@@ -45,7 +45,7 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         Playlist playlist = playlistFactory.create(playlistId, titles, artists, genres, acousticness,
                 energy, instrumentalness, valence, topTreeArtists);
 
-        User user = userDataAccessObject.getUser(username);
+        User user = userDataAccessObject.get(username);
         userDataAccessObject.editPlaylist(user.getUsername(), playlist);
         playlistDataAccessObject.storePlaylist(playlist);
 

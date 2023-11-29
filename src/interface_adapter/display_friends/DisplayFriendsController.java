@@ -10,7 +10,7 @@ public class DisplayFriendsController {
         this.displayFriendsInteractor = displayFriendsInteractor;
     }
 
-    public void execute() {
-        displayFriendsInteractor.execute();
+    public void execute(String username) {
+        displayFriendsInteractor.execute(username);
     }
 }
