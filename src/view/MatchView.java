@@ -33,11 +33,11 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
         // Adding request buttons for all the matches from the current state
         MatchState currentState = matchViewModel.getState();
-        HashMap<String, Double> matches = currentState.getMatches();
+        HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
 
-        for (String username : matches.keySet()) {
+        for (String username : topSimilarUsers.keySet()) {
             JLabel matchUsername = new JLabel(username);
-            JLabel similarityScore = new JLabel(matches.get(username).toString());
+            JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
 
             this.add(matchUsername);
             this.add(similarityScore);
