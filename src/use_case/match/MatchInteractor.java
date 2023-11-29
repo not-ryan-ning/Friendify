@@ -1,7 +1,6 @@
 package use_case.match;
 
 import entity.ArtistStrategy;
-import entity.MatchingStrategy;
 import entity.User;
 import entity.TitleStrategy;
 import entity.ArtistStrategy;
@@ -30,10 +29,10 @@ public class MatchInteractor implements MatchInputBoundary {
         GenreStrategy genreStrategy = new GenreStrategy();
         AttributeStrategy attributeStrategy = new AttributeStrategy();
 
-        HashMap<String, Double> titleScores = matchUserDAO.getMatches(currentUser, titleStrategy);
-        HashMap<String, Double> artistScores = matchUserDAO.getMatches(currentUser, titleStrategy);
-        HashMap<String, Double>  genreScores= matchUserDAO.getMatches(currentUser, titleStrategy);
-        HashMap<String, Double> attributeScores = matchUserDAO.getMatches(currentUser, titleStrategy);
+        HashMap<String, Double> titleScores = matchUserDAO.getScores(currentUser, titleStrategy);
+        HashMap<String, Double> artistScores = matchUserDAO.getScores(currentUser, titleStrategy);
+        HashMap<String, Double>  genreScores= matchUserDAO.getScores(currentUser, titleStrategy);
+        HashMap<String, Double> attributeScores = matchUserDAO.getScores(currentUser, titleStrategy);
 
         for (HashMap.Entry<String, Double> entry : titleScores.entrySet()) {
            Double score = 0.4 * titleScores.get(entry.getKey()) + 0.3 * artistScores.get(entry.getKey()) +
@@ -44,9 +43,9 @@ public class MatchInteractor implements MatchInputBoundary {
         ArrayList<HashMap.Entry<String, Double>> sortedUsers = new ArrayList<>(similarityScores.entrySet());
         sortedUsers.sort(HashMap.Entry.comparingByValue());
 
-        ArrayList<String> topSimilarUsers = new ArrayList<>();
+        HashMap<String, Double> topSimilarUsers = new HashMap<>();
         for (int i = 0; i < Math.min(5, sortedUsers.size()); i++) {
-            topSimilarUsers.add(sortedUsers.get(i).getKey());
+            topSimilarUsers.put(sortedUsers.get(i).getKey(), sortedUsers.get(i).getValue());
         }
 
         MatchOutputData matchingOutputData = new MatchOutputData(topSimilarUsers);

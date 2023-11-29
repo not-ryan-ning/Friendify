@@ -21,5 +21,5 @@ public interface MatchUserDataAccessInterface {
      * @param currentUser
      * @return an array list of the usernames of the top 10 matches
      */
-    HashMap<String, Double> getMatches(User currentUser, MatchingStrategy matchingStrategy);
+    HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy);
 }
