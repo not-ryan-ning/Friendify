@@ -23,8 +23,6 @@ public class DisplayCommonProfileViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Login Presenter will call to let the ViewModel know
-    // to alert the View
     public void firePropertyChanged() {
         support.firePropertyChange("commonProfileState", null, this.state);
     }
