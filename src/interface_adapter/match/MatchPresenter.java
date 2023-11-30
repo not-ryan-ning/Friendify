@@ -6,7 +6,6 @@ import use_case.match.MatchOutputBoundary;
 import use_case.match.MatchOutputData;
 
 public class MatchPresenter implements MatchOutputBoundary {
-    private final LoggedInViewModel loggedInViewModel;
     private final MatchViewModel matchViewModel;
     private ViewManagerModel viewManagerModel;
 
@@ -16,7 +15,6 @@ public class MatchPresenter implements MatchOutputBoundary {
 
         this.viewManagerModel = viewManagerModel;
         this.matchViewModel = matchViewModel;
-        this.loggedInViewModel = loggedInViewModel;
     }
 
     @Override
