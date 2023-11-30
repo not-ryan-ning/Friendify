@@ -22,7 +22,7 @@ public class EditBioViewModel extends ViewModel {
         this.state = state;
     }
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("editBioState", null, this.state);
     }
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);

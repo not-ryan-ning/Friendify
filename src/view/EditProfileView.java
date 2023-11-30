@@ -244,11 +244,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        JOptionPane.showConfirmDialog(this, "Not implemented yet.");
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("editBioState")) {
             EditBioState editBioState = (EditBioState) evt.getNewValue();
@@ -305,5 +300,3 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         return null; // Value not found in the map
     }
 }
-
-

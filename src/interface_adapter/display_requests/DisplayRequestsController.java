@@ -9,9 +9,8 @@ public class DisplayRequestsController {
         this.displayRequestsInteractor = displayRequestsInteractor;
     }
 
-    public void execute() {
-        User user = LoggedInState.getCurrentUser();
-        displayRequestsInteractor.execute(user);
+    public void execute(String username) {
+        displayRequestsInteractor.execute(username);
     }
 
 }
