@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class CommonPlaylistFactory implements PlaylistFactory {
@@ -10,5 +11,6 @@ public class CommonPlaylistFactory implements PlaylistFactory {
                                  double instrumentalness, double valence, ArrayList<String> topThreeArtists) {
         return new CommonPlaylist(playlistId, titles, artists, genres, acousticness, energy, instrumentalness,
                 valence, topThreeArtists);
+
     }
 }

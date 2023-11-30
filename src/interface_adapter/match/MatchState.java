@@ -1,18 +1,27 @@
 package interface_adapter.match;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MatchState {
-    private HashMap<String, Double> matches;
+    private HashMap<String, Double> topSimilarUsers;
+
+    private String username;
 
     public MatchState(MatchState copy) {
-        this.matches = copy.matches;
+        this.topSimilarUsers = copy.topSimilarUsers;
     }
     public MatchState() {}
-    public HashMap<String, Double> getMatches() {
-        return matches;
+    public HashMap<String, Double> getTopSimilarUsers() {
+        return topSimilarUsers;
     }
-    public void setMatches(HashMap<String, Double> matches) {
-        this.matches = matches;
+    public void setTopSimilarUsers(HashMap<String, Double> topSimilarUsers) {
+        this.topSimilarUsers = topSimilarUsers;
     }
-}
+    public String getUsername() {
+        return this.username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+ }

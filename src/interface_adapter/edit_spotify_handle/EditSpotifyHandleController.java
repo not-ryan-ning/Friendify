@@ -11,7 +11,7 @@ public class EditSpotifyHandleController {
         this.editSpotifyHandleInteractor = editSpotifyHandleInteractor;
     }
 
-    public void execute(User currentUsername, String newBio) {
+    public void execute(String currentUsername, String newBio) {
         EditSpotifyHandleInputData editBioInputData = new EditSpotifyHandleInputData(newBio);
         editSpotifyHandleInteractor.execute(currentUsername, editBioInputData);
     }
