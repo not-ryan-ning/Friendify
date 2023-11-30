@@ -42,7 +42,7 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         topThreeArtists = new JLabel("You need to be friends to see this...");
 
         JPanel buttons = new JPanel();
-        back = new JButton("back");
+        back = new JButton(GoBackViewModel.GO_BACK_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);
