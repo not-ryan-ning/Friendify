@@ -78,7 +78,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("You clicked a friend's profile");
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
