@@ -1,10 +1,6 @@
 package use_case.match;
 
-import entity.User;
-import entity.TitleStrategy;
-import entity.ArtistStrategy;
-import entity.GenreStrategy;
-import entity.AttributeStrategy;
+import entity.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +19,10 @@ public class MatchInteractor implements MatchInputBoundary {
         User currentUser = matchUserDAO.get(currentUsername);
         HashMap<String, Double> similarityScores = new HashMap<>();
 
-        TitleStrategy titleStrategy = new TitleStrategy();
-        ArtistStrategy artistStrategy = new ArtistStrategy();
-        GenreStrategy genreStrategy = new GenreStrategy();
-        AttributeStrategy attributeStrategy = new AttributeStrategy();
+        MatchingStrategy titleStrategy = new TitleStrategy();
+        MatchingStrategy artistStrategy = new ArtistStrategy();
+        MatchingStrategy genreStrategy = new GenreStrategy();
+        MatchingStrategy attributeStrategy = new AttributeStrategy();
 
         HashMap<String, Double> titleScores = matchUserDAO.getScores(currentUser, titleStrategy);
         HashMap<String, Double> artistScores = matchUserDAO.getScores(currentUser, artistStrategy);
