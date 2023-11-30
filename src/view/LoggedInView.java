@@ -1,9 +1,20 @@
 package view;
 
+import interface_adapter.display_friends.DisplayFriendsState;
+import interface_adapter.edit_profile.EditProfileController;
+import interface_adapter.edit_profile.EditProfileViewModel;
+import interface_adapter.display_friends.DisplayFriendsViewModel;
+import interface_adapter.display_friends.DisplayFriendsController;
+import interface_adapter.display_requests.DisplayRequestsViewModel;
+import interface_adapter.display_requests.DisplayRequestsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutViewModel;
+import interface_adapter.match.MatchController;
+import interface_adapter.match.MatchState;
+import interface_adapter.match.MatchViewModel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +29,19 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
     private final LogoutViewModel logoutViewModel;
     private final LogoutController logoutController;
+    private final DisplayRequestsViewModel displayRequestsViewModel;
+    private final DisplayRequestsController displayRequestsController;
+    private final DisplayFriendsViewModel displayFriendsViewModel;
+    private final DisplayFriendsController displayFriendsController;
+    private final MatchViewModel matchViewModel;
+    private final MatchController matchController;
+    private final EditProfileViewModel editProfileViewModel;
+    private final EditProfileController editProfileController;
 
     JLabel username;
+    JLabel bio;
+    JLabel spotifyHandle;
+    JLabel topThreeArtists;
 
     final JButton logout;
     final JButton requests;
@@ -30,11 +52,32 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, LogoutViewModel logoutViewModel, LogoutController logoutController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel,
+                        LogoutViewModel logoutViewModel,
+                        LogoutController logoutController,
+                        DisplayRequestsViewModel displayRequestsViewModel,
+                        DisplayRequestsController displayRequestsController,
+                        DisplayFriendsViewModel displayFriendsViewModel,
+                        DisplayFriendsController displayFriendsController,
+                        MatchViewModel matchViewModel,
+                        MatchController matchController,
+                        EditProfileViewModel editProfileViewModel,
+                        EditProfileController editProfileController) {
+
         this.loggedInViewModel = loggedInViewModel;
-        this.loggedInViewModel.addPropertyChangeListener(this);
         this.logoutViewModel = logoutViewModel;
         this.logoutController = logoutController;
+        this.displayRequestsViewModel = displayRequestsViewModel;
+        this.displayRequestsController = displayRequestsController;
+        this.displayFriendsViewModel = displayFriendsViewModel;
+        this.displayFriendsController = displayFriendsController;
+        this.matchViewModel = matchViewModel;
+        this.matchController = matchController;
+        this.editProfileViewModel = editProfileViewModel;
+        this.editProfileController = editProfileController;
+
+        this.loggedInViewModel.addPropertyChangeListener(this);
+
 
         logoutViewModel.addPropertyChangeListener(this);
 
@@ -43,6 +86,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
+        bio = new JLabel();
+        spotifyHandle = new JLabel();
+        topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
         logout = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
@@ -79,7 +125,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(requests)) {
-                        displayRequestsController.execute();
+                        DisplayRequestsState currentState = displayRequestsViewModel.getState();
+
+                        displayRequestsController.execute(currentState.getUsername());
                     }
                 }
             }
@@ -91,7 +139,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(friends)) {
-                            displayFriendsController.execute();
+                            DisplayFriendsState currentState = displayFriendsViewModel.getState();
+
+                            displayFriendsController.execute(currentState.getUsername());
                         }
                     }
                 }
@@ -103,7 +153,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(match)) {
-                            matchController.execute();
+                            MatchState currentState = matchViewModel.getState();
+
+                            matchController.execute(currentState.getUsername());
                         }
                     }
                 }
@@ -126,6 +178,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(title);
         this.add(usernameInfo);
         this.add(username);
+        this.add(bio);
+        this.add(spotifyHandle);
+        this.add(topThreeArtists);
         this.add(buttons);
 }
 
@@ -143,7 +198,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         // need multiple if branches to map each button click to the corresponding action
         if (evt.getPropertyName().equals("state")) {
             LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getCurrentUser().getUsername());
+            username.setText(state.getUsername());
         }
         else {
             JOptionPane.showMessageDialog(this, "You have logged out");
