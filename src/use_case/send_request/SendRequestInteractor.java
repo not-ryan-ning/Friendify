@@ -11,8 +11,7 @@ public class SendRequestInteractor implements SendRequestInputBoundary {
         this.sendRequestPresenter = sendRequestOutputBoundary;
     }
     @Override
-    public void execute(SendRequestInputData sendRequestInputData) {
-        String senderUsername = sendRequestInputData.getSenderUsername();
+    public void execute(String senderUsername, SendRequestInputData sendRequestInputData) {
         String receiverUsername = sendRequestInputData.getReceiverUsername();
 
         User sender = sendRequestUserDAO.get(senderUsername);

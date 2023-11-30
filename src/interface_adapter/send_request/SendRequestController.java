@@ -1,5 +1,6 @@
 package interface_adapter.send_request;
 
+import entity.User;
 import use_case.send_request.SendRequestInputBoundary;
 import use_case.send_request.SendRequestInputData;
 public class SendRequestController {
@@ -10,7 +11,7 @@ public class SendRequestController {
     }
 
     public void execute(String senderUsername, String receiverUsername) {
-        SendRequestInputData sendRequestInputData = new SendRequestInputData(senderUsername, receiverUsername);
-        sendRequestInteractor.execute(sendRequestInputData);
+        SendRequestInputData sendRequestInputData = new SendRequestInputData(receiverUsername);
+        sendRequestInteractor.execute(senderUsername, sendRequestInputData);
     }
 }
