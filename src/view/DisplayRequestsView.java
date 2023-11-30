@@ -27,6 +27,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final AcceptRequestsController acceptRequestsController;
     private final AcceptRequestsViewModel acceptRequestsViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final GoBackViewModel goBackViewModel;
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel,
                                DisplayRequestsController displayRequestsController,
@@ -34,7 +35,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                                DisplayProfileController displayProfileController,
                                AcceptRequestsController acceptRequestsController,
                                AcceptRequestsViewModel acceptRequestsViewModel,
-                               LoggedInViewModel loggedInViewModel) {
+                               LoggedInViewModel loggedInViewModel,
+                               GoBackViewModel goBackViewModel) {
         this.displayRequestsController = displayRequestsController;
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayProfileController = displayProfileController;
@@ -42,6 +44,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         this.acceptRequestsController = acceptRequestsController;
         this.acceptRequestsViewModel = acceptRequestsViewModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.goBackViewModel = goBackViewModel;
 
         displayRequestsViewModel.addPropertyChangeListener(this);
         displayProfileViewModel.addPropertyChangeListener(this);

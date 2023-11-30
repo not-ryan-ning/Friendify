@@ -15,8 +15,6 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
     public final String viewName = "User's Profile";
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
 
-    final JButton back;
-
     JLabel username;
     JLabel spotifyHandle;
     JLabel bio;

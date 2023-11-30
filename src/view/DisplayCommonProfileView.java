@@ -15,8 +15,6 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
     public final String viewName = "User's Profile";
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
 
-    final JButton back;
-
     JLabel username;
     JLabel spotifyHandle;
     JLabel bio;

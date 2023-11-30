@@ -26,7 +26,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
                               DisplayFriendsViewModel displayFriendsViewModel,
                               DisplayProfileController displayProfileController,
                               DisplayProfileViewModel displayProfileViewModel,
-                              LoggedInViewModel loggedInViewModel) {
+                              LoggedInViewModel loggedInViewModel, GoBackViewModel goBackViewModel) {
         this.displayFriendsController = displayFriendsController;
         this.displayFriendsViewModel = displayFriendsViewModel;
         this.displayProfileController = displayProfileController;
