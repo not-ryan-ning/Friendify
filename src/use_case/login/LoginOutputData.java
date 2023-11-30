@@ -24,5 +24,5 @@ public class LoginOutputData {
     public String getBio() { return bio; }
     public ArrayList<String> getTopThreeArtists() { return topThreeArtists; }
 
-    public String getSpotifyHandle() { return spogtifyHandle; }
+    public String getSpotifyHandle() { return spotifyHandle; }
 }
