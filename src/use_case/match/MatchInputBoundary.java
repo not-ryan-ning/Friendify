@@ -3,5 +3,5 @@ package use_case.match;
 import entity.User;
 
 public interface MatchInputBoundary {
-    void execute(String username);
+    void execute(String currentUsername);
 }

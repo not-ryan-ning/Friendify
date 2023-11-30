@@ -1,15 +1,14 @@
 package use_case.match;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MatchOutputData {
-    private final HashMap<String, Double> matches;
+    private final HashMap<String, Double> topSimilarUsers;
 
-    public MatchOutputData(HashMap<String, Double> matches) {
-        this.matches = matches;
+    public MatchOutputData(HashMap<String, Double> topSimilarUsers) {
+        this.topSimilarUsers = topSimilarUsers;
     }
-    public HashMap<String, Double> getMatches() {
-        return matches;
+    public HashMap<String, Double> getTopSimilarUsers() {
+        return topSimilarUsers;
     }
 }

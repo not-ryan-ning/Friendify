@@ -33,25 +33,31 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
         // Adding request buttons for all the matches from the current state
         MatchState currentState = matchViewModel.getState();
-        HashMap<String, Double> matches = currentState.getMatches();
+        HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
 
-        for (String username : matches.keySet()) {
+        for (String username : topSimilarUsers.keySet()) {
             JLabel matchUsername = new JLabel(username);
-            JLabel similarityScore = new JLabel(matches.get(username).toString());
+            JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
 
             this.add(matchUsername);
             this.add(similarityScore);
 
             JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
+
+            // Associate each request button with the corresponding top similar username
+            request.putClientProperty("userString", username);
             buttons.add(request);
 
-            request.addActionListener(
-                    new ActionListener() {
+            request.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {
+                                // Retrieve the associated username
+                                String associatedString = (String) request.getClientProperty("userString");
                                 SendRequestState currentState = sendRequestViewModel.getState();
                                 String senderUsername = currentState.getUsername();
+                                currentState.setRecieverUsername(associatedString);
                                 String receiverUsername = currentState.getRecieverUsername();
+
                                 sendRequestController.execute(senderUsername, receiverUsername);
                             }
                         }
@@ -74,6 +80,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         sendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
+        } else {
+            JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
         }
     }
 }
