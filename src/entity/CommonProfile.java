@@ -18,10 +18,12 @@ public class CommonProfile implements Profile{
     public String getBio() {
         return bio;
     }
+
     @Override
     public ArrayList<String> getTopThreeArtists() {
         return topThreeArtists;
     }
+
     @Override
     public String getSpotifyHandle() {
         return spotifyHandle;
