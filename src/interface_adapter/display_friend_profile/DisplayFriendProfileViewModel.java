@@ -27,7 +27,7 @@ public class DisplayFriendProfileViewModel extends ViewModel {
     // This is what the Login Presenter will call to let the ViewModel know
     // to alert the View
     public void firePropertyChanged() {
-        support.firePropertyChange("friend_state", null, this.state);
+        support.firePropertyChange("friendProfileState", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
