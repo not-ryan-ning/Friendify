@@ -11,7 +11,6 @@ import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutUserDataAccessInterface;
-import view.view.LoggedInView;
 
 import javax.swing.*;
 import java.io.IOException;
