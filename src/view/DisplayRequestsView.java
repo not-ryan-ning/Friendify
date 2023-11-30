@@ -97,7 +97,6 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //does not display anything for either state...
 
     }
 }
