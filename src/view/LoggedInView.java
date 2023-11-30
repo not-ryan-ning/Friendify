@@ -110,7 +110,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         editProfile = new JButton(loggedInViewModel.EDIT_PROFILE_BUTTON_LABEL);
         buttons.add(editProfile);
 
-        logout.addActionListener(this);
         logout.addActionListener(
             // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
@@ -122,8 +121,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             }
         );
 
-
-        requests.addActionListener(this);
         requests.addActionListener(
             // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
@@ -137,7 +134,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             }
         );
 
-        friends.addActionListener(this);
         friends.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -151,7 +147,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        match.addActionListener(this);
         match.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -165,7 +160,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        editProfile.addActionListener(this);
         editProfile.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
@@ -187,7 +181,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(topThreeArtists);
         this.add(buttons);
 }
-
 
     /**
      * React to a button click that results in evt.
