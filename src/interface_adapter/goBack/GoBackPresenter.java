@@ -5,15 +5,19 @@ import use_case.goBack.GoBackOutputBoundary;
 public class GoBackPresenter implements GoBackOutputBoundary {
     private final GoBackViewModel goBackViewModel;
     private ViewManagerModel viewManagerModel;
-    public GoBackPresenter(GoBackViewModel goBackViewModel, ViewManagerModel viewManagerModel) {
+    private LoggedInViewModel loggedInViewModel;
+    public GoBackPresenter(GoBackViewModel goBackViewModel, ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
         this.goBackViewModel = goBackViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = loggedInViewModel;
     }
 
     @Override
     public void prepareSuccessView() {
-        // On success, switch to the previous view.
-        GoBackState goBackState = goBackViewModel.getState();
+        // On success, switch to the home page (the logged in view)
+        LoggedInState loggedInState = loggedInViewModel.getState();
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
 
     }
 }
