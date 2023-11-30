@@ -196,7 +196,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // need multiple if branches to map each button click to the corresponding action
-        if (evt.getPropertyName().equals("state")) {
+        if (evt.getPropertyName().equals("loggedInState")) {
             LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
         }
