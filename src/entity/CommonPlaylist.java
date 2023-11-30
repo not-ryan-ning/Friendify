@@ -59,5 +59,8 @@ public class CommonPlaylist implements Playlist{
     public double getValence() {
         return valence;
     }
-
+    @Override
+    public ArrayList<String> getTopThreeArtists() {
+        return topThreeArtists;
+    }
 }
