@@ -2,7 +2,7 @@ package use_case.edit_bio;
 
 import entity.User;
 
-public class EditBioInteractor implements EditBioInputBoundary{
+public class EditBioInteractor implements EditBioInputBoundary {
     final EditBioUserDataAccessInterface editBioUserDAO;
     final EditBioOutputBoundary editBioPresenter;
 
@@ -11,12 +11,13 @@ public class EditBioInteractor implements EditBioInputBoundary{
         this.editBioUserDAO = editBioUserDataAccessInterface;
         this.editBioPresenter = editBioOutputBoundary;
     }
+  
     @Override
-    public void execute(String currentUsername, EditBioInputData editBioInputData) {
+    public void execute(String username, EditBioInputData editBioInputData) {
         //get the new bio from the input data
         String newBio = editBioInputData.getNewBio();
         //set the current user's profile's bio attribute to the new bio
-        User currentUser = editBioUserDAO.get(currentUsername);
+        User currentUser = editBioUserDAO.get(username);
         currentUser.getProfile().setBio(newBio);
         //save the new bio in the csv
         editBioUserDAO.editFile(currentUser.getUsername(), "bio", newBio);

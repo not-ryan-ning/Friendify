@@ -9,9 +9,8 @@ public class EditBioController {
     public EditBioController(EditBioInputBoundary editBioInteractor) {
         this.editBioInteractor = editBioInteractor;
     }
-
-    public void execute(String currentUsername, String newBio) {
+    public void execute(String username, String newBio) {
         EditBioInputData editBioInputData = new EditBioInputData(newBio);
-        editBioInteractor.execute(currentUsername, editBioInputData);
+        editBioInteractor.execute(username, editBioInputData);
     }
 }
