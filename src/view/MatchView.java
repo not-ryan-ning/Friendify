@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
+import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
 
@@ -16,15 +17,19 @@ import java.util.HashMap;
 public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
+    private final SendRequestViewModel sendRequestViewModel;
     private final SendRequestController sendRequestController;
 
     public MatchView(MatchViewModel matchViewModel,
+                     SendRequestViewModel sendRequestViewModel,
                      SendRequestController sendRequestController) {
 
         this.matchViewModel = matchViewModel;
+        this.sendRequestViewModel = sendRequestViewModel;
         this.sendRequestController = sendRequestController;
 
         matchViewModel.addPropertyChangeListener(this);
+        sendRequestViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,8 +60,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                                 String associatedString = (String) request.getClientProperty("userString");
                                 SendRequestState currentState = sendRequestViewModel.getState();
                                 String senderUsername = currentState.getUsername();
-                                currentState.setRecieverUsername(associatedString);
-                                String receiverUsername = currentState.getRecieverUsername();
+                                currentState.setReceiverUsername(associatedString);
+                                String receiverUsername = currentState.getReceiverUsername();
 
                                 sendRequestController.execute(senderUsername, receiverUsername);
                             }
@@ -77,7 +82,7 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        sendRequestState state = (SendRequestState) evt.getNewValue();
+        SendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         } else {
