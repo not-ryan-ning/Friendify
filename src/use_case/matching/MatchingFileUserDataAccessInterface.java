@@ -2,7 +2,7 @@ package use_case.matching;
 
 import java.util.ArrayList;
 
-public interface MatchingFileUserDataAccessObject {
+public interface MatchingFileUserDataAccessInterface {
     // returns all artists from the playlist
     ArrayList<String> getArtists();
     // returns all song titles from the playlist
@@ -17,6 +17,4 @@ public interface MatchingFileUserDataAccessObject {
     double getInstrumentalness(String playlistId);
     // 0-1
     double getValence(String playlistId);
-    // String
-    String getGenre(String playlistId);
 }
