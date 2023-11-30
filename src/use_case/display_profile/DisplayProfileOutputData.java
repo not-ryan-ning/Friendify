@@ -2,18 +2,29 @@ package use_case.display_profile;
 
 import entity.Profile;
 
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+
 public class DisplayProfileOutputData {
-    private Profile profile;
+    private String bio;
+    private ArrayList<String> topThreeArtists;
+    private String spotifyHandle;
 
-    public DisplayProfileOutputData(Profile profile) {
-        this.profile = profile; // profile can either be friendProfile or commonProfile
+    public DisplayProfileOutputData(String bio, ArrayList<String> topThreeArtists, String spotifyHandle) {
+        this.bio = bio;
+        this.topThreeArtists = topThreeArtists;
+        this.spotifyHandle = spotifyHandle;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public String getBio() {
+        return bio;
     }
-//    public Profile getFriendProfile() {
-//        return friendProfile;
-//    }
+
+    public ArrayList<String> getTopThreeArtists() {
+        return topThreeArtists;
+    }
+    public String getSpotifyHandle() {
+        return spotifyHandle;
+    }
 
 }
