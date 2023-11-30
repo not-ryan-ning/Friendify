@@ -20,6 +20,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final GoBackViewModel goBackViewModel;
 
     public DisplayFriendsView(DisplayFriendsController displayFriendsController,
                               DisplayFriendsViewModel displayFriendsViewModel,
@@ -31,6 +32,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
         this.displayProfileController = displayProfileController;
         this.displayProfileViewModel = displayProfileViewModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.goBackViewModel = goBackViewModel;
 
         displayFriendsViewModel.addPropertyChangeListener(this);
         displayProfileViewModel.addPropertyChangeListener(this);
@@ -42,7 +44,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
 
-        JButton back = new JButton("Go Back");
+        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);
