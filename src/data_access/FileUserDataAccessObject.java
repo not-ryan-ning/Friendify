@@ -114,11 +114,12 @@ public class FileUserDataAccessObject {
 
     HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
+        Playlist currentPlaylist = currentUser.getPlaylist();
 
         for (User user : accounts.values()) {
             if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
-                Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
+                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
                 scores.put(user.getUsername(), similarityScore);
             }
         }
