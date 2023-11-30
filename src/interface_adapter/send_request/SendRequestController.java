@@ -11,7 +11,6 @@ public class SendRequestController {
     }
 
     public void execute(String senderUsername, String receiverUsername) {
-        // Retrieve current user from LoggedInState
         SendRequestInputData sendRequestInputData = new SendRequestInputData(receiverUsername);
         sendRequestInteractor.execute(senderUsername, sendRequestInputData);
     }

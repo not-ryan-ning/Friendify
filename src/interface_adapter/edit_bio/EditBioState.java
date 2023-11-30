@@ -10,7 +10,7 @@ public class EditBioState {
     public String getBio() {
         return bio;
     }
-    public void setBIo(String bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 }

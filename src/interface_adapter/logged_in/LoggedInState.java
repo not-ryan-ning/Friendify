@@ -3,21 +3,19 @@ package interface_adapter.logged_in;
 import entity.User;
 
 public class LoggedInState {
-    private User user;
+    private String username;
 
     public LoggedInState(LoggedInState copy) {
-        user = copy.user;
+        username = copy.username;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
     public LoggedInState() {}
 
-    public User getCurrentUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
-
-    public void setCurrentUser(User currentUser) {
-        this.user = currentUser;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
 }
