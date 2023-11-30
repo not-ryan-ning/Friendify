@@ -41,7 +41,7 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
-        back = new JButton("back");
+        back = new JButton(GoBackViewModel.GO_BACK_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);
