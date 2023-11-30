@@ -44,7 +44,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
 
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        JButton back = new JButton(goBackViewModel.GO_BACK_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);

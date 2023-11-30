@@ -52,6 +52,21 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
         JPanel buttons = new JPanel();
 
+        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(back);
+
+        back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            backController.execute();
+                        }
+                    }
+                }
+        );
+
         DisplayRequestsState currentState = displayRequestsViewModel.getState();
         ArrayList<String> requests = currentState.getRequests();
 
