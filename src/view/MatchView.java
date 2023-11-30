@@ -48,6 +48,9 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
             request.putClientProperty("userString", username);
             buttons.add(request);
 
+            JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+            buttons.add(back);
+
             request.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
                             if (evt.getSource().equals(request)) {

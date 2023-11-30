@@ -120,8 +120,8 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
         buttons.add(saveSpotifyHandle);
 
-        goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
-        buttons.add(goBack);
+        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(back);
 
 
         saveBio.addActionListener(
@@ -190,10 +190,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 }
         );
 
-        goBack.addActionListener(
+        back.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(goBack)) {
+                        if (evt.getSource().equals(back)) {
                             goBackController.execute();
                         }
                     }
@@ -257,7 +257,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
 
         } else if (evt.getPropertyName().equals("displayPlaylistsState")) {
             DisplayPlaylistsState displayPlaylistsState = (DisplayPlaylistsState) evt.getNewValue();
-            List<String> playlistNames = new ArrayList<>(displayPlaylistsState.getPlaylistIdName().values());
+            ArrayList<String> playlistNames = new ArrayList<>(displayPlaylistsState.getPlaylistIdName().values());
 
             // Create a JList with a single selection model
             JList<String> playlistSelectList = new JList<String>((ListModel<String>) playlistNames);
