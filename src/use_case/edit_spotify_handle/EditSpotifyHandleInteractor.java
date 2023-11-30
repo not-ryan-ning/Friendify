@@ -13,12 +13,11 @@ public class EditSpotifyHandleInteractor implements EditSpotifyHandleInputBounda
     }
 
     @Override
-    public void execute(User currentUser, EditSpotifyHandleInputData editSpotifyHandleInputData) {
-        //get the new spotify handle from the input data
+    public void execute(String currentUsername, EditSpotifyHandleInputData editSpotifyHandleInputData) {
         String newSpotifyHandle = editSpotifyHandleInputData.getNewSpotifyHandle();
-        //set the current user's profile's bio attribute to the new bio
+        User currentUser = editSpotifyHandleUserDAO.get(currentUsername);
         currentUser.getProfile().setSpotifyHandle(newSpotifyHandle);
-        //save the new bio in the csv
+        //save the new spotify handle in the csv
         editSpotifyHandleUserDAO.editFile(currentUser.getUsername(), "4", newSpotifyHandle);
 
         //output data
