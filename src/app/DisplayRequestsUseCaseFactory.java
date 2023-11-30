@@ -4,8 +4,6 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.display_requests.DisplayRequestsController;
 import interface_adapter.display_requests.DisplayRequestsPresenter;
 import interface_adapter.display_requests.DisplayRequestsViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
-import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.display_requests.DisplayRequestsInputBoundary;
 import use_case.display_requests.DisplayRequestsInteractor;
 import use_case.display_requests.DisplayRequestsOutputBoundary;
@@ -21,10 +19,10 @@ public class DisplayRequestsUseCaseFactory {
     public static DisplayRequestsView create(
         ViewManagerModel viewManagerModel,
         DisplayRequestsViewModel displayRequestsViewModel,
-        DisplayRequestsUserDataAccessInterface displayRequestsUserDataAccessObject,
+        DisplayRequestsUserDataAccessInterface displayRequestsUserDataAccessObject
         // AcceptRequestsViewModel acceptRequestsViewModel,
-        // AcceptRequestsUserDataAccessInterface acceptRequestsuserDataAccessObject,
-        LoggedInViewModel loggedInViewModel) {
+        // AcceptRequestsUserDataAccessInterface acceptRequestsuserDataAccessObject
+        ) {
         try {
             DisplayRequestsController displayRequestsController = createDisplayRequestsUseCase(viewManagerModel, displayRequestsViewModel, displayRequestsUserDataAccessObject);
             // AcceptRequestsController acceptRequestsController = createAcceptRequestsUseCase(viewManagerModel, acceptRequestsViewModel, acceptRequestsuserDataAccessObject);
