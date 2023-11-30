@@ -13,5 +13,7 @@ public class GoBackPresenter implements GoBackOutputBoundary {
     @Override
     public void prepareSuccessView() {
         // On success, switch to the previous view.
+        GoBackState goBackState = goBackViewModel.getState();
+
     }
 }
