@@ -41,6 +41,22 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
         JPanel buttons = new JPanel();
 
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
+
+        JButton back = new JButton("Go Back");
+        buttons.add(back);
+
+        back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            backController.execute();
+                        }
+                    }
+                }
+        );
+
         ArrayList<String> friends = currentState.getFriends();
 
         for (String friend: friends) {
