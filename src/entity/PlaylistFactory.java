@@ -8,3 +8,4 @@ public interface PlaylistFactory {
                     HashMap<String, Integer> genres, double acousticness, double energy,
                     double instrumentalness, double valence, ArrayList<String> topThreeArtists);
 }
+

@@ -14,7 +14,7 @@ public class SendRequestViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("clearState", null, this.sendRequestState);
+        support.firePropertyChange("sendRequestState", null, this.sendRequestState);
     }
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);

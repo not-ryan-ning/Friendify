@@ -1,5 +1,5 @@
 package use_case.match;
 
 public interface MatchOutputBoundary {
-    void prepareSuccessView(MatchOutputData matches);
+    void prepareSuccessView(MatchOutputData response);
 }

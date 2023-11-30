@@ -6,7 +6,6 @@ import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.match.MatchUserDataAccessInterface;
 import use_case.send_request.SendRequestUserDataAccessInterface;
 
