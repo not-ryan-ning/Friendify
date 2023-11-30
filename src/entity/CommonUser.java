@@ -6,9 +6,9 @@ public class CommonUser implements User {
     private final String username;
     private final String password;
     private final Profile profile;
-    private final Playlist playlist;
-    private final ArrayList<String> friends;
-    private final ArrayList<String> requests;
+    private Playlist playlist;
+    private ArrayList<String> friends;
+    private ArrayList<String> requests;
 
     public CommonUser(String username, String password, Profile profile, Playlist playlist, ArrayList<String> friends, ArrayList<String> requests) {
         this.username = username;
@@ -31,4 +31,6 @@ public class CommonUser implements User {
     public ArrayList<String> getFriends() { return friends; }
     @Override
     public ArrayList<String> getRequests() { return requests; }
+    @Override
+    public void setPlaylist(Playlist playlist) { this.playlist = playlist; }
 }
