@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.edit_profile.EditProfileController;
+import interface_adapter.edit_profile.EditProfileState;
 import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.display_friends.DisplayFriendsViewModel;
 import interface_adapter.display_friends.DisplayFriendsController;
@@ -76,10 +77,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.editProfileViewModel = editProfileViewModel;
         this.editProfileController = editProfileController;
 
-        this.loggedInViewModel.addPropertyChangeListener(this);
-
-
+        loggedInViewModel.addPropertyChangeListener(this);
         logoutViewModel.addPropertyChangeListener(this);
+        displayRequestsViewModel.addPropertyChangeListener(this);
+        displayFriendsViewModel.addPropertyChangeListener(this);
+        matchViewModel.addPropertyChangeListener(this);
+        editProfileViewModel.addPropertyChangeListener(this);
+
 
         JLabel title = new JLabel("Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -196,10 +200,32 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // need multiple if branches to map each button click to the corresponding action
-        if (evt.getPropertyName().equals("loggedInState")) {
-            LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
+        LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
+        username.setText(loggedInState.getUsername());
+        bio.setText(loggedInState.getBio());
+        spotifyHandle.setText(loggedInState.getSpotifyHandle);
+        topThreeArtists.setText(loggedInState.getTopThreeArtists);
+
+        if (evt.getPropertyName().equals("displayRequestsState")) {
+            DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
+            state.setUsername(loggedInState.getUsername());
         }
+
+        else if (evt.getPropertyName().equals("displayFriendsState")) {
+            DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
+            state.setUsername(loggedInState.getUsername());
+        }
+
+        else if (evt.getPropertyName().equals("matchState")) {
+            MatchState state = (MatchState) evt.getNewValue();
+            state.setUsername(loggedInState.getUsername());
+        }
+
+        else if (evt.getPropertyName().equals("editProfileState")) {
+            EditProfileState state = (EditProfileState) evt.getNewValue();
+            state.setUsername(loggedInState.getUsername());
+        }
+
         else {
             JOptionPane.showMessageDialog(this, "You have logged out");
         }
