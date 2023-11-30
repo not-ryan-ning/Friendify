@@ -2,7 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
-public class CommonProfile implements Profile {
+public class CommonProfile implements Profile{
     private final String bio;
     private final ArrayList<String> topThreeArtists;
     private final String spotifyHandle;
