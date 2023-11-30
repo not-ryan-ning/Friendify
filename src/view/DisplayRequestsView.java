@@ -127,6 +127,10 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     }
 
     @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("acceptRequestsState")) {
             AcceptRequestsState acceptRequestsState = (AcceptRequestsState) evt.getNewValue();
