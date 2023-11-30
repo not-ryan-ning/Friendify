@@ -3,10 +3,10 @@ package interface_adapter.logged_in;
 import entity.User;
 
 public class LoggedInState {
-    private User user;
+    private String username;
 
     public LoggedInState(LoggedInState copy) {
-        user = copy.user;
+        username = copy.username;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
