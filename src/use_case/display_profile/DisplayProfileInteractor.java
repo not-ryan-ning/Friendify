@@ -1,5 +1,6 @@
 package use_case.display_profile;
 
+import entity.Profile;
 import entity.User;
 import interface_adapter.display_profile.DisplayProfileState;
 import interface_adapter.display_profile.DisplayProfileViewModel;
@@ -22,17 +23,14 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
         String otherUsername = displayProfileInputData.getUsername();
 
         User user = userDataAccessObject.get(otherUsername);
-
-        DisplayProfileState displayProfileState = displayProfileViewModel.getState();
-
+        Profile profile = user.getProfile();
+        DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData(profile.getBio(), profile.getTopThreeArtists(), profile.getSpotifyHandle());
         // if user is a friend, then they can view the friends-only user profile:
         if (userDataAccessObject.isFriend(otherUsername)) {
-            DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData(displayProfileState.getFriendProfile());
             displayProfilePresenter.prepareSuccessViewFriends(displayProfileOutputData);
         }
         // else the user can only see the common user profile:
         else {
-            DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData(displayProfileState.getCommonProfile());
             displayProfilePresenter.prepareSuccessViewCommon(displayProfileOutputData);
         }
     }
