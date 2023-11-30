@@ -34,6 +34,21 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
         JPanel buttons = new JPanel();
 
+        JButton back = new JButton("Go Back");
+        buttons.add(back);
+
+        back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            backController.execute();
+                        }
+                    }
+                }
+        );
+
 
         // Adding view profile and accept request buttons for every request
         DisplayRequestsState currentState = displayRequestsViewModel.getState();
