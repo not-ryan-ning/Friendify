@@ -26,6 +26,9 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        loggedInState.setBio(response.getBio());
+        loggedInState.setTopThreeArtists(response.getTopThreeArtists());
+        loggedInState.setSpotifyHandle(response.getSpotifyHandle());
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
 

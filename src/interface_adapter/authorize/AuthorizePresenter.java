@@ -25,4 +25,9 @@ public class AuthorizePresenter implements AuthorizeOutputBoundary {
         this.viewManagerModel.setActiveView(authorizeViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailView(String error) {
+        System.out.println(error); // still need more implementation
+    }
 }
