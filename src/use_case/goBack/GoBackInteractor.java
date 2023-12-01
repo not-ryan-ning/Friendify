@@ -1,11 +1,11 @@
 package use_case.goBack;
 
 public class GoBackInteractor implements GoBackInputBoundary{
-    final GoBackUserDataAcessInterface userDataAccessObject;
+    final GoBackUserDataAccessInterface userDataAccessObject;
     final GoBackOutputBoundary goBackPresenter;
 
 
-    public GoBackInteractor(GoBackUserDataAcessInterface userDataAccessInterface,
+    public GoBackInteractor(GoBackUserDataAccessInterface userDataAccessInterface,
                             GoBackOutputBoundary goBackOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.goBackPresenter = goBackOutputBoundary;
