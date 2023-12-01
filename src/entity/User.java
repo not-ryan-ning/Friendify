@@ -8,4 +8,5 @@ public interface User {
     Playlist getPlaylist();
     ArrayList<String> getFriends();
     ArrayList<String> getRequests();
+    void setPlaylist(Playlist playlist);
 }

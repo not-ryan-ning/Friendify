@@ -7,6 +7,6 @@ public interface Profile {
     ArrayList<String> getTopThreeArtists();
     String getSpotifyHandle();
     void setBio(String bio);
-    void setSpotifyHandle(String spotifyHandle);
     void setTopThreeArtists(ArrayList<String> topThreeArtists);
+    void setSpotifyHandle(String spotifyHandle);
 }
