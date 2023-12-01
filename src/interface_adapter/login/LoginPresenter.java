@@ -1,8 +1,8 @@
 package interface_adapter.login;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.ViewManagerModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -26,6 +26,9 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        loggedInState.setBio(response.getBio());
+        loggedInState.setTopThreeArtists(response.getTopThreeArtists());
+        loggedInState.setSpotifyHandle(response.getSpotifyHandle());
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
 

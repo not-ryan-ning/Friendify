@@ -2,7 +2,6 @@ package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.logout.LogoutOutputData;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
 
@@ -18,7 +17,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(LogoutOutputData response) {
+    public void prepareSuccessView() {
         LogoutState logoutState = logoutViewModel.getState();
 
 
@@ -30,8 +29,10 @@ public class LogoutPresenter implements LogoutOutputBoundary {
 
         // now switch to login screen
         LoginState loginState = loginViewModel.getState();
+        loginState.setUsername("");
+        loginState.setPassword("");
         this.loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
+        this.loginViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
