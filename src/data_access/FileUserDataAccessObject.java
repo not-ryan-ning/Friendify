@@ -155,7 +155,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         // Update the usernamePlaylist map to the new playlist
         usernamePlaylist.put(username, playlist);
         ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
-        String artists = ""; // need to convert the arrayList into a String
+        String artists = String.join(",", topThreeArtists);
         String playlistId = playlist.getPlaylistId();
 
         // Update the users csv file
