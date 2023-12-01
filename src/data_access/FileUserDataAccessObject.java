@@ -36,6 +36,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         this.profileFactory = profileFactory;
         this.matchingStrategy = matchingStrategy;
         this.usersFile = new File(csvPath);
+      
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("bio", 2);
@@ -132,23 +133,18 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         receiver.getRequests().add(sender.getUsername());
     }
 
-    public void setMatchingStrategy(MatchingStrategy matchingStrategy) {
-        this.matchingStrategy = matchingStrategy;
-    }
-
-    public HashMap<String, Double> getMatches(User currentUser) {
-        HashMap<String, Double> matches = new HashMap<>();
+    HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
+        HashMap<String, Double> scores = new HashMap<>();
+        Playlist currentPlaylist = currentUser.getPlaylist();
 
         for (User user : accounts.values()) {
             if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
-                Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
-                if (similarityScore >= 0.5) {
-                    matches.put(user.getUsername(), similarityScore);
-                }
+                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+                scores.put(user.getUsername(), similarityScore);
             }
         }
-        return matches;
+        return scores;
     }
 
     public void editPlaylist(String username, Playlist playlist) {
