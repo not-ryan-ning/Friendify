@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.display_friends.DisplayFriendsState;
+import interface_adapter.display_requests.DisplayRequestsState;
 import interface_adapter.edit_profile.EditProfileController;
 import interface_adapter.edit_profile.EditProfileState;
 import interface_adapter.edit_profile.EditProfileViewModel;
@@ -196,8 +197,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
         username.setText(loggedInState.getUsername());
         bio.setText(loggedInState.getBio());
-        spotifyHandle.setText(loggedInState.getSpotifyHandle);
-        topThreeArtists.setText(loggedInState.getTopThreeArtists);
+        spotifyHandle.setText(loggedInState.getSpotifyHandle());
+        topThreeArtists.setText(loggedInState.getTopThreeArtists()); // need to convert this into a string
 
         if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();

@@ -17,12 +17,14 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
     private final SendRequestController sendRequestController;
+    private final GoBackViewModel goBackViewModel;
 
     public MatchView(MatchViewModel matchViewModel,
-                     SendRequestController sendRequestController) {
+                     SendRequestController sendRequestController, GoBackViewModel goBackViewModel) {
 
         this.matchViewModel = matchViewModel;
         this.sendRequestController = sendRequestController;
+        this.goBackViewModel = goBackViewModel;
 
         matchViewModel.addPropertyChangeListener(this);
 
@@ -47,6 +49,9 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
             // Associate each request button with the corresponding top similar username
             request.putClientProperty("userString", username);
             buttons.add(request);
+
+            JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+            buttons.add(back);
 
             request.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {

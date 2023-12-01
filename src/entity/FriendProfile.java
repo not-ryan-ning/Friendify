@@ -2,12 +2,12 @@ package entity;
 
 import java.util.ArrayList;
 
-public class CommonProfile implements Profile{
+public class FriendProfile implements Profile {
     private final String bio;
     private final ArrayList<String> topThreeArtists;
     private final String spotifyHandle;
 
-    public CommonProfile(String bio, ArrayList<String> topThreeArtists, String spotifyHandle) {
+    public FriendProfile(String bio, ArrayList<String> topThreeArtists, String spotifyHandle) {
         this.bio = bio;
         this.topThreeArtists = topThreeArtists;
         this.spotifyHandle = spotifyHandle;
@@ -26,3 +26,5 @@ public class CommonProfile implements Profile{
         return spotifyHandle;
     }
 }
+
+

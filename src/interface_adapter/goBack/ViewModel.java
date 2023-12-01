@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.goBack;
 
 import java.beans.PropertyChangeListener;
 
@@ -15,3 +15,6 @@ public abstract class ViewModel {
 
     public abstract void firePropertyChanged();
     public abstract void addPropertyChangeListener(PropertyChangeListener listener);
+
+
+}

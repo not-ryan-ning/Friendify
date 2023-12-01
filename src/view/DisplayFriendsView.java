@@ -20,17 +20,19 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final GoBackViewModel goBackViewModel;
 
     public DisplayFriendsView(DisplayFriendsController displayFriendsController,
                               DisplayFriendsViewModel displayFriendsViewModel,
                               DisplayProfileController displayProfileController,
                               DisplayProfileViewModel displayProfileViewModel,
-                              LoggedInViewModel loggedInViewModel) {
+                              LoggedInViewModel loggedInViewModel, GoBackViewModel goBackViewModel) {
         this.displayFriendsController = displayFriendsController;
         this.displayFriendsViewModel = displayFriendsViewModel;
         this.displayProfileController = displayProfileController;
         this.displayProfileViewModel = displayProfileViewModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.goBackViewModel = goBackViewModel;
 
         displayFriendsViewModel.addPropertyChangeListener(this);
         displayProfileViewModel.addPropertyChangeListener(this);
@@ -41,6 +43,22 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
         JPanel buttons = new JPanel();
 
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
+
+        JButton back = new JButton(goBackViewModel.GO_BACK_LABEL);
+        buttons.add(back);
+
+        back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            backController.execute();
+                        }
+                    }
+                }
+        );
+
         ArrayList<String> friends = currentState.getFriends();
 
         for (String friend: friends) {

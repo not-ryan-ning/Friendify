@@ -27,6 +27,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final AcceptRequestsController acceptRequestsController;
     private final AcceptRequestsViewModel acceptRequestsViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final GoBackViewModel goBackViewModel;
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel,
                                DisplayRequestsController displayRequestsController,
@@ -34,7 +35,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                                DisplayProfileController displayProfileController,
                                AcceptRequestsController acceptRequestsController,
                                AcceptRequestsViewModel acceptRequestsViewModel,
-                               LoggedInViewModel loggedInViewModel) {
+                               LoggedInViewModel loggedInViewModel,
+                               GoBackViewModel goBackViewModel) {
         this.displayRequestsController = displayRequestsController;
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayProfileController = displayProfileController;
@@ -42,6 +44,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         this.acceptRequestsController = acceptRequestsController;
         this.acceptRequestsViewModel = acceptRequestsViewModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.goBackViewModel = goBackViewModel;
 
         displayRequestsViewModel.addPropertyChangeListener(this);
         displayProfileViewModel.addPropertyChangeListener(this);
@@ -51,6 +54,21 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
+
+        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(back);
+
+        back.addActionListener(this);
+        back.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            backController.execute();
+                        }
+                    }
+                }
+        );
 
         DisplayRequestsState currentState = displayRequestsViewModel.getState();
         ArrayList<String> requests = currentState.getRequests();
@@ -111,6 +129,10 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         }
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("acceptRequestsState")) {
