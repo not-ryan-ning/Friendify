@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CommonProfile implements Profile{
     private final String bio;
@@ -18,12 +17,10 @@ public class CommonProfile implements Profile{
     public String getBio() {
         return bio;
     }
-
     @Override
     public ArrayList<String> getTopThreeArtists() {
         return topThreeArtists;
     }
-
     @Override
     public String getSpotifyHandle() {
         return spotifyHandle;

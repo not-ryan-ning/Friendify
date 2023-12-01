@@ -2,7 +2,6 @@ package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.logout.LogoutOutputData;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
 
@@ -18,7 +17,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(LogoutOutputData response) {
+    public void prepareSuccessView() {
         LogoutState logoutState = logoutViewModel.getState();
 
 

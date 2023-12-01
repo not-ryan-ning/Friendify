@@ -6,7 +6,6 @@ import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.match.MatchUserDataAccessInterface;
 import use_case.send_request.SendRequestUserDataAccessInterface;
 
@@ -156,7 +155,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         // Update the usernamePlaylist map to the new playlist
         usernamePlaylist.put(username, playlist);
         ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
-        String artists = ""; // need to convert the arrayList into a String
+        String artists = String.join(",", topThreeArtists);
         String playlistId = playlist.getPlaylistId();
 
         // Update the users csv file

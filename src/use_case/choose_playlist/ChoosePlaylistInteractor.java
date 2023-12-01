@@ -46,6 +46,8 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
                 energy, instrumentalness, valence, topTreeArtists);
 
         User user = userDataAccessObject.get(username);
+        user.setPlaylist(playlist);
+        user.getProfile().setTopThreeArtists(topTreeArtists);
         userDataAccessObject.editPlaylist(user.getUsername(), playlist);
         playlistDataAccessObject.storePlaylist(playlist);
 
