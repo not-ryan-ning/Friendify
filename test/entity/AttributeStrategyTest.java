@@ -1,15 +1,10 @@
 package entity;
 
-import entity.CommonPlaylistFactory;
-import entity.Playlist;
-import entity.PlaylistFactory;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
