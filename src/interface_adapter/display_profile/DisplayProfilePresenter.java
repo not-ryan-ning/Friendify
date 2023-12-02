@@ -22,23 +22,31 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
 
-
+    /**
+     * Prepares and switches the view to display a friend profile based on the response data.
+     *
+     * @param response The output data containing information about the friend profile.
+     */
     @Override
     public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
         DisplayFriendProfileState displayFriendProfileState = displayFriendProfileViewModel.getState();
-       // displayFriendProfileState.setFriendProfile(response.getProfile());
         this.displayFriendProfileViewModel.setState(displayFriendProfileState);
         this.displayFriendProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(displayFriendProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
+
+    /**
+     * Prepares and switches the view to display a common profile based on the response data.
+     *
+     * @param response The output data containing information about the common profile.
+     */
     @Override
     public void prepareSuccessViewCommon(DisplayProfileOutputData response) {
         // switch to the common view profile of the user
         DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
-       // displayCommonProfileState.setCommonProfile(response.getProfile());
         this.displayCommonProfileViewModel.setState(displayCommonProfileState);
         this.displayCommonProfileViewModel.firePropertyChanged();
 
