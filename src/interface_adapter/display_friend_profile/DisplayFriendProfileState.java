@@ -7,14 +7,26 @@ public class DisplayFriendProfileState {
     private Profile friendProfile;
     private String username;
 
+    /**
+     * Constructs a new DisplayFriendProfileState instance by copying the state from another instance.
+     *
+     * @param copy The DisplayFriendProfileState to copy from.
+     */
     public DisplayFriendProfileState(DisplayFriendProfileState copy) {
         this.friendProfile = copy.friendProfile;
         this.username = copy.username;
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
+    /**
+     * Constructs a new DisplayFriendProfileState instance
+     */
     public DisplayFriendProfileState() {}
 
+    /**
+     * Gets the friend profile associated with this state.
+     *
+     * @return The friend profile.
+     */
     public Profile getFriendProfile() {
         return friendProfile;
     }
@@ -23,6 +35,11 @@ public class DisplayFriendProfileState {
         this.friendProfile = friendProfile;
     }
 
+    /**
+     * Gets the username associated with this state.
+     *
+     * @return The username.
+     */
     public String getUsername() {
         return username;
     }
