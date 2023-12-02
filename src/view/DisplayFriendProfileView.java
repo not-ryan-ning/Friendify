@@ -2,6 +2,8 @@ package view;
 
 import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
 import interface_adapter.display_friend_profile.DisplayFriendProfileState;
+import interface_adapter.go_back.GoBackController;
+import interface_adapter.go_back.GoBackViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,13 +16,17 @@ import java.util.ArrayList;
 public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
+    private final GoBackController goBackController;
 
     JLabel username;
     JLabel spotifyHandle;
     JLabel bio;
     JLabel topThreeArtists;
-    public DisplayFriendProfileView(DisplayFriendProfileViewModel displayFriendProfileViewModel) {
+    public DisplayFriendProfileView(DisplayFriendProfileViewModel displayFriendProfileViewModel,
+                                    GoBackController goBackController) {
         this.displayFriendProfileViewModel = displayFriendProfileViewModel;
+        this.goBackController = goBackController;
+
         this.displayFriendProfileViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("User's Profile");
@@ -39,16 +45,15 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
-        buttons.add(back);
+        JButton goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(goBack);
 
-        back.addActionListener(this);
-        back.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
+        goBack.addActionListener(this);
+        goBack.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            backController.execute();
+                        if (evt.getSource().equals(goBack)) {
+                            goBackController.execute();
                         }
                     }
                 }

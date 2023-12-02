@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class DisplayProfileViewModel extends ViewModel {
+    public static String VIEW_BUTTON_LABEL = "Profile";
 
     private DisplayProfileState state = new DisplayProfileState();
 

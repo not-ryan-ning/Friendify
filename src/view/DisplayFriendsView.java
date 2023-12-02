@@ -3,6 +3,10 @@ package view;
 import interface_adapter.display_friends.DisplayFriendsController;
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_friends.DisplayFriendsViewModel;
+import interface_adapter.display_profile.DisplayProfileController;
+import interface_adapter.display_profile.DisplayProfileViewModel;
+import interface_adapter.go_back.GoBackController;
+import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
@@ -20,18 +24,21 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
     private final LoggedInViewModel loggedInViewModel;
+    private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
 
     public DisplayFriendsView(DisplayFriendsController displayFriendsController,
                               DisplayFriendsViewModel displayFriendsViewModel,
                               DisplayProfileController displayProfileController,
                               DisplayProfileViewModel displayProfileViewModel,
-                              LoggedInViewModel loggedInViewModel, GoBackViewModel goBackViewModel) {
+                              LoggedInViewModel loggedInViewModel, GoBackController goBackController,
+                              GoBackViewModel goBackViewModel) {
         this.displayFriendsController = displayFriendsController;
         this.displayFriendsViewModel = displayFriendsViewModel;
         this.displayProfileController = displayProfileController;
         this.displayProfileViewModel = displayProfileViewModel;
         this.loggedInViewModel = loggedInViewModel;
+        this.goBackController = goBackController;
         this.goBackViewModel = goBackViewModel;
 
         displayFriendsViewModel.addPropertyChangeListener(this);
@@ -44,16 +51,16 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
 
-        JButton back = new JButton(goBackViewModel.GO_BACK_LABEL);
-        buttons.add(back);
+        JButton goBack = new JButton(goBackViewModel.GO_BACK_LABEL);
+        buttons.add(goBack);
 
-        back.addActionListener(this);
-        back.addActionListener(
+        goBack.addActionListener(this);
+        goBack.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            backController.execute();
+                        if (evt.getSource().equals(goBack)) {
+                            goBackController.execute();
                         }
                     }
                 }

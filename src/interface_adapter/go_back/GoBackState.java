@@ -1,4 +1,4 @@
-package interface_adapter.goBack;
+package interface_adapter.go_back;
 
 public class GoBackState {
     public GoBackState() {}
