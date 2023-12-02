@@ -178,33 +178,32 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        LoggedInState currentState = loggedInViewModel.getState();
         if (evt.getPropertyName().equals("loggedInState")) {
             LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
             username.setText(loggedInState.getUsername());
             bio.setText(loggedInState.getBio());
             spotifyHandle.setText(loggedInState.getSpotifyHandle());
             topThreeArtists.setText(String.join(", ", loggedInState.getTopThreeArtists()));
-
-            if (evt.getPropertyName().equals("displayRequestsState")) {
-                DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
-                state.setUsername(loggedInState.getUsername());
-                displayRequestsViewModel.setState(state);
-            } else if (evt.getPropertyName().equals("displayFriendsState")) {
-                DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
-                state.setUsername(loggedInState.getUsername());
-                displayFriendsViewModel.setState(state);
-            } else if (evt.getPropertyName().equals("matchState")) {
-                MatchState state = (MatchState) evt.getNewValue();
-                state.setUsername(loggedInState.getUsername());
-                matchViewModel.setState(state);
-            } else if (evt.getPropertyName().equals("editProfileState")) {
-                EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
-                editProfileState.setUsername(loggedInState.getUsername());
-                editProfileViewModel.setState(editProfileState);
-            } else if (evt.getPropertyName().equals("logoutState")) {
-                JOptionPane.showMessageDialog(this, "You have logged out");
-            }
+        }
+        if (evt.getPropertyName().equals("displayRequestsState")) {
+            DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
+            state.setUsername(currentState.getUsername());
+            displayRequestsViewModel.setState(state);
+        } else if (evt.getPropertyName().equals("displayFriendsState")) {
+            DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
+            state.setUsername(currentState.getUsername());
+            displayFriendsViewModel.setState(state);
+        } else if (evt.getPropertyName().equals("matchState")) {
+            MatchState state = (MatchState) evt.getNewValue();
+            state.setUsername(currentState.getUsername());
+            matchViewModel.setState(state);
+        } else if (evt.getPropertyName().equals("editProfileState")) {
+            EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
+            editProfileState.setUsername(currentState.getUsername());
+            editProfileViewModel.setState(editProfileState);
+        } else if (evt.getPropertyName().equals("logoutState")) {
+            JOptionPane.showMessageDialog(this, "You have logged out");
         }
     }
 }
