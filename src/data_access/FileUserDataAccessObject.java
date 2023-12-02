@@ -128,9 +128,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public void sendFriendRequest(User sender, User receiver) {
-        //if (receiver.getRequests().contains(sender.getUsername())) {
-        //    throw new IllegalStateException("You have already sent a request to this user.");
-        // }
         receiver.getRequests().add(sender.getUsername());
     }
 
@@ -139,6 +136,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         Playlist currentPlaylist = currentUser.getPlaylist();
 
         for (User user : accounts.values()) {
+            // Execute if the current user is not already friends with the user being checked
             if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
