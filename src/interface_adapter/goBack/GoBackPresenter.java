@@ -12,6 +12,9 @@ public class GoBackPresenter implements GoBackOutputBoundary {
         this.loggedInViewModel = loggedInViewModel;
     }
 
+    /**
+     * Prepares and switches the view to back to the logged in view for the back button function.
+     */
     @Override
     public void prepareSuccessView() {
         // On success, switch to the home page (the logged in view)
