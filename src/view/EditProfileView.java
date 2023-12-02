@@ -275,7 +275,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             EditBioState editBioState = (EditBioState) evt.getNewValue();
             changeBioInputField.setText(editBioState.getBio());
             loggedInState.setBio(editBioState.getBio());
-            System.out.println(loggedInState.getBio());
             loggedInViewModel.setState(loggedInState);
 
         } else if (evt.getPropertyName().equals("authorizeState")) {
