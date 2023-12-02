@@ -24,8 +24,6 @@ public class DisplayFriendProfileViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Login Presenter will call to let the ViewModel know
-    // to alert the View
     public void firePropertyChanged() {
         support.firePropertyChange("friendProfileState", null, this.state);
     }
@@ -33,17 +31,7 @@ public class DisplayFriendProfileViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
     public DisplayFriendProfileState getState() {
         return state;
-    }
-
-
-    public Profile getFriendProfile() {
-        return friendProfile;
-    }
-
-    public void setCommonProfile(Profile friendProfile) {
-        this.friendProfile = friendProfile;
     }
 }
