@@ -3,6 +3,7 @@ package view;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
+import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
 import interface_adapter.send_request.SendRequestViewModel;
@@ -18,21 +19,24 @@ import java.util.HashMap;
 public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
+    private final SendRequestViewModel sendRequestViewModel;
     private final SendRequestController sendRequestController;
     private final SendRequestViewModel sendRequestViewModel;
     private final GoBackViewModel goBackViewModel;
 
     public MatchView(MatchViewModel matchViewModel,
-                     SendRequestController sendRequestController,
                      SendRequestViewModel sendRequestViewModel,
+                     SendRequestController sendRequestController,
                      GoBackViewModel goBackViewModel) {
 
         this.matchViewModel = matchViewModel;
+        this.sendRequestViewModel = sendRequestViewModel;
         this.sendRequestController = sendRequestController;
         this.sendRequestViewModel = sendRequestViewModel;
         this.goBackViewModel = goBackViewModel;
 
         matchViewModel.addPropertyChangeListener(this);
+        sendRequestViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -65,7 +69,7 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                                 // Retrieve the associated username
                                 String associatedString = (String) request.getClientProperty("userString");
                                 SendRequestState currentState = sendRequestViewModel.getState();
-                                String senderUsername = currentState.getSenderUsername();
+                                String senderUsername = currentState.getUsername();
                                 currentState.setReceiverUsername(associatedString);
                                 String receiverUsername = currentState.getReceiverUsername();
 
