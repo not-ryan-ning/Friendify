@@ -96,7 +96,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     private void save() {
-        System.out.println("save is called");
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(usersFile));
