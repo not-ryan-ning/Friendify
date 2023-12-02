@@ -23,10 +23,6 @@ import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.signup.SignupViewModel;
 
-import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
-import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
-import use_case.match.MatchUserDataAccessInterface;
-import view.DisplayFriendProfileView;
 import view.LoggedInView;
 import view.LoginView;
 import view.ViewManager;
