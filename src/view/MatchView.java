@@ -1,5 +1,7 @@
 package view;
 
+import interface_adapter.edit_bio.EditBioState;
+import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
@@ -21,16 +23,19 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     private final SendRequestViewModel sendRequestViewModel;
     private final SendRequestController sendRequestController;
     private final GoBackViewModel goBackViewModel;
+    private final GoBackController goBackController;
 
     public MatchView(MatchViewModel matchViewModel,
                      SendRequestViewModel sendRequestViewModel,
                      SendRequestController sendRequestController,
-                     GoBackViewModel goBackViewModel) {
+                     GoBackViewModel goBackViewModel,
+                     GoBackController goBackController) {
 
         this.matchViewModel = matchViewModel;
         this.sendRequestViewModel = sendRequestViewModel;
         this.sendRequestController = sendRequestController;
         this.goBackViewModel = goBackViewModel;
+        this.goBackController = goBackController;
 
         matchViewModel.addPropertyChangeListener(this);
         sendRequestViewModel.addPropertyChangeListener(this);
@@ -39,6 +44,19 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel buttons = new JPanel();
+
+        JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
+        buttons.add(back);
+
+        back.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            goBackController.execute();
+                        }
+                    }
+                }
+        );
 
         // Adding request buttons for all the matches from the current state
         MatchState currentState = matchViewModel.getState();
@@ -57,23 +75,20 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
             request.putClientProperty("userString", username);
             buttons.add(request);
 
-            JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
-            buttons.add(back);
-
             request.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(request)) {
-                                // Retrieve the associated username
-                                String associatedString = (String) request.getClientProperty("userString");
-                                SendRequestState currentState = sendRequestViewModel.getState();
-                                String senderUsername = currentState.getUsername();
-                                currentState.setReceiverUsername(associatedString);
-                                String receiverUsername = currentState.getReceiverUsername();
+                public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(request)) {
+                        // Retrieve the associated username
+                        String associatedString = (String) request.getClientProperty("userString");
+                        SendRequestState currentState = sendRequestViewModel.getState();
+                        String senderUsername = currentState.getUsername();
+                        currentState.setReceiverUsername(associatedString);
+                        String receiverUsername = currentState.getReceiverUsername();
 
-                                sendRequestController.execute(senderUsername, receiverUsername);
-                            }
-                        }
+                        sendRequestController.execute(senderUsername, receiverUsername);
                     }
+                }
+            }
             );
         }
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -95,5 +110,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         } else {
             JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
         }
+        JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
     }
 }

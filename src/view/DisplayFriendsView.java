@@ -33,6 +33,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
                               DisplayProfileViewModel displayProfileViewModel,
                               LoggedInViewModel loggedInViewModel, GoBackController goBackController,
                               GoBackViewModel goBackViewModel) {
+
         this.displayFriendsController = displayFriendsController;
         this.displayFriendsViewModel = displayFriendsViewModel;
         this.displayProfileController = displayProfileController;
@@ -49,23 +50,20 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
         JPanel buttons = new JPanel();
 
-        DisplayFriendsState currentState = displayFriendsViewModel.getState();
+        JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
+        buttons.add(back);
 
-        JButton goBack = new JButton(goBackViewModel.GO_BACK_LABEL);
-        buttons.add(goBack);
-
-        goBack.addActionListener(this);
-        goBack.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
+        back.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(goBack)) {
+                        if (evt.getSource().equals(back)) {
                             goBackController.execute();
                         }
                     }
                 }
         );
 
+        DisplayFriendsState currentState = displayFriendsViewModel.getState();
         ArrayList<String> friends = currentState.getFriends();
 
         for (String friend: friends) {
@@ -78,21 +76,21 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
             buttons.add(viewProfile);
 
             viewProfile.addActionListener(
-                    new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(viewProfile)) {
-                                DisplayFriendsState currentState = displayFriendsViewModel.getState();
-                                // Retrieve the associated friend name
-                                String associatedString = (String) viewProfile.getClientProperty("userString");
-                                currentState.setFriendName(associatedString);
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(viewProfile)) {
+                            DisplayFriendsState currentState = displayFriendsViewModel.getState();
+                            // Retrieve the associated friend name
+                            String associatedString = (String) viewProfile.getClientProperty("userString");
+                            currentState.setFriendName(associatedString);
 
-                                displayProfileController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getFriendName()
-                                );
-                            }
+                            displayProfileController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getFriendName()
+                            );
                         }
                     }
+                }
             );
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -108,6 +106,6 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // not implemented for now
+        // Not implemented yet
     }
 }

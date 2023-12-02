@@ -4,15 +4,15 @@ import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import entity.Profile;
-import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 
 public class DisplayFriendProfileViewModel extends ViewModel {
     public final String TITLE_LABEL = "Common Profile View";
+    public static final String USERNAME_LABEL = "Username: ";
+    public static final String BIO_LABEL = "Bio: ";
+    public static final String TOP_THREE_ARTISTS_LABEL = "Top Three Artists: ";
+    public static final String SPOTIFY_HANDLE = "Spotify Handle: ";
 
     private DisplayFriendProfileState state = new DisplayFriendProfileState();
-
-    private Profile friendProfile;
 
     public DisplayFriendProfileViewModel() {
         super("friend profile");
@@ -24,8 +24,6 @@ public class DisplayFriendProfileViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Login Presenter will call to let the ViewModel know
-    // to alert the View
     public void firePropertyChanged() {
         support.firePropertyChange("friendProfileState", null, this.state);
     }
@@ -33,17 +31,7 @@ public class DisplayFriendProfileViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
     public DisplayFriendProfileState getState() {
         return state;
-    }
-
-
-    public Profile getFriendProfile() {
-        return friendProfile;
-    }
-
-    public void setCommonProfile(Profile friendProfile) {
-        this.friendProfile = friendProfile;
     }
 }

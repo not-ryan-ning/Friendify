@@ -19,7 +19,6 @@ public class DisplayProfileOutputData {
     public String getBio() {
         return bio;
     }
-
     public ArrayList<String> getTopThreeArtists() {
         return topThreeArtists;
     }

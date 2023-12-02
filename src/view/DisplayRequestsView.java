@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.display_requests.DisplayRequestsController;
@@ -15,8 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import entity.User;
-import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -28,18 +25,18 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
-//    private final AcceptRequestsController acceptRequestsController;
-//    private final AcceptRequestsViewModel acceptRequestsViewModel;
+    // private final AcceptRequestsController acceptRequestsController;
+    // private final AcceptRequestsViewModel acceptRequestsViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel,
                                DisplayRequestsController displayRequestsController,
-                               DisplayProfileViewModel displayProfileViewModel,
                                DisplayProfileController displayProfileController,
-//                               AcceptRequestsController acceptRequestsController,
-//                               AcceptRequestsViewModel acceptRequestsViewModel,
+                               DisplayProfileViewModel displayProfileViewModel,
+                               // AcceptRequestsController acceptRequestsController,
+                               // AcceptRequestsViewModel acceptRequestsViewModel,
                                LoggedInViewModel loggedInViewModel,
                                GoBackController goBackController,
                                GoBackViewModel goBackViewModel) {
@@ -62,12 +59,11 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
         JPanel buttons = new JPanel();
 
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);
         back.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)) {
@@ -136,14 +132,11 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("acceptRequestsState")) {

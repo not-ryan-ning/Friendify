@@ -1,30 +1,25 @@
 package interface_adapter.display_common_profile;
 
-import entity.Profile;
-import interface_adapter.display_friend_profile.DisplayFriendProfileState;
-import interface_adapter.display_profile.DisplayProfileState;
+import java.util.ArrayList;
 
 public class DisplayCommonProfileState {
-    private Profile commonProfile;
     private String username;
+    private String bio;
+    private ArrayList<String> topThreeArtists;
 
     public DisplayCommonProfileState(DisplayCommonProfileState copy) {
-        this.commonProfile = copy.commonProfile;
         this.username = copy.username;
-
+        this.bio = copy.bio;
+        this.topThreeArtists = copy.topThreeArtists;
     }
 
     public DisplayCommonProfileState() {}
 
-    public Profile getCommonProfile() {
-        return commonProfile;
-    }
-
-    public void setCommonProfile(Profile commonProfile) {
-        this.commonProfile = commonProfile;
-    }
-
     public String getUsername() {
         return username;
     }
+    public String getBio() { return bio; }
+    public void setBio(String bio) { this.bio = bio; }
+    public ArrayList<String> getTopThreeArtists() { return topThreeArtists; }
+    public void setTopThreeArtists(ArrayList<String> topThreeArtists) { this.topThreeArtists = topThreeArtists; }
 }
