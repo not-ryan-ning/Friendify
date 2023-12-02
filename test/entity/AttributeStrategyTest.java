@@ -58,4 +58,16 @@ public class AttributeStrategyTest {
         assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
 
+    @Test
+    // Test 0% similarity between two playlists, should return 2.0 (max possible] distance from each other)
+    public void testNoSimilarity() {
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                1.0, 1.0, 1.0, 1.0,
+                new ArrayList<>());
+
+        assertEquals(2.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
