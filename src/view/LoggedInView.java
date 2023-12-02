@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_requests.DisplayRequestsState;
+import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.edit_profile.EditProfileController;
 import interface_adapter.edit_profile.EditProfileState;
 import interface_adapter.edit_profile.EditProfileViewModel;
@@ -203,9 +204,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         }
 
         else if (evt.getPropertyName().equals("editProfileState")) {
-            EditProfileState state = (EditProfileState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-            editProfileViewModel.setState(state);
+            EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
+            editProfileState.setUsername(loggedInState.getUsername());
+            editProfileViewModel.setState(editProfileState);
         }
 
         else {

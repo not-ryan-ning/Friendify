@@ -60,7 +60,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     private final JButton displayPlaylists;
     private final JButton savePlaylist;
     private final JButton saveSpotifyHandle;
-    private final JButton goBack;
+    private final JButton back;
 
     public EditProfileView(EditProfileController editProfileController, EditProfileViewModel editProfileViewModel,
                            EditBioController editBioController, EditBioViewModel editBioViewModel,
@@ -97,7 +97,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         displayPlaylistsViewModel.addPropertyChangeListener(this);
         choosePlaylistViewModel.addPropertyChangeListener(this);
         editSpotifyHandleViewModel.addPropertyChangeListener(this);
-        goBackViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(EditProfileViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -107,7 +106,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         LabelTextPanel spotifyInfo = new LabelTextPanel(
                 new JLabel(EditSpotifyHandleViewModel.SPOTIFY_HANDLE_LABEL), changeSpotifyInputField);
 
-        // Creating all the buttons
+
         JPanel buttons = new JPanel();
 
         saveBio = new JButton(EditBioViewModel.SAVE_BIO_BUTTON_LABEL);
@@ -122,19 +121,19 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
         buttons.add(saveSpotifyHandle);
 
-        goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
-        buttons.add(goBack);
+        back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
+        buttons.add(back);
 
+        EditProfileState editProfileState = editProfileViewModel.getState();
 
         saveBio.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(saveBio)) {
-                            String username = editProfileViewModel.getState().getUsername();
                             EditBioState currentState = editBioViewModel.getState();
 
                             editBioController.execute(
-                                    username,
+                                    editProfileState.getUsername(),
                                     currentState.getBio()
                             );
                         }
@@ -162,11 +161,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(savePlaylist)) {
-                            String username = editProfileViewModel.getState().getUsername();
                             ChoosePlaylistState currentState = choosePlaylistViewModel.getState();
 
                             choosePlaylistController.execute(
-                                    username,
+                                    editProfileState.getUsername(),
                                     currentState.getPlaylistId(),
                                     currentState.getPlaylistName(),
                                     currentState.getAccessToken()
@@ -180,11 +178,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(saveSpotifyHandle)) {
-                            String username = editProfileViewModel.getState().getUsername();
                             EditSpotifyHandleState currentState = editSpotifyHandleViewModel.getState();
 
                             editSpotifyHandleController.execute(
-                                    username,
+                                    editProfileState.getUsername(),
                                     currentState.getSpotifyHandle()
                             );
                         }
@@ -192,10 +189,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 }
         );
 
-        goBack.addActionListener(
+        back.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(goBack)) {
+                        if (evt.getSource().equals(back)) {
                             goBackController.execute();
                         }
                     }
@@ -243,10 +240,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 this.add(bioInfo);
                 this.add(spotifyInfo);
                 this.add(buttons);
-    }
-
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
