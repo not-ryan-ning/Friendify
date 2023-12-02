@@ -77,7 +77,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
             buttons.add(request);
 
             request.addActionListener(new ActionListener() {
-                @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(request)) {
                         // Retrieve the associated username
@@ -112,5 +111,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         } else {
             JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
         }
+        JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
     }
 }
