@@ -136,6 +136,10 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         }
     }
 
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 

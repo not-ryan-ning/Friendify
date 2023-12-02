@@ -245,6 +245,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 this.add(buttons);
     }
 
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
