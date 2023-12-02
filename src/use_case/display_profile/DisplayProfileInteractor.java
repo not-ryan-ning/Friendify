@@ -22,6 +22,7 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
     public void execute(String username, DisplayProfileInputData displayProfileInputData) {
         String otherUsername = displayProfileInputData.getOtherUsername();
 
+        User user = userDataAccessObject.get(username);
         User otherUser = userDataAccessObject.get(otherUsername);
         Profile profile = otherUser.getProfile();
 
@@ -29,7 +30,7 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
                 profile.getTopThreeArtists(), profile.getSpotifyHandle());
 
         // if user is a friend, then they can view the friends-only user profile:
-        if (userDataAccessObject.isFriend(username, otherUsername)) {
+        if (user.getFriends().contains(otherUsername)) {
             displayProfilePresenter.prepareSuccessViewFriends(displayProfileOutputData);
         }
         // else the user can only see the common user profile:

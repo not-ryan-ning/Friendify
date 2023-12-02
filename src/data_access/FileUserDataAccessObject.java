@@ -3,6 +3,7 @@ package data_access;
 import entity.*;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
@@ -14,7 +15,7 @@ import java.util.*;
 
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
-        LogoutUserDataAccessInterface, MatchUserDataAccessInterface, SendRequestUserDataAccessInterface {
+        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayProfileUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
@@ -133,7 +134,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         receiver.getRequests().add(sender.getUsername());
     }
 
-    HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
+    public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
         Playlist currentPlaylist = currentUser.getPlaylist();
 
