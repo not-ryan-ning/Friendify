@@ -8,7 +8,6 @@ import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
-import interface_adapter.send_request.SendRequestViewModel;
 
 import javax.swing.*;
 import java.awt.*;
