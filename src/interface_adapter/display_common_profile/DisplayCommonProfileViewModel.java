@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class DisplayCommonProfileViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Common Profile View";
+    public static final String TITLE_LABEL = "Common Profile";
     public static final String USERNAME_LABEL = "Username: ";
     public static final String BIO_LABEL = "Bio: ";
     public static final String TOP_THREE_ARTISTS_LABEL = "Top Three Artists: ";
