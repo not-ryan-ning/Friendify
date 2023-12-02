@@ -29,7 +29,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final LogoutViewModel logoutViewModel;
     private final LogoutController logoutController;
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayRequestsController displayRequestsController;
@@ -51,11 +50,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton match;
     final JButton editProfile;
 
-    /**
-     * A window with a title and a JButton.
-     */
     public LoggedInView(LoggedInViewModel loggedInViewModel,
-                        LogoutViewModel logoutViewModel,
                         LogoutController logoutController,
                         DisplayRequestsViewModel displayRequestsViewModel,
                         DisplayRequestsController displayRequestsController,
@@ -67,7 +62,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         EditProfileController editProfileController) {
 
         this.loggedInViewModel = loggedInViewModel;
-        this.logoutViewModel = logoutViewModel;
         this.logoutController = logoutController;
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayRequestsController = displayRequestsController;
@@ -79,12 +73,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.editProfileController = editProfileController;
 
         loggedInViewModel.addPropertyChangeListener(this);
-        logoutViewModel.addPropertyChangeListener(this);
         displayRequestsViewModel.addPropertyChangeListener(this);
         displayFriendsViewModel.addPropertyChangeListener(this);
         matchViewModel.addPropertyChangeListener(this);
         editProfileViewModel.addPropertyChangeListener(this);
-
 
         JLabel title = new JLabel("Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,7 +104,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(editProfile);
 
         logout.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(logout)) {
@@ -123,7 +114,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         );
 
         requests.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(requests)) {
@@ -136,7 +126,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         );
 
         friends.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(friends)) {
@@ -149,7 +138,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         );
 
         match.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(match)) {
@@ -183,13 +171,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons);
 }
 
-    /**
-     * React to a button click that results in evt.
-     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -203,21 +187,25 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
             state.setUsername(loggedInState.getUsername());
+            displayRequestsViewModel.setState(state);
         }
 
         else if (evt.getPropertyName().equals("displayFriendsState")) {
             DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
             state.setUsername(loggedInState.getUsername());
+            displayFriendsViewModel.setState(state);
         }
 
         else if (evt.getPropertyName().equals("matchState")) {
             MatchState state = (MatchState) evt.getNewValue();
             state.setUsername(loggedInState.getUsername());
+            matchViewModel.setState(state);
         }
 
         else if (evt.getPropertyName().equals("editProfileState")) {
             EditProfileState state = (EditProfileState) evt.getNewValue();
             state.setUsername(loggedInState.getUsername());
+            editProfileViewModel.setState(state);
         }
 
         else {
