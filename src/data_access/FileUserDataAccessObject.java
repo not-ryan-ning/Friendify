@@ -46,7 +46,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         headers.put("password", 1);
         headers.put("bio", 2);
         headers.put("artists", 3);
-        headers.put("spotify_handle", 4);
+        headers.put("spotifyHandle", 4);
         headers.put("playlistId", 5);
         headers.put("friends", 6);
         headers.put("requests", 7);
@@ -65,7 +65,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                     String password = String.valueOf(col[headers.get("password")]);
                     String bio = String.valueOf(col[headers.get("bio")]);
                     String artists = String.valueOf(col[headers.get("artists")]);
-                    String spotifyHandle = String.valueOf(col[headers.get("spotify_handle")]);
+                    String spotifyHandle = String.valueOf(col[headers.get("spotifyHandle")]);
                     String playlistId = String.valueOf(col[headers.get("playlistId")]);
                     String friends = String.valueOf(col[headers.get("friends")]);
                     String requests = String.valueOf(col[headers.get("requests")]);
@@ -144,15 +144,19 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
     public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
-        Playlist currentPlaylist = currentUser.getPlaylist();
 
-        for (User user : accounts.values()) {
-            // Execute if the current user is not already friends with the user being checked
-            if (!currentUser.getFriends().contains(user.getUsername())) {
-                // Retrieve the playlist to check
-                Playlist playlistToCheck = user.getPlaylist();
-                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
-                scores.put(user.getUsername(), similarityScore);
+        if (currentUser != null){
+            Playlist currentPlaylist = currentUser.getPlaylist();
+            if (currentPlaylist != null) {
+                for (User user : accounts.values()) {
+                    // Execute if the current user is not already friends with the user being checked
+                    if (!currentUser.getFriends().contains(user.getUsername())) {
+                        // Retrieve the playlist to check
+                        Playlist playlistToCheck = user.getPlaylist();
+                        Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+                        scores.put(user.getUsername(), similarityScore);
+                    }
+                }
             }
         }
         return scores;
@@ -171,9 +175,9 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public void editFile(String username, String column, String newValue) {
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+            // Read all lines into memory
+            StringBuilder content = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split("\\|");
@@ -184,8 +188,12 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                     userInfo[columnIndex] = newValue;
                 }
 
-                writer.write(String.join("|", userInfo));
-                writer.newLine();
+                content.append(String.join("|", userInfo)).append(System.lineSeparator());
+            }
+
+            // Write the modified content back to the file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
+                writer.write(content.toString());
             }
 
         } catch (IOException e) {

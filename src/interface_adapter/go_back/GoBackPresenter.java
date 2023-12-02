@@ -19,6 +19,8 @@ public class GoBackPresenter implements GoBackOutputBoundary {
     public void prepareSuccessView() {
         // On success, switch to the home page (the logged in view)
         LoggedInState loggedInState = loggedInViewModel.getState();
+        this.loggedInViewModel.setState(loggedInState);
+
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 

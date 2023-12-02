@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class MatchViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Display Matches View";
+    public static final String TITLE_LABEL = "Matches";
     public static final String REQUEST_BUTTON_LABEL = "Send Request";
     private MatchState state = new MatchState();
 
