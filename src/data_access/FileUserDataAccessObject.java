@@ -138,6 +138,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         for (User user : accounts.values()) {
             // Execute if the current user is not already friends with the user being checked
             if (!currentUser.getFriends().contains(user.getUsername())) {
+                // Retrieve the playlist to check
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
                 scores.put(user.getUsername(), similarityScore);
