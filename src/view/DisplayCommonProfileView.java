@@ -1,7 +1,6 @@
 package view;
 
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
-import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
@@ -20,9 +19,9 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
     private final GoBackViewModel goBackViewModel;
 
     JLabel username;
-    JLabel spotifyHandle;
     JLabel bio;
     JLabel topThreeArtists;
+    JLabel spotifyHandle;
     public DisplayCommonProfileView(DisplayCommonProfileViewModel displayCommonProfileViewModel,
                                     GoBackController goBackController,
                                     GoBackViewModel goBackViewModel) {
@@ -36,27 +35,25 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         JLabel title = new JLabel("Common User's Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel usernameInfo = new JLabel("Username: ");
+        JLabel usernameInfo = new JLabel(DisplayCommonProfileViewModel.USERNAME_LABEL);
         username = new JLabel();
 
-        JLabel bioInfo = new JLabel("Bio: ");
+        JLabel bioInfo = new JLabel(DisplayCommonProfileViewModel.BIO_LABEL);
         bio = new JLabel();
 
-        JLabel spotifyInfo = new JLabel("Spotify handle: ");
-        spotifyHandle = new JLabel();
+        JLabel topThreeArtistsInfo = new JLabel(DisplayCommonProfileViewModel.TOP_THREE_ARTISTS_LABEL);
+        topThreeArtists = new JLabel();
 
-        JLabel topThreeArtistsInfo = new JLabel("Top 3 Artists: ");
+        JLabel spotifyInfo = new JLabel(DisplayCommonProfileViewModel.SPOTIFY_HANDLE);
         // initializing this label, so if not a friend, we don't need to update this label
-        topThreeArtists = new JLabel("You need to be friends to see this...");
+        spotifyHandle = new JLabel("You need to be friends to see this...");
 
         JPanel buttons = new JPanel();
 
-        JButton goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        JButton goBack = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(goBack);
 
-        goBack.addActionListener(this);
         goBack.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(goBack)) {
@@ -73,11 +70,11 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         this.add(username);
         this.add(bioInfo);
         this.add(bio);
+        this.add(topThreeArtistsInfo);
+        this.add(topThreeArtists);
         this.add(spotifyInfo);
         this.add(spotifyHandle);
         this.add(buttons);
-        this.add(topThreeArtistsInfo);
-        this.add(topThreeArtists);
     }
 
 
@@ -91,7 +88,7 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayCommonProfileState state = (DisplayCommonProfileState) evt.getNewValue();
         username.setText(state.getUsername());
-        bio.setText(state.getCommonProfile().getBio());
-        spotifyHandle.setText(state.getCommonProfile().getSpotifyHandle());
+        bio.setText(state.getBio());
+        topThreeArtists.setText(String.join(",", state.getTopThreeArtists()));
     }
 }

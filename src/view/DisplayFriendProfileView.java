@@ -11,21 +11,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
 public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
     private final GoBackController goBackController;
+    private final GoBackViewModel goBackViewModel;
 
     JLabel username;
-    JLabel spotifyHandle;
     JLabel bio;
     JLabel topThreeArtists;
+    JLabel spotifyHandle;
     public DisplayFriendProfileView(DisplayFriendProfileViewModel displayFriendProfileViewModel,
-                                    GoBackController goBackController) {
+                                    GoBackController goBackController,
+                                    GoBackViewModel goBackViewModel) {
         this.displayFriendProfileViewModel = displayFriendProfileViewModel;
         this.goBackController = goBackController;
+        this.goBackViewModel = goBackViewModel;
 
         this.displayFriendProfileViewModel.addPropertyChangeListener(this);
 
@@ -45,10 +47,9 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
-        JButton goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        JButton goBack = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(goBack);
 
-        goBack.addActionListener(this);
         goBack.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -66,11 +67,11 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         this.add(username);
         this.add(bioInfo);
         this.add(bio);
+        this.add(topThreeArtistsInfo);
+        this.add(topThreeArtists);
         this.add(spotifyInfo);
         this.add(spotifyHandle);
         this.add(buttons);
-        this.add(topThreeArtistsInfo);
-        this.add(topThreeArtists);
     }
 
 
@@ -84,13 +85,8 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayFriendProfileState state = (DisplayFriendProfileState) evt.getNewValue();
         username.setText(state.getUsername());
-        bio.setText(state.getFriendProfile().getBio());
-        spotifyHandle.setText(state.getFriendProfile().getSpotifyHandle());
-
-        ArrayList<String> topThreeArtistsList = state.getFriendProfile().getTopThreeArtists();
-
-        // Using String.join to concatenate the elements with a separator (e.g., comma and space)
-        String topThreeArtistsText = String.join(", ", topThreeArtistsList);
-        topThreeArtists.setText(topThreeArtistsText);
+        bio.setText(state.getBio());
+        topThreeArtists.setText(String.join(", ", state.getTopThreeArtists()));
+        spotifyHandle.setText(state.getSpotifyHandle());
     }
 }
