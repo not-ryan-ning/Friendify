@@ -63,13 +63,14 @@ public class DisplayFriendsUseCaseFactory {
         return new DisplayFriendsController(displayFriendsInteractor);
     }
 
-    private static DisplayProfileController createDisplayProfileUseCase(ViewManagerModel viewManagerModel, DisplayProfileViewModel displayProfileViewModel, DisplayCommonProfileViewModel displayCommonProfileViewModel, DisplayFriendProfileViewModel displayFriendProfileViewModel, DisplayProfileUserDataAccessInterface displayProfileUserDataAccessObject) {
+    private static DisplayProfileController createDisplayProfileUseCase(ViewManagerModel viewManagerModel, DisplayProfileViewModel displayProfileViewModel, DisplayCommonProfileViewModel displayCommonProfileViewModel, DisplayFriendProfileViewModel displayFriendProfileViewModel, DisplayProfileUserDataAccessInterface displayProfileUserDataAccessObject) throws IOException {
         DisplayProfileOutputBoundary displayProfileOutputBoundary = new DisplayProfilePresenter(displayFriendProfileViewModel, displayCommonProfileViewModel, viewManagerModel);
         DisplayProfileInputBoundary displayProfileInteractor = new DisplayProfileInteractor(displayProfileUserDataAccessObject, displayProfileOutputBoundary, displayProfileViewModel);
 
         return new DisplayProfileController(displayProfileInteractor);
     }
-    private static GoBackController createGoBackUseCase(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) {
+
+    private static GoBackController createGoBackUseCase(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) throws IOException {
         GoBackOutputBoundary goBackOutputBoundary = new GoBackPresenter(viewManagerModel, goBackViewModel, loggedInViewModel);
         GoBackInputBoundary goBackInteractor = new GoBackInteractor(goBackOutputBoundary);
 
