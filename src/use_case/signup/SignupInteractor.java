@@ -3,6 +3,7 @@ package use_case.signup;
 import entity.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
@@ -34,12 +35,14 @@ public class SignupInteractor implements SignupInputBoundary {
             // Create empty profile and playlist objects when new user create
             // (!) Empty ArrayLists are initialized
             Profile profile = profileFactory.create("", new ArrayList<String>(), "");
-            Playlist playlist = playlistFactory.create("", new ArrayList<String>());
+            Playlist playlist = playlistFactory.create("", new ArrayList<String>(), new HashMap<>(), new HashMap<>(), 0.0, 0.0, 0.0, 0.0, new ArrayList<>());
 
             User user = userFactory.create(signupInputData.getUsername(),
                     signupInputData.getPassword(),
-                    profile, playlist,
-                    new ArrayList<String>(), new ArrayList<String>());
+                    profile,
+                    playlist,
+                    new ArrayList<String>(),
+                    new ArrayList<String>());
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);

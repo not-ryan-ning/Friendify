@@ -25,6 +25,7 @@ import interface_adapter.signup.SignupViewModel;
 
 import view.LoggedInView;
 import view.LoginView;
+import view.SignupView;
 import view.ViewManager;
 
 import javax.swing.*;
