@@ -66,6 +66,7 @@ public class LoginUseCaseFactory {
 
     public static LoggedInView create(
             ViewManagerModel viewManagerModel,
+            LoggedInViewModel loggedInViewModel,
             LoginViewModel loginViewModel,
             LogoutViewModel logoutViewModel,
             DisplayRequestsViewModel displayRequestsViewModel,
@@ -81,6 +82,8 @@ public class LoginUseCaseFactory {
             DisplayFriendsController displayFriendsController = createDisplayFriendsUseCase(viewManagerModel, displayFriendsViewModel, displayFriendsUserDataAccessObject);
             MatchController matchController = createMatchUseCase(viewManagerModel, matchViewModel, matchUserDataAccessObject);
             EditProfileController editProfileController = createEditProfileUseCase(viewManagerModel, editProfileViewModel);
+
+            return new LoggedInView(loggedInViewModel, logoutController, displayRequestsViewModel, displayRequestsController, displayFriendsViewModel, displayFriendsController, matchViewModel, matchController, editProfileViewModel, editProfileController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
