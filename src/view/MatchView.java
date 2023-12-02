@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.match.MatchState;

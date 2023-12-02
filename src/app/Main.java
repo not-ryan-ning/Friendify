@@ -1,6 +1,10 @@
 package app;
 
+import data_access.FilePlaylistsDataAccessObject;
 import data_access.FileUserDataAccessObject;
+import data_access.SpotifyAPIDataAccessObject;
+import data_access.SpotifyAuthenticationDataAccessObject;
+import entity.CommonPlaylistFactory;
 import entity.CommonProfileFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
@@ -23,9 +27,18 @@ import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.signup.SignupViewModel;
 
-import view.LoggedInView;
-import view.LoginView;
-import view.ViewManager;
+import use_case.authorize.AuthorizeSpotifyAuthenticationDataAccessInterface;
+import use_case.choose_playlist.ChoosePlaylistPlaylistDataAccessInterface;
+import use_case.choose_playlist.ChoosePlaylistSpotifyAPIDataAccessInterface;
+import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
+import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_playlists.DisplayPlaylistsSpotifyAPIDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
+import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
+import use_case.edit_bio.EditBioUserDataAccessInterface;
+import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
+import use_case.send_request.SendRequestUserDataAccessInterface;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,13 +74,22 @@ public class Main {
         DisplayFriendsViewModel displayFriendsViewModel = new DisplayFriendsViewModel();
         DisplayFriendProfileViewModel displayFriendProfileViewModel = new DisplayFriendProfileViewModel();
         DisplayCommonProfileViewModel displayCommonProfileViewModel = new DisplayCommonProfileViewModel();
-        ChoosePlaylistViewModel choosePlaylistsViewModel = new ChoosePlaylistViewModel();
+        ChoosePlaylistViewModel choosePlaylistViewModel = new ChoosePlaylistViewModel();
         AuthorizeViewModel authorizeViewModel = new AuthorizeViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         FileUserDataAccessObject displayRequestsUserDataAccessObject;
         FileUserDataAccessObject displayFriendsUserDataAccessObject;
         FileUserDataAccessObject matchUserDataAccessObject;
+        FileUserDataAccessObject sendRequestUserDataAccessObject;
+        FileUserDataAccessObject editBioUserDataAccessObject;
+        SpotifyAPIDataAccessObject displayPlaylistsSpotifyAPIDataAccessObject;
+        SpotifyAuthenticationDataAccessObject authorizeSpotifyAuthenticationDataAccessObject;
+        FileUserDataAccessObject choosePlaylistUserDataAccessObject;
+        FilePlaylistsDataAccessObject choosePlaylistPlaylistDataAccessObject;
+        SpotifyAPIDataAccessObject choosePlaylistSpotifyAPIDataAccessObject;
+        FileUserDataAccessObject editSpotifyHandleUserDataAccessObject;
+        FileUserDataAccessObject displayProfileUserDataAccessObject;
 
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv",
@@ -83,6 +105,35 @@ public class Main {
                     new CommonProfileFactory());
 
             matchUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            sendRequestUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            editBioUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            displayPlaylistsSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
+
+            authorizeSpotifyAuthenticationDataAccessObject = new SpotifyAuthenticationDataAccessObject();
+
+            choosePlaylistUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            choosePlaylistPlaylistDataAccessObject = new FilePlaylistsDataAccessObject("./playlists.csv",
+                    new CommonPlaylistFactory());
+
+            choosePlaylistSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
+
+            editSpotifyHandleUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            displayProfileUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
                     new CommonProfileFactory());
 
@@ -107,6 +158,54 @@ public class Main {
                 matchUserDataAccessObject,
                 editProfileViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        MatchView matchView = MatchUseCaseFactory.create(viewManagerModel,
+                matchViewModel,
+                sendRequestViewModel,
+                sendRequestUserDataAccessObject,
+                goBackViewModel,
+                loggedInViewModel);
+        views.add(matchView, matchView.viewName);
+
+        EditProfileView editProfileView = EditProfileUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
+                editProfileViewModel,
+                editBioViewModel,
+                editBioUserDataAccessObject,
+                displayPlaylistsViewModel,
+                displayPlaylistsSpotifyAPIDataAccessObject,
+                authorizeViewModel,
+                authorizeSpotifyAuthenticationDataAccessObject,
+                choosePlaylistViewModel,
+                choosePlaylistUserDataAccessObject,
+                choosePlaylistPlaylistDataAccessObject,
+                choosePlaylistSpotifyAPIDataAccessObject,
+                editSpotifyHandleViewModel,
+                editSpotifyHandleUserDataAccessObject,
+                goBackViewModel);
+        views.add(editProfileView, editProfileView.viewName);
+
+        DisplayRequestsView displayRequestsView = DisplayRequestsUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
+                displayRequestsViewModel,
+                displayRequestsUserDataAccessObject,
+                displayProfileViewModel,
+                displayCommonProfileViewModel,
+                displayFriendProfileViewModel,
+                displayProfileUserDataAccessObject,
+                goBackViewModel);
+        views.add(displayRequestsView);
+
+        DisplayFriendsView displayFriendsView = DisplayFriendsUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
+                displayFriendsViewModel,
+                displayFriendsUserDataAccessObject,
+                displayProfileViewModel,
+                displayCommonProfileViewModel,
+                displayFriendProfileViewModel,
+                displayProfileUserDataAccessObject,
+                goBackViewModel);
+        views.add(displayFriendsView);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
