@@ -28,8 +28,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
-//    private final AcceptRequestsController acceptRequestsController;
-//    private final AcceptRequestsViewModel acceptRequestsViewModel;
+    // private final AcceptRequestsController acceptRequestsController;
+    // private final AcceptRequestsViewModel acceptRequestsViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
@@ -38,8 +38,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                                DisplayRequestsController displayRequestsController,
                                DisplayProfileViewModel displayProfileViewModel,
                                DisplayProfileController displayProfileController,
-//                               AcceptRequestsController acceptRequestsController,
-//                               AcceptRequestsViewModel acceptRequestsViewModel,
+                               // AcceptRequestsController acceptRequestsController,
+                               // AcceptRequestsViewModel acceptRequestsViewModel,
                                LoggedInViewModel loggedInViewModel,
                                GoBackController goBackController,
                                GoBackViewModel goBackViewModel) {
@@ -62,12 +62,11 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
         JPanel buttons = new JPanel();
 
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
         back.addActionListener(this);
         back.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)) {
@@ -136,14 +135,11 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("acceptRequestsState")) {
