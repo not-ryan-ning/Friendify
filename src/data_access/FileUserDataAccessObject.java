@@ -3,6 +3,7 @@ package data_access;
 import entity.*;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
 import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
@@ -15,7 +16,8 @@ import java.util.*;
 
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
-        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface {
+        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
+        DisplayProfileUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
@@ -126,9 +128,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public void sendFriendRequest(User sender, User receiver) {
-        //if (receiver.getRequests().contains(sender.getUsername())) {
-        //    throw new IllegalStateException("You have already sent a request to this user.");
-        // }
         receiver.getRequests().add(sender.getUsername());
     }
 
@@ -137,7 +136,9 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         Playlist currentPlaylist = currentUser.getPlaylist();
 
         for (User user : accounts.values()) {
+            // Execute if the current user is not already friends with the user being checked
             if (!currentUser.getFriends().contains(user.getUsername())) {
+                // Retrieve the playlist to check
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
                 scores.put(user.getUsername(), similarityScore);
