@@ -144,18 +144,15 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
 
-        if (currentUser != null){
-            Playlist currentPlaylist = currentUser.getPlaylist();
-            if (currentPlaylist != null) {
-                for (User user : accounts.values()) {
-                    // Execute if the current user is not already friends with the user being checked
-                    if (!currentUser.getFriends().contains(user.getUsername())) {
-                        // Retrieve the playlist to check
-                        Playlist playlistToCheck = user.getPlaylist();
-                        Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
-                        scores.put(user.getUsername(), similarityScore);
-                    }
-                }
+        Playlist currentPlaylist = currentUser.getPlaylist();
+
+        for (User user : accounts.values()) {
+            // Execute if the current user is not already friends with the user being checked
+            if (!currentUser.getFriends().contains(user.getUsername())) {
+                // Retrieve the playlist to check
+                Playlist playlistToCheck = user.getPlaylist();
+                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+                scores.put(user.getUsername(), similarityScore);
             }
         }
         return scores;

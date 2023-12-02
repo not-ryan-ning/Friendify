@@ -47,19 +47,10 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
-        back.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            goBackController.execute();
-                        }
-                    }
-                }
-        );
-
         // Adding request buttons for all the matches from the current state
         MatchState currentState = matchViewModel.getState();
         HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
+        System.out.println(topSimilarUsers);
 
         if (topSimilarUsers != null) {
             for (String username : topSimilarUsers.keySet()) {
@@ -92,6 +83,17 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                 );
             }
         }
+
+        back.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            goBackController.execute();
+                        }
+                    }
+                }
+        );
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);

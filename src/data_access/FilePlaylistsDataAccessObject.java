@@ -68,6 +68,7 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     if (!artists.isEmpty()) {
                         artistsMap = Arrays.stream(artists.split("\n"))
                                 .map(entry -> entry.split(","))
+                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
                                 .collect(Collectors.toMap(
                                         parts -> parts[0],
                                         parts -> {
@@ -85,9 +86,10 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
 
                     HashMap<String, Integer> genresMap = new HashMap<>();
                     genresMap.put("defaultGenre", 0);
-                    if (! genres.isEmpty()) {
+                    if (!genres.isEmpty()) {
                         genresMap = Arrays.stream(genres.split("\n"))
                                 .map(entry -> entry.split(","))
+                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
                                 .collect(Collectors.toMap(
                                         parts -> parts[0],
                                         parts -> {

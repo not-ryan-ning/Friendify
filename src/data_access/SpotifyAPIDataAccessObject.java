@@ -71,7 +71,6 @@ public class SpotifyAPIDataAccessObject implements DisplayPlaylistsSpotifyAPIDat
         playlistInfo.add(genres);
 
         ArrayList<Double> attributes = getAttributes(trackIds, accessToken);
-        System.out.println(attributes);
 
         double acousticness = attributes.get(0);
         double energy = attributes.get(1);

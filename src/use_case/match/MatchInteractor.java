@@ -39,10 +39,9 @@ public class MatchInteractor implements MatchInputBoundary {
         sortedUsers.sort(HashMap.Entry.comparingByValue());
 
         HashMap<String, Double> topSimilarUsers = new HashMap<>();
-        for (int i = 0; i < Math.min(5, sortedUsers.size()); i++) {
+        for (int i = 0; i < Math.min(3, sortedUsers.size()); i++) {
             topSimilarUsers.put(sortedUsers.get(i).getKey(), sortedUsers.get(i).getValue());
         }
-
         MatchOutputData matchingOutputData = new MatchOutputData(topSimilarUsers);
         matchPresenter.prepareSuccessView(matchingOutputData);
     }
