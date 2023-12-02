@@ -36,8 +36,9 @@ import interface_adapter.edit_spotify_handle.EditSpotifyHandleState;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleViewModel;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
 import org.w3c.dom.ls.LSOutput;
-
 
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "edit profile";
@@ -58,6 +59,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     private final EditSpotifyHandleViewModel editSpotifyHandleViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
+    private final LoggedInViewModel loggedInViewModel;
 
     private final JButton saveBio;
     private final JButton displayPlaylists;
@@ -74,7 +76,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                            AuthorizeController authorizeController, AuthorizeViewModel authorizeViewModel,
                            ChoosePlaylistController choosePlaylistController, ChoosePlaylistViewModel choosePlaylistViewModel,
                            EditSpotifyHandleController editSpotifyHandleController, EditSpotifyHandleViewModel editSpotifyHandleViewModel,
-                           GoBackController goBackController, GoBackViewModel goBackViewModel) {
+                           GoBackController goBackController, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) {
         // EditProfile
         this.editProfileController = editProfileController;
         this.editProfileViewModel = editProfileViewModel;
@@ -96,6 +98,8 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         // GoBack
         this.goBackController = goBackController;
         this.goBackViewModel = goBackViewModel;
+        // Logged In
+        this.loggedInViewModel = loggedInViewModel;
 
         editProfileViewModel.addPropertyChangeListener(this);
         editBioViewModel.addPropertyChangeListener(this);
@@ -265,9 +269,14 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        LoggedInState loggedInState = loggedInViewModel.getState();
+
         if (evt.getPropertyName().equals("editBioState")) {
             EditBioState editBioState = (EditBioState) evt.getNewValue();
             changeBioInputField.setText(editBioState.getBio());
+            loggedInState.setBio(editBioState.getBio());
+            System.out.println(loggedInState.getBio());
+            loggedInViewModel.setState(loggedInState);
 
         } else if (evt.getPropertyName().equals("authorizeState")) {
             AuthorizeState authorizeState = (AuthorizeState) evt.getNewValue();
@@ -325,6 +334,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             EditSpotifyHandleState editSpotifyHandleState = (EditSpotifyHandleState) evt.getNewValue();
             changeSpotifyInputField.setText(editSpotifyHandleState.getSpotifyHandle());
         }
+
     }
     private static void openWebLink(String url) {
         try {

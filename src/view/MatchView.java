@@ -61,7 +61,7 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         MatchState currentState = matchViewModel.getState();
         HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
 
-        if (!(topSimilarUsers == null)) {
+        if (topSimilarUsers != null) {
             for (String username : topSimilarUsers.keySet()) {
                 JLabel matchUsername = new JLabel(username);
                 JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
@@ -76,19 +76,19 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                 buttons.add(request);
 
                 request.addActionListener(new ActionListener() {
-                                              public void actionPerformed(ActionEvent evt) {
-                                                  if (evt.getSource().equals(request)) {
-                                                      // Retrieve the associated username
-                                                      String associatedString = (String) request.getClientProperty("userString");
-                                                      SendRequestState currentState = sendRequestViewModel.getState();
-                                                      String senderUsername = currentState.getUsername();
-                                                      currentState.setReceiverUsername(associatedString);
-                                                      String receiverUsername = currentState.getReceiverUsername();
+                      public void actionPerformed(ActionEvent evt) {
+                          if (evt.getSource().equals(request)) {
+                              // Retrieve the associated username
+                              String associatedString = (String) request.getClientProperty("userString");
+                              SendRequestState currentState = sendRequestViewModel.getState();
+                              String senderUsername = currentState.getUsername();
+                              currentState.setReceiverUsername(associatedString);
+                              String receiverUsername = currentState.getReceiverUsername();
 
-                                                      sendRequestController.execute(senderUsername, receiverUsername);
-                                                  }
-                                              }
-                                          }
+                              sendRequestController.execute(senderUsername, receiverUsername);
+                          }
+                      }
+                  }
                 );
             }
         }
@@ -105,12 +105,15 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SendRequestState state = (SendRequestState) evt.getNewValue();
-        if (state.getRequestError() != null) {
-            JOptionPane.showMessageDialog(this, state.getRequestError());
-        } else {
-            JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
+        if (evt.getPropertyName().equals("sendRequestState")) {
+            SendRequestState state = (SendRequestState) evt.getNewValue();
+
+            if (state.getRequestError() != null) {
+                JOptionPane.showMessageDialog(this, state.getRequestError());
+
+            } else {
+                JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
+            }
         }
-        JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
     }
 }
