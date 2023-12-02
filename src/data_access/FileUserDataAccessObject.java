@@ -10,6 +10,7 @@ import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.match.MatchUserDataAccessInterface;
 import use_case.send_request.SendRequestUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
@@ -17,7 +18,7 @@ import java.util.*;
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
         MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
-        DisplayProfileUserDataAccessInterface {
+        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
@@ -32,11 +33,13 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     private UserFactory userFactory;
     private ProfileFactory profileFactory;
     private FilePlaylistsDataAccessObject playlistsDataAccessObject;
+    private boolean headerWritten = false;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, ProfileFactory profileFactory) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, ProfileFactory profileFactory, FilePlaylistsDataAccessObject filePlaylistsDataAccessObject) throws IOException {
         this.userFactory = userFactory;
         this.profileFactory = profileFactory;
         this.usersFile = new File(csvPath);
+        this.playlistsDataAccessObject = filePlaylistsDataAccessObject;
       
         headers.put("username", 0);
         headers.put("password", 1);
@@ -52,10 +55,12 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         } else {
 
             try (BufferedReader reader = new BufferedReader(new FileReader(usersFile))) {
+                String header = reader.readLine();
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split("\\|");
+                    System.out.println(col.length);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String bio = String.valueOf(col[headers.get("bio")]);
@@ -87,14 +92,16 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     private void save() {
-        BufferedWriter writer;
-        try {
-            writer = new BufferedWriter(new FileWriter(usersFile));
-            writer.write(String.join("\\|", headers.keySet()));
-            writer.newLine();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile, true))) {
+            // Check if the header has already been written
+            if (!headerWritten) {
+                writer.write(String.join("|", headers.keySet()));
+                writer.newLine();
+                headerWritten = true;  // Set the flag to true so that the header is not written again
+            }
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
+                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
                         user.getUsername(), user.getPassword(), user.getProfile().getBio(),
                         user.getProfile().getTopThreeArtists(), user.getProfile().getSpotifyHandle(),
                         user.getPlaylist().getPlaylistId(), user.getFriends(), user.getRequests());
@@ -102,12 +109,11 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                 writer.newLine();
             }
 
-            writer.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     public void save(User user) {
@@ -119,7 +125,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         return accounts.get(username);
     }
 
-    public boolean existByName(String identifier) {
+    public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
 
@@ -165,7 +171,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
              BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
+                String[] userInfo = line.split("\\|");
 
                 if (userInfo[headers.get("username")].equals(username)) {
                     // get the column we want to edit the info
@@ -173,7 +179,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                     userInfo[columnIndex] = newValue;
                 }
 
-                writer.write(String.join(",", userInfo));
+                writer.write(String.join("|", userInfo));
                 writer.newLine();
             }
 

@@ -105,25 +105,25 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(editProfile);
 
         logout.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(logout)) {
-                        logoutController.execute();
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logout)) {
+                            logoutController.execute();
+                        }
                     }
                 }
-            }
         );
 
         requests.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(requests)) {
-                        DisplayRequestsState currentState = displayRequestsViewModel.getState();
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(requests)) {
+                            DisplayRequestsState currentState = displayRequestsViewModel.getState();
 
-                        displayRequestsController.execute(currentState.getUsername());
+                            displayRequestsController.execute(currentState.getUsername());
+                        }
                     }
                 }
-            }
         );
 
         friends.addActionListener(
@@ -170,7 +170,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(spotifyHandle);
         this.add(topThreeArtists);
         this.add(buttons);
-}
+    }
 
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
@@ -178,39 +178,33 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // need multiple if branches to map each button click to the corresponding action
-        LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
-        username.setText(loggedInState.getUsername());
-        bio.setText(loggedInState.getBio());
-        spotifyHandle.setText(loggedInState.getSpotifyHandle());
-        topThreeArtists.setText(String.join(", ", loggedInState.getTopThreeArtists()));
 
-        if (evt.getPropertyName().equals("displayRequestsState")) {
-            DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-            displayRequestsViewModel.setState(state);
-        }
+        if (evt.getPropertyName().equals("loggedInState")) {
+            LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
+            username.setText(loggedInState.getUsername());
+            bio.setText(loggedInState.getBio());
+            spotifyHandle.setText(loggedInState.getSpotifyHandle());
+            topThreeArtists.setText(String.join(", ", loggedInState.getTopThreeArtists()));
 
-        else if (evt.getPropertyName().equals("displayFriendsState")) {
-            DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-            displayFriendsViewModel.setState(state);
-        }
-
-        else if (evt.getPropertyName().equals("matchState")) {
-            MatchState state = (MatchState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-            matchViewModel.setState(state);
-        }
-
-        else if (evt.getPropertyName().equals("editProfileState")) {
-            EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
-            editProfileState.setUsername(loggedInState.getUsername());
-            editProfileViewModel.setState(editProfileState);
-        }
-
-        else {
-            JOptionPane.showMessageDialog(this, "You have logged out");
+            if (evt.getPropertyName().equals("displayRequestsState")) {
+                DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
+                state.setUsername(loggedInState.getUsername());
+                displayRequestsViewModel.setState(state);
+            } else if (evt.getPropertyName().equals("displayFriendsState")) {
+                DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
+                state.setUsername(loggedInState.getUsername());
+                displayFriendsViewModel.setState(state);
+            } else if (evt.getPropertyName().equals("matchState")) {
+                MatchState state = (MatchState) evt.getNewValue();
+                state.setUsername(loggedInState.getUsername());
+                matchViewModel.setState(state);
+            } else if (evt.getPropertyName().equals("editProfileState")) {
+                EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
+                editProfileState.setUsername(loggedInState.getUsername());
+                editProfileViewModel.setState(editProfileState);
+            } else if (evt.getPropertyName().equals("logoutState")) {
+                JOptionPane.showMessageDialog(this, "You have logged out");
+            }
         }
     }
 }

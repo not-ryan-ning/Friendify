@@ -61,34 +61,36 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         MatchState currentState = matchViewModel.getState();
         HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
 
-        for (String username : topSimilarUsers.keySet()) {
-            JLabel matchUsername = new JLabel(username);
-            JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
+        if (!(topSimilarUsers == null)) {
+            for (String username : topSimilarUsers.keySet()) {
+                JLabel matchUsername = new JLabel(username);
+                JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
 
-            this.add(matchUsername);
-            this.add(similarityScore);
+                this.add(matchUsername);
+                this.add(similarityScore);
 
-            JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
+                JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
 
-            // Associate each request button with the corresponding top similar username
-            request.putClientProperty("userString", username);
-            buttons.add(request);
+                // Associate each request button with the corresponding top similar username
+                request.putClientProperty("userString", username);
+                buttons.add(request);
 
-            request.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(request)) {
-                        // Retrieve the associated username
-                        String associatedString = (String) request.getClientProperty("userString");
-                        SendRequestState currentState = sendRequestViewModel.getState();
-                        String senderUsername = currentState.getUsername();
-                        currentState.setReceiverUsername(associatedString);
-                        String receiverUsername = currentState.getReceiverUsername();
+                request.addActionListener(new ActionListener() {
+                                              public void actionPerformed(ActionEvent evt) {
+                                                  if (evt.getSource().equals(request)) {
+                                                      // Retrieve the associated username
+                                                      String associatedString = (String) request.getClientProperty("userString");
+                                                      SendRequestState currentState = sendRequestViewModel.getState();
+                                                      String senderUsername = currentState.getUsername();
+                                                      currentState.setReceiverUsername(associatedString);
+                                                      String receiverUsername = currentState.getReceiverUsername();
 
-                        sendRequestController.execute(senderUsername, receiverUsername);
-                    }
-                }
+                                                      sendRequestController.execute(senderUsername, receiverUsername);
+                                                  }
+                                              }
+                                          }
+                );
             }
-            );
         }
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

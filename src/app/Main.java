@@ -78,31 +78,41 @@ public class Main {
         SpotifyAPIDataAccessObject choosePlaylistSpotifyAPIDataAccessObject;
         FileUserDataAccessObject editSpotifyHandleUserDataAccessObject;
         FileUserDataAccessObject displayProfileUserDataAccessObject;
+        FilePlaylistsDataAccessObject filePlaylistsDataAccessObject;
 
         try {
+            filePlaylistsDataAccessObject = new FilePlaylistsDataAccessObject("./playlists.csv",
+                    new CommonPlaylistFactory());
+
             userDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             displayRequestsUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             displayFriendsUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             matchUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             sendRequestUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             editBioUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             displayPlaylistsSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
 
@@ -110,7 +120,8 @@ public class Main {
 
             choosePlaylistUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             choosePlaylistPlaylistDataAccessObject = new FilePlaylistsDataAccessObject("./playlists.csv",
                     new CommonPlaylistFactory());
@@ -119,11 +130,13 @@ public class Main {
 
             editSpotifyHandleUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
             displayProfileUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

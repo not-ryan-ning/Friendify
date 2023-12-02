@@ -76,37 +76,40 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         DisplayRequestsState currentState = displayRequestsViewModel.getState();
         ArrayList<String> requests = currentState.getRequests();
 
-        for (String request : requests) {
-            JLabel requestUsername = new JLabel(request);
-            this.add(requestUsername);
+        if (!(requests == null)) {
+            for (String request : requests) {
+                JLabel requestUsername = new JLabel(request);
+                this.add(requestUsername);
 
-            JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
-            // Associate each view profile button with the corresponding request username
-            viewProfile.putClientProperty("userString", request);
-            buttons.add(viewProfile);
+                JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
+                // Associate each view profile button with the corresponding request username
+                viewProfile.putClientProperty("userString", request);
+                buttons.add(viewProfile);
 
-            // JButton acceptRequest = new JButton(AcceptRequestsViewModel.ACCEPT_BUTTON_LABEL);
-            // Associate each accept button with the corresponding request username
-            // acceptRequest.putClientProperty("userString", request);
-            // buttons.add(acceptRequest);
+                // JButton acceptRequest = new JButton(AcceptRequestsViewModel.ACCEPT_BUTTON_LABEL);
+                // Associate each accept button with the corresponding request username
+                // acceptRequest.putClientProperty("userString", request);
+                // buttons.add(acceptRequest);
 
-            viewProfile.addActionListener(
-                    new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(viewProfile)) {
-                                DisplayRequestsState currentState = displayRequestsViewModel.getState();
-                                // Retrieve the associated request name
-                                String associatedString = (String) viewProfile.getClientProperty("userString");
-                                currentState.setRequestName(associatedString);
+                viewProfile.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                if (evt.getSource().equals(viewProfile)) {
+                                    DisplayRequestsState currentState = displayRequestsViewModel.getState();
+                                    // Retrieve the associated request name
+                                    String associatedString = (String) viewProfile.getClientProperty("userString");
+                                    currentState.setRequestName(associatedString);
 
-                                displayProfileController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getRequestName()
-                                );
+                                    displayProfileController.execute(
+                                            currentState.getUsername(),
+                                            currentState.getRequestName()
+                                    );
+                                }
                             }
                         }
-                    }
-            );
+                );
+            }
+
 
 //            acceptRequest.addActionListener(
 //                    new ActionListener() {
