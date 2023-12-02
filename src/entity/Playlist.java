@@ -3,6 +3,10 @@ package entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The Playlist interface represents a user's Spotify playlist and defines methods
+ *  for accessing various attributes and characteristics of the playlist.
+ */
 public interface Playlist {
     public String getPlaylistId();
     public ArrayList<String> getTitles();
