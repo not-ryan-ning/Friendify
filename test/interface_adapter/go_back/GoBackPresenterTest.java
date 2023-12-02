@@ -49,7 +49,7 @@ public class GoBackPresenterTest {
         GoBackPresenter goBackPresenter = new GoBackPresenter(viewManagerModel, goBackViewModel, loggedInViewModel);
         goBackPresenter.prepareSuccessView();
 
-        assertEquals("Logged In", viewManagerModel.getActiveView());
+        assertEquals("logged in", viewManagerModel.getActiveView());
     }
 
 }

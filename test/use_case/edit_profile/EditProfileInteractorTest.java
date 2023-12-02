@@ -3,8 +3,6 @@ package use_case.edit_profile;
 import interface_adapter.ViewManagerModel;
 import org.junit.Test;
 
-import javax.swing.text.View;
-
 import static org.junit.Assert.*;
 
 public class EditProfileInteractorTest {
