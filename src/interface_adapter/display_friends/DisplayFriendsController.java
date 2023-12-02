@@ -4,13 +4,12 @@ import entity.User;
 import use_case.display_friends.DisplayFriendsInputBoundary;
 
 public class DisplayFriendsController {
-
     final DisplayFriendsInputBoundary displayFriendsInteractor;
     public DisplayFriendsController(DisplayFriendsInputBoundary displayFriendsInteractor) {
         this.displayFriendsInteractor = displayFriendsInteractor;
     }
 
-    public void execute() {
-        displayFriendsInteractor.execute();
+    public void execute(String username) {
+        displayFriendsInteractor.execute(username);
     }
 }

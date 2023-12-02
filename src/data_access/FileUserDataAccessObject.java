@@ -1,11 +1,21 @@
 package data_access;
 
 import entity.*;
+import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
+import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
+import use_case.edit_bio.EditBioUserDataAccessInterface;
+import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.match.MatchUserDataAccessInterface;
+import use_case.send_request.SendRequestUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
 
-public class FileUserDataAccessObject {
+public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
+        EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
+        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayProfileUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
@@ -18,12 +28,16 @@ public class FileUserDataAccessObject {
     private final Map<String, Playlist> usernamePlaylist = new HashMap<>();
 
     private UserFactory userFactory;
+    private ProfileFactory profileFactory;
+    private FilePlaylistsDataAccessObject playlistsDataAccessObject;
     private MatchingStrategy matchingStrategy;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, MatchingStrategy matchingStrategy) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, ProfileFactory profileFactory, MatchingStrategy matchingStrategy) throws IOException {
         this.userFactory = userFactory;
+        this.profileFactory = profileFactory;
         this.matchingStrategy = matchingStrategy;
         this.usersFile = new File(csvPath);
+      
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("bio", 2);
@@ -61,8 +75,8 @@ public class FileUserDataAccessObject {
                     String[] requestsSplit = requests.split(",");
                     ArrayList<String> requestsArrayList = new ArrayList<String>(Arrays.asList(requestsSplit));
 
-                    Profile profile = ProfileFactory.create(bio, topThreeArtists, spotifyHandle);
-                    Playlist playlist = FilePlaylistsDataAccessObject.getPlaylist(playlistId);
+                    Profile profile = profileFactory.create(bio, topThreeArtists, spotifyHandle);
+                    Playlist playlist = playlistsDataAccessObject.getPlaylist(playlistId);
 
                     User user = userFactory.create(username, password, profile, playlist, friendsArrayList, requestsArrayList);
                     accounts.put(username, user);
@@ -95,11 +109,17 @@ public class FileUserDataAccessObject {
         }
     }
 
+    @Override
+    public void save(User user) {
+        accounts.put(user.getUsername(), user);
+        this.save();
+    }
+
     public User get(String username) {
         return accounts.get(username);
     }
 
-    public boolean existsByName(String identifier) {
+    public boolean existByName(String identifier) {
         return accounts.containsKey(identifier);
     }
 
@@ -114,30 +134,25 @@ public class FileUserDataAccessObject {
         receiver.getRequests().add(sender.getUsername());
     }
 
-    public void setMatchingStrategy(MatchingStrategy matchingStrategy) {
-        this.matchingStrategy = matchingStrategy;
-    }
-
-    HashMap<String, Double> getMatches(User currentUser) {
-        HashMap<String, Double> matches = new HashMap<>();
+    public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
+        HashMap<String, Double> scores = new HashMap<>();
+        Playlist currentPlaylist = currentUser.getPlaylist();
 
         for (User user : accounts.values()) {
             if (!currentUser.getFriends().contains(user.getUsername())) {
                 Playlist playlistToCheck = user.getPlaylist();
-                Double similarityScore = matchingStrategy.getSimilarityScore(user.getPlaylist(), playlistToCheck);
-                if (similarityScore >= 0.5) {
-                    matches.put(user.getUsername(), similarityScore);
-                }
+                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+                scores.put(user.getUsername(), similarityScore);
             }
         }
-        return matches;
+        return scores;
     }
 
     public void editPlaylist(String username, Playlist playlist) {
         // Update the usernamePlaylist map to the new playlist
         usernamePlaylist.put(username, playlist);
         ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
-        String artists = ""; // need to convert the arrayList into a String
+        String artists = String.join(",", topThreeArtists);
         String playlistId = playlist.getPlaylistId();
 
         // Update the users csv file
@@ -145,7 +160,7 @@ public class FileUserDataAccessObject {
         editFile(username,"playlistId", playlistId);
     }
 
-    private void editFile(String username, String column, String newValue) {
+    public void editFile(String username, String column, String newValue) {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile))) {

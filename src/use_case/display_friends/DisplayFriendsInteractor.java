@@ -15,9 +15,9 @@ public class DisplayFriendsInteractor implements DisplayFriendsInputBoundary {
     }
 
     @Override
-    public void execute() {
-        User currentUser = LoggedInState.getCurrentUser();
-        ArrayList<String> friendNames = currentUser.getFriendNames();
+    public void execute(String username) {
+        User user = userDataAccessObject.get(username);
+        ArrayList<String> friendNames = user.getFriends();
 
         DisplayFriendsOutputData displayFriendsOutputData = new DisplayFriendsOutputData(friendNames);
         displayFriendsPresenter.prepareSuccessView(displayFriendsOutputData);
