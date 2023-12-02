@@ -33,6 +33,7 @@ import use_case.choose_playlist.ChoosePlaylistSpotifyAPIDataAccessInterface;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.display_playlists.DisplayPlaylistsSpotifyAPIDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
 import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
@@ -88,6 +89,7 @@ public class Main {
         FilePlaylistsDataAccessObject choosePlaylistPlaylistDataAccessObject;
         SpotifyAPIDataAccessObject choosePlaylistSpotifyAPIDataAccessObject;
         FileUserDataAccessObject editSpotifyHandleUserDataAccessObject;
+        FileUserDataAccessObject displayProfileUserDataAccessObject;
 
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv",
@@ -128,6 +130,10 @@ public class Main {
             choosePlaylistSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
 
             editSpotifyHandleUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+                    new CommonUserFactory(),
+                    new CommonProfileFactory());
+
+            displayProfileUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
                     new CommonProfileFactory());
 
@@ -180,13 +186,25 @@ public class Main {
         views.add(editProfileView, editProfileView.viewName);
 
         DisplayRequestsView displayRequestsView = DisplayRequestsUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
                 displayRequestsViewModel,
-                displayRequestsUserDataAccessObject);
+                displayRequestsUserDataAccessObject,
+                displayProfileViewModel,
+                displayCommonProfileViewModel,
+                displayFriendProfileViewModel,
+                displayProfileUserDataAccessObject,
+                goBackViewModel);
         views.add(displayRequestsView);
 
         DisplayFriendsView displayFriendsView = DisplayFriendsUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
                 displayFriendsViewModel,
-                displayFriendsUserDataAccessObject);
+                displayFriendsUserDataAccessObject,
+                displayProfileViewModel,
+                displayCommonProfileViewModel,
+                displayFriendProfileViewModel,
+                displayProfileUserDataAccessObject,
+                goBackViewModel);
         views.add(displayFriendsView);
 
         viewManagerModel.setActiveView(signupView.viewName);
