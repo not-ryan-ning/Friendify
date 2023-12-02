@@ -1,12 +1,10 @@
 package view;
 
-import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 import interface_adapter.display_friends.DisplayFriendsController;
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_friends.DisplayFriendsViewModel;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
-import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -78,21 +76,21 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
             buttons.add(viewProfile);
 
             viewProfile.addActionListener(
-                    new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(viewProfile)) {
-                                DisplayFriendsState currentState = displayFriendsViewModel.getState();
-                                // Retrieve the associated friend name
-                                String associatedString = (String) viewProfile.getClientProperty("userString");
-                                currentState.setFriendName(associatedString);
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(viewProfile)) {
+                            DisplayFriendsState currentState = displayFriendsViewModel.getState();
+                            // Retrieve the associated friend name
+                            String associatedString = (String) viewProfile.getClientProperty("userString");
+                            currentState.setFriendName(associatedString);
 
-                                displayProfileController.execute(
-                                        currentState.getUsername(),
-                                        currentState.getFriendName()
-                                );
-                            }
+                            displayProfileController.execute(
+                                    currentState.getUsername(),
+                                    currentState.getFriendName()
+                            );
                         }
                     }
+                }
             );
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

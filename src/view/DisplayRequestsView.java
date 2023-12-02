@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.display_requests.DisplayRequestsController;
@@ -15,8 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import entity.User;
-import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -36,8 +33,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel,
                                DisplayRequestsController displayRequestsController,
-                               DisplayProfileViewModel displayProfileViewModel,
                                DisplayProfileController displayProfileController,
+                               DisplayProfileViewModel displayProfileViewModel,
                                // AcceptRequestsController acceptRequestsController,
                                // AcceptRequestsViewModel acceptRequestsViewModel,
                                LoggedInViewModel loggedInViewModel,

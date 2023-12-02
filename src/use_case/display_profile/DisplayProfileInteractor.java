@@ -2,7 +2,6 @@ package use_case.display_profile;
 
 import entity.Profile;
 import entity.User;
-import interface_adapter.display_profile.DisplayProfileState;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 
 
