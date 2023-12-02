@@ -9,8 +9,7 @@ public class MatchPresenter implements MatchOutputBoundary {
     private final MatchViewModel matchViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public MatchPresenter(LoggedInViewModel loggedInViewModel,
-                          ViewManagerModel viewManagerModel,
+    public MatchPresenter(ViewManagerModel viewManagerModel,
                           MatchViewModel matchViewModel) {
 
         this.viewManagerModel = viewManagerModel;
