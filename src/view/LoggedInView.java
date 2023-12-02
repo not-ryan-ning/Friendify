@@ -25,6 +25,14 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The LoggedInView class represents the view of the "main homepage" which users see once they are logged in.
+ * It extends JPanel and implements ActionListener and PropertyChangeListener to handle user
+ * interactions and property changes.
+ * This view includes labels for the username, bio, Spotify handle, and top three artists, which only friends can see,
+ * of the loggedin user, as well as buttons to match with others, logout, see requests and friends and edit their
+ * profile.
+ */
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
