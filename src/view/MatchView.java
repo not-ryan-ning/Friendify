@@ -6,7 +6,6 @@ import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
-import interface_adapter.send_request.SendRequestViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +20,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     private final MatchViewModel matchViewModel;
     private final SendRequestViewModel sendRequestViewModel;
     private final SendRequestController sendRequestController;
-    private final SendRequestViewModel sendRequestViewModel;
     private final GoBackViewModel goBackViewModel;
 
     public MatchView(MatchViewModel matchViewModel,
@@ -32,7 +30,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         this.matchViewModel = matchViewModel;
         this.sendRequestViewModel = sendRequestViewModel;
         this.sendRequestController = sendRequestController;
-        this.sendRequestViewModel = sendRequestViewModel;
         this.goBackViewModel = goBackViewModel;
 
         matchViewModel.addPropertyChangeListener(this);
