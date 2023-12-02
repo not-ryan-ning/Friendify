@@ -27,17 +27,6 @@ import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.signup.SignupViewModel;
 
-import use_case.authorize.AuthorizeSpotifyAuthenticationDataAccessInterface;
-import use_case.choose_playlist.ChoosePlaylistPlaylistDataAccessInterface;
-import use_case.choose_playlist.ChoosePlaylistSpotifyAPIDataAccessInterface;
-import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
-import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
-import use_case.display_playlists.DisplayPlaylistsSpotifyAPIDataAccessInterface;
-import use_case.display_profile.DisplayProfileUserDataAccessInterface;
-import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
-import use_case.edit_bio.EditBioUserDataAccessInterface;
-import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
-import use_case.send_request.SendRequestUserDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -148,6 +137,7 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = LoginUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
                 loginViewModel,
                 logoutViewModel,
                 displayRequestsViewModel,
@@ -206,6 +196,19 @@ public class Main {
                 displayProfileUserDataAccessObject,
                 goBackViewModel);
         views.add(displayFriendsView);
+
+        DisplayCommonProfileView displayCommonProfileView = DisplayProfileUseCaseFactory.create(
+                viewManagerModel,
+                loggedInViewModel,
+                displayCommonProfileViewModel,
+                goBackViewModel);
+        views.add(displayCommonProfileView);
+
+        DisplayFriendProfileView displayFriendProfileView = DisplayProfileUseCaseFactory.create(viewManagerModel,
+                loggedInViewModel,
+                displayFriendProfileViewModel,
+                goBackViewModel);
+        views.add(displayFriendProfileView);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
