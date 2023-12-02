@@ -24,7 +24,7 @@ public class LogoutViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("state3", null, this.state);
+        support.firePropertyChange("logOutState", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
