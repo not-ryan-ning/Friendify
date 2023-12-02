@@ -1,10 +1,12 @@
 package view;
 
+import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 import interface_adapter.display_friends.DisplayFriendsController;
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_friends.DisplayFriendsViewModel;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
+import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -33,6 +35,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
                               DisplayProfileViewModel displayProfileViewModel,
                               LoggedInViewModel loggedInViewModel, GoBackController goBackController,
                               GoBackViewModel goBackViewModel) {
+
         this.displayFriendsController = displayFriendsController;
         this.displayFriendsViewModel = displayFriendsViewModel;
         this.displayProfileController = displayProfileController;
@@ -49,23 +52,20 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
         JPanel buttons = new JPanel();
 
-        DisplayFriendsState currentState = displayFriendsViewModel.getState();
+        JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
+        buttons.add(back);
 
-        JButton goBack = new JButton(goBackViewModel.GO_BACK_LABEL);
-        buttons.add(goBack);
-
-        goBack.addActionListener(this);
-        goBack.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
+        back.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(goBack)) {
+                        if (evt.getSource().equals(back)) {
                             goBackController.execute();
                         }
                     }
                 }
         );
 
+        DisplayFriendsState currentState = displayFriendsViewModel.getState();
         ArrayList<String> friends = currentState.getFriends();
 
         for (String friend: friends) {
@@ -108,6 +108,6 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // not implemented for now
+        // Not implemented yet
     }
 }
