@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class GoBackViewModel extends ViewModel {
-    public static final String GO_BACK_LABEL = "Go Back to Home Page";
+    public static final String BACK_BUTTON_LABEL = "Go Back to Home Page";
     private GoBackState state = new GoBackState();
     public GoBackViewModel() {
         super("go back");
