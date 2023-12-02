@@ -66,9 +66,21 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     artistsMap.put("defaultArtists", 0);
 
                     if (!artists.isEmpty()) {
-                        artistsMap = (HashMap<String, Integer>) Arrays.stream(artists.split("\n"))
+                        artistsMap = Arrays.stream(artists.split("\n"))
                                 .map(entry -> entry.split(","))
-                                .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+                                .collect(Collectors.toMap(
+                                        parts -> parts[0],
+                                        parts -> {
+                                            try {
+                                                return Integer.parseInt(parts[1]);
+                                            } catch (NumberFormatException e) {
+                                                // Handle non-numeric case, e.g., set a default value
+                                                return 0;
+                                            }
+                                        },
+                                        (existing, replacement) -> existing,
+                                        HashMap::new
+                                ));
                     }
 
                     HashMap<String, Integer> genresMap = new HashMap<>();
@@ -76,7 +88,19 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     if (! genres.isEmpty()) {
                         genresMap = Arrays.stream(genres.split("\n"))
                                 .map(entry -> entry.split(","))
-                                .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1]), (a, b) -> a, HashMap::new));
+                                .collect(Collectors.toMap(
+                                        parts -> parts[0],
+                                        parts -> {
+                                            try {
+                                                return Integer.parseInt(parts[1]);
+                                            } catch (NumberFormatException e) {
+                                                // Handle non-numeric case, e.g., set a default value
+                                                return 0;
+                                            }
+                                        },
+                                        (existing, replacement) -> existing,
+                                        HashMap::new
+                                ));
                     }
 
                     Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsMap, genresMap,

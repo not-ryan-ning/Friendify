@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +36,7 @@ import interface_adapter.edit_spotify_handle.EditSpotifyHandleState;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleViewModel;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
+import org.w3c.dom.ls.LSOutput;
 
 
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -61,6 +64,9 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
     private final JButton savePlaylist;
     private final JButton saveSpotifyHandle;
     private final JButton back;
+    private final JList<String> playlistSelectList;
+    private final DefaultListModel<String> listModel;
+    private final JScrollPane scrollPane;
 
     public EditProfileView(EditProfileController editProfileController, EditProfileViewModel editProfileViewModel,
                            EditBioController editBioController, EditBioViewModel editBioViewModel,
@@ -106,6 +112,15 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         LabelTextPanel spotifyInfo = new LabelTextPanel(
                 new JLabel(EditSpotifyHandleViewModel.SPOTIFY_HANDLE_LABEL), changeSpotifyInputField);
 
+        // Create JList and JScrollPane
+        listModel = new DefaultListModel<>();
+        playlistSelectList = new JList<>(listModel);
+        playlistSelectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane = new JScrollPane(playlistSelectList);
+        scrollPane.setPreferredSize(new Dimension(200, 200));
+        scrollPane.setVisible(false);
+        JPanel buttonsAndScroll = new JPanel();
+        buttonsAndScroll.setLayout(new BoxLayout(buttonsAndScroll, BoxLayout.Y_AXIS));
 
         JPanel buttons = new JPanel();
 
@@ -147,8 +162,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                         if (evt.getSource().equals(displayPlaylists)) {
                             AuthorizeState authorizeState = authorizeViewModel.getState();
                             String authorizationLink = authorizeState.getAuthorizationLink();
-                            openWebLink(authorizationLink);
-                            authorizeController.execute();
+                            authorizeController.execute(authorizationLink);
 
                             DisplayPlaylistsState currentState = displayPlaylistsViewModel.getState();
                             displayPlaylistsController.execute(currentState.getAccessToken());
@@ -234,12 +248,13 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                     public void keyReleased(KeyEvent e) {
                     }
                 });
-                this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-                this.add(title);
-                this.add(bioInfo);
-                this.add(spotifyInfo);
-                this.add(buttons);
+        buttonsAndScroll.add(scrollPane);
+        buttonsAndScroll.add(buttons);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(bioInfo);
+        this.add(spotifyInfo);
+        this.add(buttonsAndScroll);
     }
 
     @Override
@@ -264,21 +279,44 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             DisplayPlaylistsState displayPlaylistsState = (DisplayPlaylistsState) evt.getNewValue();
             ArrayList<String> playlistNames = new ArrayList<>(displayPlaylistsState.getPlaylistIdName().values());
 
-            // Create a JList with a single selection model
-            JList<String> playlistSelectList = new JList<String>((ListModel<String>) playlistNames);
-            playlistSelectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            // Clear previous data
+            listModel.clear();
 
-            // Get the selected playlist name and its id, and username
-            String playlistName = playlistSelectList.getSelectedValue();
-            String playlistId = getKeyByValue(displayPlaylistsState.getPlaylistIdName(), playlistName);
+            // Add new data to the list model
+            for (String item : playlistNames) {
+                listModel.addElement(item);
+            }
 
-            // Update the choosePlaylistViewModel
-            ChoosePlaylistState choosePlaylistState = new ChoosePlaylistState();
-            choosePlaylistState.setPlaylistId(playlistId);
-            choosePlaylistState.setPlaylistName(playlistName);
-            choosePlaylistState.setAccessToken(displayPlaylistsState.getAccessToken());
-            choosePlaylistViewModel.setState(choosePlaylistState);
+            // Make the JScrollPane visible
+            scrollPane.setVisible(true);
 
+            // Repaint the panel to reflect changes
+            this.revalidate();
+            this.repaint();
+
+            playlistSelectList.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    if (!e.getValueIsAdjusting()) {
+                        // Get the selected playlist name
+                        String playlistName = playlistSelectList.getSelectedValue();
+
+                        // Use the selected playlist name to get the corresponding playlist ID
+                        String playlistId = getKeyByValue(displayPlaylistsState.getPlaylistIdName(), playlistName);
+
+                        // Update the choosePlaylistViewModel
+                        ChoosePlaylistState choosePlaylistState = new ChoosePlaylistState();
+                        choosePlaylistState.setPlaylistId(playlistId);
+                        choosePlaylistState.setPlaylistName(playlistName);
+                        choosePlaylistState.setAccessToken(displayPlaylistsState.getAccessToken());
+                        choosePlaylistViewModel.setState(choosePlaylistState);
+
+                        // Optionally display the selected playlist details
+                        System.out.println("Selected Playlist Name: " + playlistName);
+                        System.out.println("Selected Playlist ID: " + playlistId);
+                    }
+                }
+            });
         } else if (evt.getPropertyName().equals("choosePlaylistState")) {
             ChoosePlaylistState choosePlaylistState = (ChoosePlaylistState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, choosePlaylistState.getPlaylistName());
