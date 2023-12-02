@@ -3,6 +3,8 @@ package view;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileState;
+import interface_adapter.go_back.GoBackController;
+import interface_adapter.go_back.GoBackViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,14 +16,22 @@ import java.beans.PropertyChangeListener;
 public class DisplayCommonProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
+    private final GoBackController goBackController;
+    private final GoBackViewModel goBackViewModel;
 
     JLabel username;
     JLabel spotifyHandle;
     JLabel bio;
     JLabel topThreeArtists;
-    public DisplayCommonProfileView(DisplayCommonProfileViewModel displayCommonProfileViewModel) {
+    public DisplayCommonProfileView(DisplayCommonProfileViewModel displayCommonProfileViewModel,
+                                    GoBackController goBackController,
+                                    GoBackViewModel goBackViewModel) {
         this.displayCommonProfileViewModel = displayCommonProfileViewModel;
+        this.goBackController = goBackController;
+        this.goBackViewModel = goBackViewModel;
+
         this.displayCommonProfileViewModel.addPropertyChangeListener(this);
+        this.goBackViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Common User's Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -41,16 +51,16 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
 
         JPanel buttons = new JPanel();
 
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
-        buttons.add(back);
+        JButton goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(goBack);
 
-        back.addActionListener(this);
-        back.addActionListener(
+        goBack.addActionListener(this);
+        goBack.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            backController.execute();
+                        if (evt.getSource().equals(goBack)) {
+                            goBackController.execute();
                         }
                     }
                 }

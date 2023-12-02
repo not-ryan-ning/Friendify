@@ -32,6 +32,8 @@ import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleController;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleState;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleViewModel;
+import interface_adapter.go_back.GoBackController;
+import interface_adapter.go_back.GoBackViewModel;
 
 
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -120,8 +122,8 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
         buttons.add(saveSpotifyHandle);
 
-        JButton back = new JButton(GoBackViewModel.GO_BACK_LABEL);
-        buttons.add(back);
+        goBack = new JButton(GoBackViewModel.GO_BACK_LABEL);
+        buttons.add(goBack);
 
 
         saveBio.addActionListener(
@@ -190,10 +192,10 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 }
         );
 
-        back.addActionListener(
+        goBack.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
+                        if (evt.getSource().equals(goBack)) {
                             goBackController.execute();
                         }
                     }
@@ -242,6 +244,12 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 this.add(spotifyInfo);
                 this.add(buttons);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

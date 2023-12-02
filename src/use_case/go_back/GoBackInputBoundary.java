@@ -1,4 +1,4 @@
-package use_case.goBack;
+package use_case.go_back;
 
 public interface GoBackInputBoundary {
     void execute();

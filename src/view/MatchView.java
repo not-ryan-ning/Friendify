@@ -1,9 +1,11 @@
 package view;
 
+import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
 import interface_adapter.send_request.SendRequestController;
 import interface_adapter.send_request.SendRequestState;
+import interface_adapter.send_request.SendRequestViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +19,17 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
     private final SendRequestController sendRequestController;
+    private final SendRequestViewModel sendRequestViewModel;
     private final GoBackViewModel goBackViewModel;
 
     public MatchView(MatchViewModel matchViewModel,
-                     SendRequestController sendRequestController, GoBackViewModel goBackViewModel) {
+                     SendRequestController sendRequestController,
+                     SendRequestViewModel sendRequestViewModel,
+                     GoBackViewModel goBackViewModel) {
 
         this.matchViewModel = matchViewModel;
         this.sendRequestController = sendRequestController;
+        this.sendRequestViewModel = sendRequestViewModel;
         this.goBackViewModel = goBackViewModel;
 
         matchViewModel.addPropertyChangeListener(this);
@@ -59,9 +65,9 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                                 // Retrieve the associated username
                                 String associatedString = (String) request.getClientProperty("userString");
                                 SendRequestState currentState = sendRequestViewModel.getState();
-                                String senderUsername = currentState.getUsername();
-                                currentState.setRecieverUsername(associatedString);
-                                String receiverUsername = currentState.getRecieverUsername();
+                                String senderUsername = currentState.getSenderUsername();
+                                currentState.setReceiverUsername(associatedString);
+                                String receiverUsername = currentState.getReceiverUsername();
 
                                 sendRequestController.execute(senderUsername, receiverUsername);
                             }
@@ -82,7 +88,7 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        sendRequestState state = (SendRequestState) evt.getNewValue();
+        SendRequestState state = (SendRequestState) evt.getNewValue();
         if (state.getRequestError() != null) {
             JOptionPane.showMessageDialog(this, state.getRequestError());
         } else {
