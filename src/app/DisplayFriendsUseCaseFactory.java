@@ -69,6 +69,7 @@ public class DisplayFriendsUseCaseFactory {
 
         return new DisplayProfileController(displayProfileInteractor);
     }
+
     private static GoBackController createGoBackUseCase(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) throws IOException {
         GoBackOutputBoundary goBackOutputBoundary = new GoBackPresenter(viewManagerModel, goBackViewModel, loggedInViewModel);
         GoBackInputBoundary goBackInteractor = new GoBackInteractor(goBackOutputBoundary);

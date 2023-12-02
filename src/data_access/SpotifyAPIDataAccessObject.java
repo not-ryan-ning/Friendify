@@ -3,6 +3,8 @@ package data_access;
 // added the json jar library in order to import this
 import org.json.JSONObject;
 import org.json.JSONArray;
+import use_case.choose_playlist.ChoosePlaylistSpotifyAPIDataAccessInterface;
+import use_case.display_playlists.DisplayPlaylistsSpotifyAPIDataAccessInterface;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,7 +12,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
-public class SpotifyAPIDataAccessObject {
+public class SpotifyAPIDataAccessObject implements DisplayPlaylistsSpotifyAPIDataAccessInterface,
+        ChoosePlaylistSpotifyAPIDataAccessInterface {
     // Return all the playlists the user has that maps playlistId to playlistName
     public HashMap<String, String> getPlaylists(String accessToken) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
@@ -51,7 +54,7 @@ public class SpotifyAPIDataAccessObject {
 
     // Get all information about the chosen playlist from the API and store them in the playlist csv file and the users
     // csv file (playlist id only)
-    public ArrayList<Object> returnPlaylistInfo(String username, String playlistId, String accessToken) {
+    public ArrayList<Object> getPlaylistInfo(String username, String playlistId, String accessToken) {
         ArrayList<Object> playlistInfo = new ArrayList<>();
         ArrayList<String> trackIds = getTrackIds(playlistId, accessToken);
         ArrayList<Object> titlesArtists = getTracksTitlesArtists(trackIds, accessToken);
