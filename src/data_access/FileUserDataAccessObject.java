@@ -32,12 +32,13 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
     private UserFactory userFactory;
     private ProfileFactory profileFactory;
+    private PlaylistFactory playlistFactory;
     private FilePlaylistsDataAccessObject playlistsDataAccessObject;
-    private boolean headerWritten = false;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, ProfileFactory profileFactory, FilePlaylistsDataAccessObject filePlaylistsDataAccessObject) throws IOException {
+    public FileUserDataAccessObject(String csvPath, UserFactory userFactory, PlaylistFactory playlistFactory, ProfileFactory profileFactory, FilePlaylistsDataAccessObject filePlaylistsDataAccessObject) throws IOException {
         this.userFactory = userFactory;
         this.profileFactory = profileFactory;
+        this.playlistFactory = playlistFactory;
         this.usersFile = new File(csvPath);
         this.playlistsDataAccessObject = filePlaylistsDataAccessObject;
       
@@ -60,7 +61,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split("\\|");
-                    System.out.println(col.length);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String bio = String.valueOf(col[headers.get("bio")]);
@@ -82,6 +82,10 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
                     Profile profile = profileFactory.create(bio, topThreeArtists, spotifyHandle);
                     Playlist playlist = playlistsDataAccessObject.getPlaylist(playlistId);
+                    if (playlist == null) {
+                        playlist = playlistFactory.create(playlistId, new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                                0.0, 0.0,0.0,0.0, new ArrayList<>());
+                    }
 
                     User user = userFactory.create(username, password, profile, playlist, friendsArrayList, requestsArrayList);
                     accounts.put(username, user);
@@ -92,13 +96,12 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     private void save() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFile, true))) {
-            // Check if the header has already been written
-            if (!headerWritten) {
-                writer.write(String.join("|", headers.keySet()));
-                writer.newLine();
-                headerWritten = true;  // Set the flag to true so that the header is not written again
-            }
+        System.out.println("save is called");
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter(usersFile));
+            writer.write(String.join("|", headers.keySet()));
+            writer.newLine();
 
             for (User user : accounts.values()) {
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
@@ -108,6 +111,8 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                 writer.write(line);
                 writer.newLine();
             }
+
+            writer.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
