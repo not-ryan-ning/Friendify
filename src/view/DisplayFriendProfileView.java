@@ -11,6 +11,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * The DisplayFriendProfileView class represents the view that displays the friend user profile.
+ * It extends JPanel and implements ActionListener and PropertyChangeListener to handle user
+ * interactions and property changes.
+ *  This view includes labels for the username, bio, Spotify handle, and top three artists, which only friends can see,
+ *  as well as a button to go back to the logged in view.
+ */
 public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "User's Profile";
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
