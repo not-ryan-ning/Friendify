@@ -28,7 +28,6 @@ import interface_adapter.send_request.SendRequestViewModel;
 import interface_adapter.signup.SignupViewModel;
 
 import view.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
