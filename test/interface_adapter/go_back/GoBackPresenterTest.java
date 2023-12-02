@@ -3,6 +3,7 @@ package interface_adapter.go_back;
 import app.Main;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import view.LoggedInView;
 
@@ -39,7 +40,7 @@ public class GoBackPresenterTest {
      *
      * Test GoBack's prepareSuccessView to ensure it switches the views back to the loggedInView on click
      */
-    @org.junit.Test
+    @Test
     public void goBackSucessTest() {
         Main.main(null);
         JButton button = getButton();
