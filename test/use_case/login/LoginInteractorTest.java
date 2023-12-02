@@ -2,8 +2,6 @@ package use_case.login;
 
 import interface_adapter.ViewManagerModel;
 import org.junit.Test;
-import use_case.edit_bio.EditBioInputData;
-import use_case.edit_bio.EditBioInteractor;
 
 import static org.junit.Assert.*;
 
