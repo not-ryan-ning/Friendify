@@ -2,6 +2,7 @@ package interface_adapter.send_request;
 
 public class SendRequestState {
     private String receiverUsername = "";
+    private String username = "";
     private String requestError = null;
     private final String requestSentMessage = "Request Sent";
 
@@ -15,6 +16,12 @@ public class SendRequestState {
     }
     public void setReceiverUsername(String receiverUsername) {
         this.receiverUsername = receiverUsername;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+            this.username = username;
     }
     public String getRequestError() {
         return requestError;
