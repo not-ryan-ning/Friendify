@@ -66,7 +66,6 @@ public class LoginUseCaseFactory {
 
     public static LoggedInView create(
             ViewManagerModel viewManagerModel,
-            LoggedInViewModel loggedInViewModel,
             LoginViewModel loginViewModel,
             LogoutViewModel logoutViewModel,
             DisplayRequestsViewModel displayRequestsViewModel,
