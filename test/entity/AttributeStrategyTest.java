@@ -28,7 +28,7 @@ public class AttributeStrategyTest {
     }
 
     @Test
-    // Test the basic case where both playlists are matching and should return 1.0 similarity score
+    // Test 100% similarity between two playlists, should return 1.0 (most similar)
     public void testBasicCase() {
         Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 1.0, 1.0,
@@ -37,7 +37,7 @@ public class AttributeStrategyTest {
                 1.0, 1.0, 1.0, 1.0,
                 new ArrayList<>());
 
-        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+        assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AttributeStrategyTest {
     }
 
     @Test
-    // Test 0% similarity between two playlists, should return 2.0 (max possible] distance from each other)
+    // Test 0% similarity between two playlists, should return 0.0 (most dissimilar)
     public void testNoSimilarity() {
         Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
@@ -63,6 +63,6 @@ public class AttributeStrategyTest {
                 1.0, 1.0, 1.0, 1.0,
                 new ArrayList<>());
 
-        assertEquals(2.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
 }
