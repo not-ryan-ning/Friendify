@@ -17,6 +17,11 @@ public class EditBioPresenter implements EditBioOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.editBioViewModel = editBioViewModel;
     }
+    /**
+     * Prepares and updates the view for the edit bio operation.
+     *
+     * @param response The output data containing information about the edited bio.
+     */
     @Override
     public void prepareSuccessView(EditBioOutputData response) {
 

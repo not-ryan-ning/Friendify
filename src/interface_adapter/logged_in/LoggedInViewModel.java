@@ -6,6 +6,9 @@ import interface_adapter.login.LoginState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functionality of being logged in, with corresponding buttons to other features that a user can
+ */
 public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 

@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and behavior related to editing user profile.
+ */
 public class EditProfileViewModel extends ViewModel {
     private EditProfileState state = new EditProfileState();
     public EditProfileViewModel() {

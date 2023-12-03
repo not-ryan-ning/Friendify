@@ -4,6 +4,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.edit_spotify_handle.EditSpotifyHandleOutputBoundary;
 import use_case.edit_spotify_handle.EditSpotifyHandleOutputData;
 
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class EditSpotifyHandlePresenter implements EditSpotifyHandleOutputBoundary {
     private final EditSpotifyHandleViewModel editSpotifyHandleViewModel;
 

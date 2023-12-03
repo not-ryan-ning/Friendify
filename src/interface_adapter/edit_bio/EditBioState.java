@@ -1,5 +1,8 @@
 package interface_adapter.edit_bio;
 
+/**
+ * Represents the state for editing user bio.
+ */
 public class EditBioState {
     private String bio;
 

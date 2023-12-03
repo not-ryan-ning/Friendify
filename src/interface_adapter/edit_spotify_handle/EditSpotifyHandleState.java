@@ -1,5 +1,8 @@
 package interface_adapter.edit_spotify_handle;
 
+/**
+ * Represents the state of editing a user's spotify handle
+ */
 public class EditSpotifyHandleState {
     private String spotifyHandle;
 

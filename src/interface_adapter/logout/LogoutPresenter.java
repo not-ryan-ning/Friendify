@@ -4,7 +4,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.logout.LogoutOutputBoundary;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
-
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class LogoutPresenter implements LogoutOutputBoundary {
     private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;

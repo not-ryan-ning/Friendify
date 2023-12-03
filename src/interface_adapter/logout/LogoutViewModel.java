@@ -6,6 +6,9 @@ import interface_adapter.logout.LogoutState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functionality of logging out of an account.
+ */
 public class LogoutViewModel extends ViewModel {
    public final String TITLE_LABEL = "Log Out View";
     public static final String LOGOUT_BUTTON_LABEL = "Log out";

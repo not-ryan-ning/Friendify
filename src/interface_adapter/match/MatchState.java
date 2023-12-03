@@ -3,6 +3,9 @@ package interface_adapter.match;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Represents the state of a user matching with other users.
+ */
 public class MatchState {
     private HashMap<String, Double> topSimilarUsers;
 

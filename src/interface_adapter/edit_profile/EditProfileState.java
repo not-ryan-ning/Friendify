@@ -1,5 +1,8 @@
 package interface_adapter.edit_profile;
 
+/**
+ * Represents the state of editing a user's profile.
+ */
 public class EditProfileState {
     private String username = "";
     public EditProfileState(EditProfileState copy) {

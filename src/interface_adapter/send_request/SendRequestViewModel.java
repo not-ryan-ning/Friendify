@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functionality of a user sending another user a friend request.
+ */
 public class SendRequestViewModel extends ViewModel {
     private SendRequestState sendRequestState = new SendRequestState();
 
