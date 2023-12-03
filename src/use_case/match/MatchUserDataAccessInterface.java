@@ -11,15 +11,12 @@ public interface MatchUserDataAccessInterface {
     User get(String username);
 
     /**
-     * Loops through users who are not the current user's friends, and compares their playlists with
-     * the current user's playlist using the matching strategies in the following order:
-     * 1. TitleStrategy
-     * 2. ArtistStrategy
-     * 3. GenreStrategy
-     * 4. AttributeStrategy
-     * Once 10 matches are found, they are returned.
-     * @param currentUser
-     * @return an array list of the usernames of the top 10 matches
+     * Returns the similarity scores between the current user and other users in the system,
+     * given they are not already friends. The similarity scores are calculated based
+     * on the provided matching strategy.
+     * @param currentUser The currently logged-in user
+     * @param matchingStrategy The matching strategy for how similarity scores are calculated
+     * @return A HashMap of usernames mapping to similarity scores
      */
     HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy);
 }
