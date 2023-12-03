@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.*;
+import use_case.accept_request.AcceptRequestFileUserDataAccessInterface;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.display_profile.DisplayProfileUserDataAccessInterface;
@@ -18,7 +19,8 @@ import java.util.*;
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
         MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
-        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface {
+        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface, AcceptRequestFileUserDataAccessInterface {
+        
     private final File usersFile;
 
     // Contains the content in each column
@@ -131,6 +133,12 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     public void save(User user) {
         accounts.put(user.getUsername(), user);
         this.save();
+    }
+
+    @Override
+    public void updateUserInformation(User user) {
+        accounts.remove(user.getUsername());
+        accounts.put(user.getUsername(), user);
     }
 
     public User get(String username) {
