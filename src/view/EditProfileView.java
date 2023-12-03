@@ -247,6 +247,12 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 this.add(buttons);
     }
 
+    /**
+     * Responds to property change events (button clicks), updating the edit profile view based on certain changes.
+     * It maps each unique button click to the corresponding change it results in.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("editBioState")) {
