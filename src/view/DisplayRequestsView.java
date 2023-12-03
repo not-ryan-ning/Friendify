@@ -136,8 +136,13 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
+
+    /**
+     * Responds to property change events, updating DisplayRequestsView to display a message if user accepts.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("acceptRequestsState")) {

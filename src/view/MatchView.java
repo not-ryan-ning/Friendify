@@ -91,6 +91,12 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Responds to property change events (button clicks), updating the Match View to either a fail message or a
+     * request sent message.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SendRequestState state = (SendRequestState) evt.getNewValue();

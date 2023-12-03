@@ -85,6 +85,12 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         System.out.println("Click " + e.getActionCommand());
     }
 
+    /**
+     * Responds to property change events, updating DisplayCommonProfileView to display their username, bio and
+     * top 3 artists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayCommonProfileState state = (DisplayCommonProfileState) evt.getNewValue();

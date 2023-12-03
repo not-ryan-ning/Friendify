@@ -82,6 +82,12 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         System.out.println("Click " + e.getActionCommand());
     }
 
+    /**
+     * Responds to property change events, updating DisplayFriendProfileView to display the username, bio, spotify handle
+     * and top 3 artists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayFriendProfileState state = (DisplayFriendProfileState) evt.getNewValue();
