@@ -36,6 +36,6 @@ public class AttributeStrategy implements MatchingStrategy {
 
         // Similarity score square root of total Euclidean distance.
         // Score of 0 means that the playlists are exactly identical
-        return Math.sqrt(totalSumEuclideanDistances);
+        return Math.sqrt(totalSumEuclideanDistances) / 2.0;
     }
 }
