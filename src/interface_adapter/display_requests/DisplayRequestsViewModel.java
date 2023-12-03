@@ -23,7 +23,6 @@ public class DisplayRequestsViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
     public DisplayRequestsState getState() {
         return state;
     }

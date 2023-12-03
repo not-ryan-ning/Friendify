@@ -79,6 +79,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
                 viewProfile.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(ActionEvent evt) {
+                                System.out.println("Click " + evt.getActionCommand());
                                 if (evt.getSource().equals(viewProfile)) {
                                     DisplayFriendsState currentState = displayFriendsViewModel.getState();
                                     // Retrieve the associated friend name
@@ -109,6 +110,6 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Not implemented yet
+        System.out.println("Property Change: " + evt.getPropertyName());
     }
 }

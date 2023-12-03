@@ -7,4 +7,7 @@ public class DisplayFriendsOutputData {
     public DisplayFriendsOutputData(ArrayList<String> friendNames) {
         this.friendNames = friendNames;
     }
+    public ArrayList<String> getFriendNames() {
+        return friendNames;
+    }
 }

@@ -15,13 +15,13 @@ public class EditSpotifyHandleViewModel extends ViewModel {
         return state;
     }
     public EditSpotifyHandleViewModel() {
-        super("edit spotify handle");
+        super("edit profile");
     }
     public void setState(EditSpotifyHandleState state) {
         this.state = state;
     }
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("editSpotifyHandleState", null, this.state);
     }
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);

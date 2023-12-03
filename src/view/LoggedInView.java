@@ -17,6 +17,7 @@ import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.match.MatchController;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
+import interface_adapter.send_request.SendRequestState;
 
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -89,13 +91,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
-        logout = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
+        logout = new JButton(LoggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logout);
 
-        requests = new JButton(loggedInViewModel.REQUESTS_BUTTON_LABEL);
+        requests = new JButton(LoggedInViewModel.REQUESTS_BUTTON_LABEL);
         buttons.add(requests);
 
-        friends = new JButton(loggedInViewModel.FRIENDS_BUTTON_LABEL);
+        friends = new JButton(LoggedInViewModel.FRIENDS_BUTTON_LABEL);
         buttons.add(friends);
 
         match = new JButton(loggedInViewModel.MATCH_BUTTON_LABEL);
@@ -121,7 +123,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(requests)) {
-
+                            System.out.println(currentState.getUsername());
                             displayRequestsController.execute(currentState.getUsername());
                         }
                     }
@@ -191,7 +193,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
             state.setUsername(currentState.getUsername());
             displayRequestsViewModel.setState(state);
-            System.out.println(username);
 
         } else if (evt.getPropertyName().equals("displayFriendsState")) {
             DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();

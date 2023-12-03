@@ -24,6 +24,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     private final GoBackViewModel goBackViewModel;
     private final GoBackController goBackController;
 
+    private JPanel buttons;  // Declare buttons as a field to make it accessible in propertyChange method
+
     public MatchView(MatchViewModel matchViewModel,
                      SendRequestViewModel sendRequestViewModel,
                      SendRequestController sendRequestController,
@@ -42,57 +44,10 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel buttons = new JPanel();
+        buttons = new JPanel();  // Initialize buttons
 
         JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
-
-        // Adding request buttons for all the matches from the current state
-        MatchState currentState = matchViewModel.getState();
-        HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
-        System.out.println(topSimilarUsers);
-
-        if (topSimilarUsers != null) {
-            for (String username : topSimilarUsers.keySet()) {
-                JLabel matchUsername = new JLabel(username);
-                JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
-
-                this.add(matchUsername);
-                this.add(similarityScore);
-
-                JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
-
-                // Associate each request button with the corresponding top similar username
-                request.putClientProperty("userString", username);
-                buttons.add(request);
-
-                request.addActionListener(new ActionListener() {
-                      public void actionPerformed(ActionEvent evt) {
-                          if (evt.getSource().equals(request)) {
-                              // Retrieve the associated username
-                              String associatedString = (String) request.getClientProperty("userString");
-                              SendRequestState currentState = sendRequestViewModel.getState();
-                              String senderUsername = currentState.getUsername();
-                              currentState.setReceiverUsername(associatedString);
-                              String receiverUsername = currentState.getReceiverUsername();
-
-                              sendRequestController.execute(senderUsername, receiverUsername);
-                          }
-                      }
-                  }
-                );
-            }
-        }
-
-        back.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            goBackController.execute();
-                        }
-                    }
-                }
-        );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -107,12 +62,58 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("sendRequestState")) {
+        if (evt.getPropertyName().equals("matchState")) {
+            MatchState currentState = matchViewModel.getState();
+            HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
+            SendRequestState sendRequestState = sendRequestViewModel.getState();
+
+            // Clear existing components from the buttons panel
+            buttons.removeAll();
+
+            if (topSimilarUsers != null) {
+                for (String username : topSimilarUsers.keySet()) {
+                    sendRequestState.setReceiverUsername(username);
+
+                    JLabel matchUsername = new JLabel(username);
+                    JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
+
+                    buttons.add(matchUsername);
+                    buttons.add(similarityScore);
+
+                    JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
+
+                    // Associate each request button with the corresponding top similar username
+                    request.putClientProperty("userString", username);
+                    buttons.add(request);
+
+                    request.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent evt) {
+                            if (evt.getSource().equals(request)) {
+                                // Retrieve the associated username
+                                String associatedString = (String) request.getClientProperty("userString");
+                                MatchState matchState = matchViewModel.getState();
+                                String senderUsername = matchState.getUsername();
+
+                                SendRequestState sendRequestState = sendRequestViewModel.getState();
+                                sendRequestState.setReceiverUsername(associatedString);
+                                String receiverUsername = sendRequestState.getReceiverUsername();
+
+                                sendRequestController.execute(senderUsername, receiverUsername);
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Repaint the panel to reflect changes
+            buttons.revalidate();
+            buttons.repaint();
+
+        } else if (evt.getPropertyName().equals("sendRequestState")) {
             SendRequestState state = (SendRequestState) evt.getNewValue();
 
             if (state.getRequestError() != null) {
                 JOptionPane.showMessageDialog(this, state.getRequestError());
-
             } else {
                 JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
             }
