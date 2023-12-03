@@ -6,6 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import entity.Profile;
 
+/**
+ * Represents the state and behavior related to displaying a common profile view
+ */
 public class DisplayCommonProfileViewModel extends ViewModel {
     public final String TITLE_LABEL = "Common Profile View";
 

@@ -7,6 +7,9 @@ import java.beans.PropertyChangeSupport;
 import entity.Profile;
 import interface_adapter.display_friend_profile.DisplayFriendProfileState;
 
+/**
+ * Represents the state and behavior related to displaying a friend profile view
+ */
 public class DisplayFriendProfileViewModel extends ViewModel {
     public final String TITLE_LABEL = "Common Profile View";
 
@@ -24,8 +27,6 @@ public class DisplayFriendProfileViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    // This is what the Login Presenter will call to let the ViewModel know
-    // to alert the View
     public void firePropertyChanged() {
         support.firePropertyChange("friendProfileState", null, this.state);
     }
