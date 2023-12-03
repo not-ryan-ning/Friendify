@@ -27,6 +27,8 @@ public class ChoosePlaylistPresenter implements ChoosePlaylistOutputBoundary {
         ChoosePlaylistState choosePlaylistState = choosePlaylistViewModel.getState();
         choosePlaylistState.setPlaylistName(response.getPlaylistName());
         this.choosePlaylistViewModel.setState(choosePlaylistState);
+        this.choosePlaylistViewModel.firePropertyChanged();
+
         this.viewManagerModel.setActiveView(choosePlaylistViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }

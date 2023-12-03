@@ -15,7 +15,7 @@ public class ChoosePlaylistViewModel extends ViewModel {
 
     private ChoosePlaylistState state = new ChoosePlaylistState();
 
-    public ChoosePlaylistViewModel() { super("ChoosePlaylist"); }
+    public ChoosePlaylistViewModel() { super("edit profile"); }
 
     public void setState(ChoosePlaylistState state) {
         this.state = state;

@@ -12,5 +12,8 @@ public interface User {
     Playlist getPlaylist();
     ArrayList<String> getFriends();
     ArrayList<String> getRequests();
+    void setProfile(Profile profile);
     void setPlaylist(Playlist playlist);
+    void setFriends(ArrayList<String> friends);
+    void setRequests(ArrayList<String> requests);
 }

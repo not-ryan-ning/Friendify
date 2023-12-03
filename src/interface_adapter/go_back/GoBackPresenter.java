@@ -1,6 +1,9 @@
-package interface_adapter.goBack;
+package interface_adapter.go_back;
 
-import use_case.goBack.GoBackOutputBoundary;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.logged_in.LoggedInViewModel;
+import use_case.go_back.GoBackOutputBoundary;
 
 /**
  * Prepares and updates view for corresponding operation.
@@ -9,7 +12,7 @@ public class GoBackPresenter implements GoBackOutputBoundary {
     private final GoBackViewModel goBackViewModel;
     private ViewManagerModel viewManagerModel;
     private LoggedInViewModel loggedInViewModel;
-    public GoBackPresenter(GoBackViewModel goBackViewModel, ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
+    public GoBackPresenter(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) {
         this.goBackViewModel = goBackViewModel;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
@@ -22,6 +25,8 @@ public class GoBackPresenter implements GoBackOutputBoundary {
     public void prepareSuccessView() {
         // On success, switch to the home page (the logged in view)
         LoggedInState loggedInState = loggedInViewModel.getState();
+        this.loggedInViewModel.setState(loggedInState);
+
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 

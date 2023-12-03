@@ -4,20 +4,21 @@ import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import entity.Profile;
 
 /**
  * Represents the state and behavior related to displaying a common profile view
  */
 public class DisplayCommonProfileViewModel extends ViewModel {
-    public final String TITLE_LABEL = "Common Profile View";
+    public static final String TITLE_LABEL = "Common Profile View";
+    public static final String USERNAME_LABEL = "Username: ";
+    public static final String BIO_LABEL = "Bio: ";
+    public static final String TOP_THREE_ARTISTS_LABEL = "Top Three Artists: ";
+    public static final String SPOTIFY_HANDLE = "Spotify Handle: ";
 
     private DisplayCommonProfileState state = new DisplayCommonProfileState();
 
-    private Profile commonProfile;
-
     public DisplayCommonProfileViewModel() {
-        super("common profile");
+        super("display common profile");
     }
 
     public void setState(DisplayCommonProfileState state) {
@@ -27,7 +28,7 @@ public class DisplayCommonProfileViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("commonProfileState", null, this.state);
+        support.firePropertyChange("displayCommonProfileState", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -36,14 +37,5 @@ public class DisplayCommonProfileViewModel extends ViewModel {
 
     public DisplayCommonProfileState getState() {
         return state;
-    }
-
-
-    public Profile getCommonProfile() {
-        return commonProfile;
-    }
-
-    public void setCommonProfile(Profile commonProfile) {
-        this.commonProfile = commonProfile;
     }
 }

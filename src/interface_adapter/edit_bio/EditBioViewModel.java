@@ -19,7 +19,7 @@ public class EditBioViewModel extends ViewModel {
         return state;
     }
     public EditBioViewModel() {
-        super("edit bio");
+        super("edit profile");
     }
     public void setState(EditBioState state) {
         this.state = state;

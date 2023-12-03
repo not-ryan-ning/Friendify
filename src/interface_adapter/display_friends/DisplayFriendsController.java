@@ -7,7 +7,6 @@ import use_case.display_friends.DisplayFriendsInputBoundary;
  * Initiates operations related to displaying friends
  */
 public class DisplayFriendsController {
-
     final DisplayFriendsInputBoundary displayFriendsInteractor;
     public DisplayFriendsController(DisplayFriendsInputBoundary displayFriendsInteractor) {
         this.displayFriendsInteractor = displayFriendsInteractor;

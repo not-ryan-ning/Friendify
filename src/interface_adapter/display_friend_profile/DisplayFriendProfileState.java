@@ -1,11 +1,12 @@
 package interface_adapter.display_friend_profile;
 
-import entity.Profile;
-import interface_adapter.display_common_profile.DisplayCommonProfileState;
+import java.util.ArrayList;
 
 public class DisplayFriendProfileState {
-    private Profile friendProfile;
     private String username;
+    private String bio;
+    private ArrayList<String> topThreeArtists;
+    private String spotifyHandle;
 
     /**
      * Constructs a new DisplayFriendProfileState instance by copying the state from another instance.
@@ -13,8 +14,10 @@ public class DisplayFriendProfileState {
      * @param copy The DisplayFriendProfileState to copy from.
      */
     public DisplayFriendProfileState(DisplayFriendProfileState copy) {
-        this.friendProfile = copy.friendProfile;
         this.username = copy.username;
+        this.bio = copy.bio;
+        this.topThreeArtists = copy.topThreeArtists;
+        this.spotifyHandle = copy.spotifyHandle;
     }
 
     /**
@@ -22,6 +25,7 @@ public class DisplayFriendProfileState {
      */
     public DisplayFriendProfileState() {}
 
+<<<<<<< HEAD
     /**
      * Gets the friend profile associated with this state.
      *
@@ -40,7 +44,15 @@ public class DisplayFriendProfileState {
      *
      * @return The username.
      */
+=======
+>>>>>>> main
     public String getUsername() {
         return username;
     }
+    public String getBio() { return bio; }
+    public void setBio(String bio) { this.bio = bio; }
+    public ArrayList<String> getTopThreeArtists() { return topThreeArtists; }
+    public void setTopThreeArtists(ArrayList<String> topThreeArtists) { this.topThreeArtists = topThreeArtists; }
+    public String getSpotifyHandle() { return spotifyHandle; }
+    public void setSpotifyHandle(String spotifyHandle) { this.spotifyHandle = spotifyHandle; }
 }

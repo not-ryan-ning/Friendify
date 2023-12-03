@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class CommonUser implements User {
     private final String username;
     private final String password;
-    private final Profile profile;
+    private Profile profile;
     private Playlist playlist;
     private ArrayList<String> friends;
     private ArrayList<String> requests;
@@ -36,5 +36,11 @@ public class CommonUser implements User {
     @Override
     public ArrayList<String> getRequests() { return requests; }
     @Override
+    public void setProfile(Profile profile) { this.profile = profile; }
+    @Override
     public void setPlaylist(Playlist playlist) { this.playlist = playlist; }
+    @Override
+    public void setFriends(ArrayList<String> friends) { this.friends = friends; }
+    @Override
+    public void setRequests(ArrayList<String> requests) { this.requests = requests; }
 }

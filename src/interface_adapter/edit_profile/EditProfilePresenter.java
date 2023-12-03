@@ -18,8 +18,6 @@ public class EditProfilePresenter implements EditProfileOutputBoundary{
 
     @Override
     public void prepareSuccessView() {
-        EditProfileState editProfileState = editProfileViewModel.getState();
-        this.editProfileViewModel.setState(editProfileState);
         this.editProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(editProfileViewModel.getViewName());

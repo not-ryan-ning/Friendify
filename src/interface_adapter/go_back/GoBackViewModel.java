@@ -1,4 +1,6 @@
-package interface_adapter.goBack;
+package interface_adapter.go_back;
+
+import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

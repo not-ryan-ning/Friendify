@@ -1,11 +1,14 @@
 package interface_adapter.send_request;
 
-import entity.User;
 import use_case.send_request.SendRequestInputBoundary;
 import use_case.send_request.SendRequestInputData;
+<<<<<<< HEAD
 /**
  * Initiates operations related to sending a user a friend request
  */
+=======
+
+>>>>>>> main
 public class SendRequestController {
     final SendRequestInputBoundary sendRequestInteractor;
 

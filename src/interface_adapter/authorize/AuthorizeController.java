@@ -11,7 +11,7 @@ public class AuthorizeController {
         this.authorizeInteractor = authorizeInteractor;
     }
 
-    public void execute() {
-        authorizeInteractor.execute();
+    public void execute(String authorizationLink) {
+        authorizeInteractor.execute(authorizationLink);
     }
 }

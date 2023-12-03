@@ -12,7 +12,6 @@ import interface_adapter.display_requests.DisplayRequestsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.match.MatchController;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
@@ -37,7 +36,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final LogoutViewModel logoutViewModel;
     private final LogoutController logoutController;
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayRequestsController displayRequestsController;
@@ -59,11 +57,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     final JButton match;
     final JButton editProfile;
 
-    /**
-     * A window with a title and a JButton.
-     */
     public LoggedInView(LoggedInViewModel loggedInViewModel,
-                        LogoutViewModel logoutViewModel,
                         LogoutController logoutController,
                         DisplayRequestsViewModel displayRequestsViewModel,
                         DisplayRequestsController displayRequestsController,
@@ -75,7 +69,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         EditProfileController editProfileController) {
 
         this.loggedInViewModel = loggedInViewModel;
-        this.logoutViewModel = logoutViewModel;
         this.logoutController = logoutController;
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayRequestsController = displayRequestsController;
@@ -87,12 +80,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.editProfileController = editProfileController;
 
         loggedInViewModel.addPropertyChangeListener(this);
-        logoutViewModel.addPropertyChangeListener(this);
         displayRequestsViewModel.addPropertyChangeListener(this);
         displayFriendsViewModel.addPropertyChangeListener(this);
         matchViewModel.addPropertyChangeListener(this);
         editProfileViewModel.addPropertyChangeListener(this);
-
 
         JLabel title = new JLabel("Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -104,13 +95,13 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         topThreeArtists = new JLabel();
 
         JPanel buttons = new JPanel();
-        logout = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
+        logout = new JButton(LoggedInViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(logout);
 
-        requests = new JButton(loggedInViewModel.REQUESTS_BUTTON_LABEL);
+        requests = new JButton(LoggedInViewModel.REQUESTS_BUTTON_LABEL);
         buttons.add(requests);
 
-        friends = new JButton(loggedInViewModel.FRIENDS_BUTTON_LABEL);
+        friends = new JButton(LoggedInViewModel.FRIENDS_BUTTON_LABEL);
         buttons.add(friends);
 
         match = new JButton(loggedInViewModel.MATCH_BUTTON_LABEL);
@@ -119,37 +110,34 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         editProfile = new JButton(loggedInViewModel.EDIT_PROFILE_BUTTON_LABEL);
         buttons.add(editProfile);
 
+        LoggedInState currentState = loggedInViewModel.getState();
+
+
         logout.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(logout)) {
-                        logoutController.execute();
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logout)) {
+                            logoutController.execute();
+                        }
                     }
                 }
-            }
         );
 
         requests.addActionListener(
-            // This creates an anonymous subclass of ActionListener and instantiates it.
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(requests)) {
-                        DisplayRequestsState currentState = displayRequestsViewModel.getState();
-
-                        displayRequestsController.execute(currentState.getUsername());
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(requests)) {
+                            System.out.println(currentState.getUsername());
+                            displayRequestsController.execute(currentState.getUsername());
+                        }
                     }
                 }
-            }
         );
 
         friends.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(friends)) {
-                            DisplayFriendsState currentState = displayFriendsViewModel.getState();
-
                             displayFriendsController.execute(currentState.getUsername());
                         }
                     }
@@ -157,12 +145,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         );
 
         match.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(match)) {
-                            MatchState currentState = matchViewModel.getState();
-
                             matchController.execute(currentState.getUsername());
                         }
                     }
@@ -189,15 +174,11 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         this.add(spotifyHandle);
         this.add(topThreeArtists);
         this.add(buttons);
-}
+    }
 
-    /**
-     * React to a button click that results in evt.
-     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
-
     /**
      * Responds to property change events (button clicks), updating the logged in view based on certain changes. It maps
      * each unique button click to the corresponding change it results in.
@@ -206,34 +187,37 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // need multiple if branches to map each button click to the corresponding action
-        LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
-        username.setText(loggedInState.getUsername());
-        bio.setText(loggedInState.getBio());
-        spotifyHandle.setText(loggedInState.getSpotifyHandle());
-        topThreeArtists.setText(loggedInState.getTopThreeArtists()); // need to convert this into a string
+        LoggedInState currentState = loggedInViewModel.getState();
 
-        if (evt.getPropertyName().equals("displayRequestsState")) {
+        if (evt.getPropertyName().equals("loggedInState")) {
+            LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
+            username.setText("Username: " + loggedInState.getUsername());
+            bio.setText("Bio: " + loggedInState.getBio());
+            spotifyHandle.setText("Spotify Handle: " + loggedInState.getSpotifyHandle());
+            topThreeArtists.setText("Top 3 Artists: " + String.join(", ", loggedInState.getTopThreeArtists()));
+
+
+        } else if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-        }
+            state.setUsername(currentState.getUsername());
+            displayRequestsViewModel.setState(state);
 
-        else if (evt.getPropertyName().equals("displayFriendsState")) {
+        } else if (evt.getPropertyName().equals("displayFriendsState")) {
             DisplayFriendsState state = (DisplayFriendsState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-        }
+            state.setUsername(currentState.getUsername());
+            displayFriendsViewModel.setState(state);
 
-        else if (evt.getPropertyName().equals("matchState")) {
+        } else if (evt.getPropertyName().equals("matchState")) {
             MatchState state = (MatchState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-        }
+            state.setUsername(currentState.getUsername());
+            matchViewModel.setState(state);
 
-        else if (evt.getPropertyName().equals("editProfileState")) {
-            EditProfileState state = (EditProfileState) evt.getNewValue();
-            state.setUsername(loggedInState.getUsername());
-        }
+        } else if (evt.getPropertyName().equals("editProfileState")) {
+            EditProfileState editProfileState = (EditProfileState) evt.getNewValue();
+            editProfileState.setUsername(currentState.getUsername());
+            editProfileViewModel.setState(editProfileState);
 
-        else {
+        } else if (evt.getPropertyName().equals("logoutState")) {
             JOptionPane.showMessageDialog(this, "You have logged out");
         }
     }

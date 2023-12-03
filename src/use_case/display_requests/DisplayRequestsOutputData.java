@@ -6,4 +6,5 @@ public class DisplayRequestsOutputData {
     public DisplayRequestsOutputData(ArrayList<String> requests) {
         this.requests = requests;
     }
+    public ArrayList<String> getRequests() { return this.requests; }
 }

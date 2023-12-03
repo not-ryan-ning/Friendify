@@ -3,6 +3,8 @@ package data_access;
 // added the json jar library in order to import this
 import org.json.JSONObject;
 import org.json.JSONArray;
+import use_case.choose_playlist.ChoosePlaylistSpotifyAPIDataAccessInterface;
+import use_case.display_playlists.DisplayPlaylistsSpotifyAPIDataAccessInterface;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,7 +12,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
-public class SpotifyAPIDataAccessObject {
+
+public class SpotifyAPIDataAccessObject implements DisplayPlaylistsSpotifyAPIDataAccessInterface,
+        ChoosePlaylistSpotifyAPIDataAccessInterface {
+    // Return all the playlists the user has that maps playlistId to playlistName
     /**
      * Gets all of a user's playlists, mapping playlistId to playlistName
      * @param accessToken The token used to authenticate user
@@ -61,12 +66,10 @@ public class SpotifyAPIDataAccessObject {
      */
     // Get all information about the chosen playlist from the API and store them in the playlist csv file and the users
     // csv file (playlist id only)
-    public ArrayList<Object> returnPlaylistInfo(String username, String playlistId, String accessToken) {
+    public ArrayList<Object> getPlaylistInfo(String username, String playlistId, String accessToken) {
         ArrayList<Object> playlistInfo = new ArrayList<>();
         ArrayList<String> trackIds = getTrackIds(playlistId, accessToken);
         ArrayList<Object> titlesArtists = getTracksTitlesArtists(trackIds, accessToken);
-        ArrayList<Double> attributes = getAttributes(trackIds, accessToken);
-
         ArrayList<String> titles = (ArrayList<String>) titlesArtists.get(0);
         playlistInfo.add(titles);
 
@@ -78,6 +81,8 @@ public class SpotifyAPIDataAccessObject {
 
         HashMap<String, Integer> genres = getGenres(artistIds, accessToken);
         playlistInfo.add(genres);
+
+        ArrayList<Double> attributes = getAttributes(trackIds, accessToken);
 
         double acousticness = attributes.get(0);
         double energy = attributes.get(1);
@@ -176,10 +181,6 @@ public class SpotifyAPIDataAccessObject {
                             artistIds.add(artistId);
                         }
                     }
-
-                    titlesArtists.add(titles);
-                    titlesArtists.add(artists);
-                    titlesArtists.add(artistIds);
                 } else {
                     System.out.println("Error getting track details of the tracks. Status code: " + response.statusCode() +
                             ", Response: " + response.body());
@@ -188,42 +189,51 @@ public class SpotifyAPIDataAccessObject {
                 e.printStackTrace();
             }
         }
+        titlesArtists.add(titles);
+        titlesArtists.add(artists);
+        titlesArtists.add(artistIds);
         return titlesArtists;
     }
 
-    private HashMap<String, Integer> getGenres(ArrayList<String> artistIds, String accessToken) {
+    private static HashMap<String, Integer> getGenres(ArrayList<String> artistIds, String accessToken) {
         HashMap<String, Integer> genres = new HashMap<>();
 
-        String artistUrl = "https://api.spotify.com/v1/artists?ids=" + String.join(",", artistIds);
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(artistUrl))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
-                .build();
-
-        HttpClient httpClient = HttpClient.newHttpClient();
-
         try {
+            String artistUrl = "https://api.spotify.com/v1/artists?ids=" + String.join(",", artistIds);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(artistUrl))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            HttpClient httpClient = HttpClient.newHttpClient();
+
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
                 JSONObject jsonResponse = new JSONObject(responseBody);
 
-                JSONArray genresArray = jsonResponse.getJSONArray("genres");
-                for (int i = 0; i < genresArray.length(); i++) {
-                    String genre = genresArray.getString(i);
+                JSONArray artistsArray = jsonResponse.getJSONArray("artists");
 
-                    if (genres.containsKey(genre)) {
-                        genres.put(genre, genres.get(genre) + 1);
-                    } else {
-                        genres.put(genre, 1);
+                for (int i = 0; i < artistsArray.length(); i++) {
+                    JSONObject artistObject = artistsArray.getJSONObject(i);
+
+                    if (artistObject.has("genres")) {
+                        JSONArray genresArray = artistObject.getJSONArray("genres");
+
+                        for (int j = 0; j < genresArray.length(); j++) {
+                            String genre = genresArray.getString(j);
+
+                            genres.put(genre, genres.getOrDefault(genre, 0) + 1);
+                        }
                     }
                 }
+
                 return genres;
             } else {
-                System.out.println("Error getting track details of the artists. Status code: " + response.statusCode() +
+                System.out.println("Error getting artist details. Status code: " + response.statusCode() +
                         ", Response: " + response.body());
             }
         } catch (Exception e) {
@@ -255,14 +265,15 @@ public class SpotifyAPIDataAccessObject {
 
             if (response.statusCode() == 200) {
                 String responseBody = response.body();
-                JSONArray audioFeaturesArray = new JSONArray(responseBody);
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                JSONArray audioFeaturesArray =  jsonResponse.getJSONArray("audio_features");
 
                 for (int i = 0; i < audioFeaturesArray.length(); i++) {
                     JSONObject audioFeaturesObject = audioFeaturesArray.getJSONObject(i);
                     acousticnessSum += audioFeaturesObject.getDouble("acousticness");
                     energySum += audioFeaturesObject.getDouble("energy");
-                    instrumentalnessSum = audioFeaturesObject.getDouble("instrumentalness");
-                    valenceSum = audioFeaturesObject.getDouble("valence");
+                    instrumentalnessSum += audioFeaturesObject.getDouble("instrumentalness");
+                    valenceSum += audioFeaturesObject.getDouble("valence");
                 }
                 ArrayList<Double> attributes = new ArrayList<Double>();
 

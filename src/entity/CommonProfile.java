@@ -6,10 +6,10 @@ import java.util.ArrayList;
  * Implementation of the Profile interface representing a common profile with the attributes
  * bio, topThreeArtists and spotify handle of a user.
  */
-public class CommonProfile implements Profile {
-    private final String bio;
-    private final ArrayList<String> topThreeArtists;
-    private final String spotifyHandle;
+public class CommonProfile implements Profile{
+    private String bio;
+    private ArrayList<String> topThreeArtists;
+    private String spotifyHandle;
 
     public CommonProfile(String bio, ArrayList<String> topThreeArtists, String spotifyHandle) {
         this.bio = bio;
@@ -29,4 +29,11 @@ public class CommonProfile implements Profile {
     public String getSpotifyHandle() {
         return spotifyHandle;
     }
+    @Override
+    public void setBio(String bio) { this.bio = bio; }
+    @Override
+    public void setTopThreeArtists(ArrayList<String> topThreeArtists) { this.topThreeArtists = topThreeArtists; }
+    @Override
+    public void setSpotifyHandle(String spotifyHandle) { this.spotifyHandle = spotifyHandle; }
+
 }

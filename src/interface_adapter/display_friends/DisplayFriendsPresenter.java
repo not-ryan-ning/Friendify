@@ -22,6 +22,7 @@ public class DisplayFriendsPresenter implements DisplayFriendsOutputBoundary {
     @Override
     public void prepareSuccessView(DisplayFriendsOutputData response) {
         DisplayFriendsState displayFriendsState = displayFriendsViewModel.getState();
+        displayFriendsState.setFriends(response.getFriendNames());
         displayFriendsViewModel.setState(displayFriendsState);
         displayFriendsViewModel.firePropertyChanged();
 

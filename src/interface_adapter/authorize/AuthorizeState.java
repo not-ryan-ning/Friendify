@@ -12,7 +12,7 @@ public class AuthorizeState {
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";
     private static final String CLIENT_SECRET = "c85c0140606943c698f2cddaf49b082e";
     private static final String REDIRECT_URI = "http://localhost:8080/callback";
-    private static final String scope = "playlist-read-private playlist-read-collaborative";
+    private static final String scope = "playlist-read-private";
     private static final String tokenUrl = "https://accounts.spotify.com/api/token";
 
 

@@ -1,15 +1,17 @@
 package interface_adapter.send_request;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.ViewModel;
 import use_case.send_request.SendRequestOutputBoundary;
 import use_case.send_request.SendRequestOutputData;
 
+<<<<<<< HEAD
 import javax.swing.text.View;
 
 /**
  * Prepares and updates view for corresponding operation.
  */
+=======
+>>>>>>> main
 public class SendRequestPresenter implements SendRequestOutputBoundary {
 
     private final SendRequestViewModel sendRequestViewModel;

@@ -37,6 +37,7 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
             save();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(playlistsFile))) {
+                String header = reader.readLine();
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -51,25 +52,59 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     String valence = String.valueOf(col[headers.get("valence")]);
                     String topThreeArtists = String.valueOf(col[headers.get("topThreeArtists")]);
 
-                    // column format: playlistId, titles, artists, genres, acousticness, energy, instrumentalness, valence, topThreeArtists
-
                     // Convert CSV string to Arraylist<String> for titles and topThreeArtists
-                    String[] titlesSplit = titles.split(",");
-                    ArrayList<String> titlesArrayList = new ArrayList<String>(Arrays.asList(titlesSplit));
+                    String[] titlesSplit = titles.substring(1, titles.length() - 1).split(", ");
+                    ArrayList<String> titlesArrayList = new ArrayList<>(Arrays.asList(titlesSplit));
 
-                    String[] topTreeArtistsSplit = topThreeArtists.split(",");
-                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<String>(Arrays.asList(topTreeArtistsSplit));
+                    String[] topThreeArtistsSplit = topThreeArtists.substring(1, topThreeArtists.length() - 1).split(", ");
+                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<>(Arrays.asList(topThreeArtistsSplit));
 
                     // Convert CSV string to HashMap<String, Integer> for artists and genres
-                    HashMap<String, Integer> artistsMap = (HashMap<String, Integer>) Arrays.stream(artists.split("\n"))
-                            .map(entry -> entry.split(","))
-                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
 
-                    HashMap<String, Integer> genresMap = (HashMap<String, Integer>) Arrays.stream(genres.split("\n"))
-                            .map(entry -> entry.split(","))
-                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+                    // Remove curly braces and spaces
+                    String cleanedArtistsInput = artists.replaceAll("[{}\\s]", "");
+                    String cleanedGenresInput = genres.replaceAll("[{}\\s]", "");
 
-                    Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsMap, genresMap,
+                    // Split into key-value pairs
+                    String[] artistsKeyValuePairs = cleanedArtistsInput.split(",");
+                    String[] genresKeyValuePairs = cleanedGenresInput.split(",");
+
+                    // Split each key-value pair and populate the HashMap
+                    HashMap<String, Integer> artistsHashMap = new HashMap<>();
+                    for (String pair : artistsKeyValuePairs) {
+                        String[] entry = pair.split("=");
+
+                        if (entry.length == 2) {
+                            String key = entry[0];
+                            try {
+                                int value = Integer.parseInt(entry[1]);
+                                artistsHashMap.put(key, value);
+                            } catch (NumberFormatException e) {
+                                System.err.println("Invalid value for key '" + key + "': " + entry[1]);
+                                // Handle non-numeric case, e.g., set a default value
+                                artistsHashMap.put(key, 0);
+                            }
+                        }
+                    }
+
+                    HashMap<String, Integer> genresHashMap = new HashMap<>();
+                    for (String pair : genresKeyValuePairs) {
+                        String[] entry = pair.split("=");
+
+                        if (entry.length == 2) {
+                            String key = entry[0];
+                            try {
+                                int value = Integer.parseInt(entry[1]);
+                                genresHashMap.put(key, value);
+                            } catch (NumberFormatException e) {
+                                System.err.println("Invalid value for key '" + key + "': " + entry[1]);
+                                // Handle non-numeric case, e.g., set a default value
+                                genresHashMap.put(key, 0);
+                            }
+                        }
+                    }
+
+                    Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsHashMap, genresHashMap,
                             Double.parseDouble(acousticness), Double.parseDouble(energy), Double.parseDouble(instrumentalness),
                             Double.parseDouble(valence), topThreeArtistsArrayList);
 
@@ -84,7 +119,9 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
         playlists.put(playlist.getPlaylistId(), playlist);
         this.save();
     }
-
+    @Override
+    public boolean isIn(String playlistId) { return playlists.containsKey(playlistId); }
+    @Override
     public Playlist getPlaylist(String playlistId) {
         return playlists.get(playlistId);
     }
@@ -93,12 +130,12 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(playlistsFile));
-            writer.write(String.join("\\|", headers.keySet()));
+            writer.write(String.join("|", headers.keySet()));
             writer.newLine();
 
             for (Playlist playlist : playlists.values()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
-                        playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists(), playlist.getGenres(),
+                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s",
+                        playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists().toString(), playlist.getGenres().toString(),
                         playlist.getAcousticness(), playlist.getEnergy(),
                         playlist.getInstrumentalness(), playlist.getValence(), playlist.getTopThreeArtists());
                 writer.write(line);

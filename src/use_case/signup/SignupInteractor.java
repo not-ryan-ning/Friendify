@@ -3,6 +3,7 @@ package use_case.signup;
 import entity.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SignupInteractor implements SignupInputBoundary {
     final SignupUserDataAccessInterface userDataAccessObject;
@@ -10,7 +11,6 @@ public class SignupInteractor implements SignupInputBoundary {
     final UserFactory userFactory;
     final ProfileFactory profileFactory;
     final PlaylistFactory playlistFactory;
-
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
@@ -36,19 +36,19 @@ public class SignupInteractor implements SignupInputBoundary {
     @Override
     public void execute(SignupInputData signupInputData) {
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
-            userPresenter.prepareFailView("Error: This user already exists, please try logging in! ");
+            userPresenter.prepareFailView("Error: This user already exists, please try logging in. ");
+            userPresenter.prepareLoginView();
+
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Error: Passwords don't match, please try again.");
-        } else {
-            // Create empty profile and playlist objects when new user create
-            // (!) Empty ArrayLists are initialized
-            Profile profile = profileFactory.create("", new ArrayList<String>(), "");
-            Playlist playlist = playlistFactory.create("", new ArrayList<String>());
 
+        } else {
+            Profile profile = profileFactory.create("", new ArrayList<>(), "");
+            Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                    0.0, 0.0, 0.0, 0.0, new ArrayList<>());
             User user = userFactory.create(signupInputData.getUsername(),
-                    signupInputData.getPassword(),
-                    profile, playlist,
-                    new ArrayList<String>(), new ArrayList<String>());
+                    signupInputData.getPassword(), profile, playlist, new ArrayList<>(), new ArrayList<>());
+
             userDataAccessObject.save(user);
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);

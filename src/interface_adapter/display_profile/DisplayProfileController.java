@@ -22,7 +22,7 @@ public class DisplayProfileController {
      * @param otherUsername The username of the profile to be displayed.
      */
     public void execute(String username, String otherUsername) {
-        DisplayProfileInputData displayProfileInputData = new DisplayProfileInputData(username, otherUsername);
-        displayProfileUseCaseInteractor.execute(displayProfileInputData);
+        DisplayProfileInputData displayProfileInputData = new DisplayProfileInputData(otherUsername);
+        displayProfileUseCaseInteractor.execute(username, displayProfileInputData);
     }
 }

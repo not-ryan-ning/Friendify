@@ -20,6 +20,10 @@ import interface_adapter.edit_profile.EditProfileViewModel;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleController;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandlePresenter;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleViewModel;
+import interface_adapter.go_back.GoBackController;
+import interface_adapter.go_back.GoBackPresenter;
+import interface_adapter.go_back.GoBackViewModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.authorize.AuthorizeInputBoundary;
 import use_case.authorize.AuthorizeInteractor;
 import use_case.authorize.AuthorizeOutputBoundary;
@@ -41,6 +45,9 @@ import use_case.edit_spotify_handle.EditSpotifyHandleInteractor;
 import use_case.edit_spotify_handle.EditSpotifyHandleOutputBoundary;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import interface_adapter.*;
+import use_case.go_back.GoBackInputBoundary;
+import use_case.go_back.GoBackInteractor;
+import use_case.go_back.GoBackOutputBoundary;
 import view.EditProfileView;
 
 import javax.swing.*;
@@ -52,6 +59,7 @@ public class EditProfileUseCaseFactory {
     private EditProfileUseCaseFactory() {}
     public static EditProfileView create(
             ViewManagerModel viewManagerModel,
+            LoggedInViewModel loggedInViewModel,
             EditProfileViewModel editProfileViewModel,
             EditBioViewModel editBioViewModel,
             EditBioUserDataAccessInterface editBioUserDataAccessObject,
@@ -74,12 +82,12 @@ public class EditProfileUseCaseFactory {
             ChoosePlaylistController choosePlaylistController = createChoosePlaylistController(viewManagerModel, choosePlaylistViewModel, choosePlaylistUserDataAccessObject,
                     choosePlaylistPlaylistDataAccessObject, choosePlaylistSpotifyAPIDataAccessObject);
             EditSpotifyHandleController editSpotifyHandleController = createEditSpotifyHandleUseCase(viewManagerModel, editSpotifyHandleViewModel, editSpotifyHandleUserDataAccessObject);
-            GoBackController goBackController = createGoBackUseCase(viewManagerModel, goBackViewModel);
+            GoBackController goBackController = createGoBackUseCase(viewManagerModel, goBackViewModel, loggedInViewModel);
 
             return new EditProfileView(editProfileController, editProfileViewModel, editBioController, editBioViewModel,
                     displayPlaylistsController, displayPlaylistsViewModel, authorizeController, authorizeViewModel,
                     choosePlaylistController, choosePlaylistViewModel, editSpotifyHandleController, editSpotifyHandleViewModel,
-                    goBackController, goBackViewModel);
+                    goBackController, goBackViewModel, loggedInViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -131,8 +139,8 @@ public class EditProfileUseCaseFactory {
         return new EditSpotifyHandleController(editSpotifyHandleInteractor);
     }
 
-    private static GoBackController createGoBackUseCase(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel) {
-        GoBackOutputBoundary goBackOutputBoundary = new GoBackPresenter(viewManagerModel, goBackViewModel);
+    private static GoBackController createGoBackUseCase(ViewManagerModel viewManagerModel, GoBackViewModel goBackViewModel, LoggedInViewModel loggedInViewModel) {
+        GoBackOutputBoundary goBackOutputBoundary = new GoBackPresenter(viewManagerModel, goBackViewModel, loggedInViewModel);
         GoBackInputBoundary goBackInteractor = new GoBackInteractor(goBackOutputBoundary);
 
         return new GoBackController(goBackInteractor);

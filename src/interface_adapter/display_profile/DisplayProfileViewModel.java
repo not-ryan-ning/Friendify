@@ -1,7 +1,6 @@
 package interface_adapter.display_profile;
 
 import interface_adapter.ViewModel;
-import interface_adapter.display_profile.DisplayProfileState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -10,12 +9,12 @@ import java.beans.PropertyChangeSupport;
  * Represents the state and functions related to displaying profiles
  */
 public class DisplayProfileViewModel extends ViewModel {
+    public static String VIEW_BUTTON_LABEL = "Profile";
 
     private DisplayProfileState state = new DisplayProfileState();
 
     public DisplayProfileViewModel() { super("display profile");
     }
-
 
     public void setState(DisplayProfileState state) {
         this.state = state;
