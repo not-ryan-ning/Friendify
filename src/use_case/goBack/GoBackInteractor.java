@@ -10,6 +10,10 @@ public class GoBackInteractor implements GoBackInputBoundary{
         this.userDataAccessObject = userDataAccessInterface;
         this.goBackPresenter = goBackOutputBoundary;
     }
+
+    /**
+     * Calls the goBack presenter's prepareSuccessView method to change views.
+     */
     @Override
     public void execute() {
         goBackPresenter.prepareSuccessView();
