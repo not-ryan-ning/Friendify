@@ -15,6 +15,7 @@ import java.awt.*;
 import static org.junit.Assert.*;
 
 public class GoBackPresenterTest implements GoBackOutputBoundary {
+    // have not implemented this test yet...
     @Override
     public void prepareSuccessView() {
 
