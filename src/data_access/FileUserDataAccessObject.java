@@ -10,6 +10,7 @@ import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.match.MatchUserDataAccessInterface;
 import use_case.send_request.SendRequestUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;
@@ -17,7 +18,7 @@ import java.util.*;
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
         MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
-        DisplayProfileUserDataAccessInterface {
+        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
