@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -85,7 +86,11 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                 String username = entry.getKey();
                 Double similarityScore = entry.getValue();
 
-                JLabel match = new JLabel(username + ": " + similarityScore);
+                // Convert to percentage and round to two decimal places
+                Double percentage = similarityScore * 100;
+                Double roundedPercentage = roundToTwoDecimalPlaces(percentage);
+
+                JLabel match = new JLabel(username + ": " + roundedPercentage + "%");
 
                 // Create a button for sending a friend request
                 JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
@@ -129,5 +134,11 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                 JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
             }
         }
+    }
+    private static Double roundToTwoDecimalPlaces(Double value) {
+        // Create a DecimalFormat object with two decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+        // Format the double and parse it back to a double
+        return Double.parseDouble(df.format(value));
     }
 }
