@@ -198,7 +198,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         System.out.println("Click " + evt.getActionCommand());
     }
 
-
+    /**
+     * Responds to property change events (button clicks), updating the user interface based on certain changes. it maps
+     * each unique button click to the corresponding change it results in.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // need multiple if branches to map each button click to the corresponding action
