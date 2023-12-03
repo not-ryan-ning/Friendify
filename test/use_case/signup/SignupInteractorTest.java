@@ -29,7 +29,7 @@ public class SignupInteractorTest {
         ProfileFactory pf = new CommonProfileFactory();
         PlaylistFactory pyf = new CommonPlaylistFactory();
         SignupUserDataAccessInterface user = new FileUserDataAccessObject("./users", uf, pf);
-        signUpInteractor = new SignupInteractor(user, new SignupPresenter(viewManagerModel, new SignupViewModel(), new LoginViewModel()), uf, pf, pyf);
+        signupInteractor = new SignupInteractor(user, new SignupPresenter(viewManagerModel, new SignupViewModel(), new LoginViewModel()), uf, pf, pyf);
     }
     @Test
     public void testExecute() {
