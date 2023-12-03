@@ -52,14 +52,12 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     String valence = String.valueOf(col[headers.get("valence")]);
                     String topThreeArtists = String.valueOf(col[headers.get("topThreeArtists")]);
 
-                    // column format: playlistId, titles, artists, genres, acousticness, energy, instrumentalness, valence, topThreeArtists
-
                     // Convert CSV string to Arraylist<String> for titles and topThreeArtists
-                    String[] titlesSplit = titles.split(",");
-                    ArrayList<String> titlesArrayList = new ArrayList<String>(Arrays.asList(titlesSplit));
+                    String[] titlesSplit = titles.substring(1, artists.length() - 1).split(", ");
+                    ArrayList<String> titlesArrayList = new ArrayList<>(Arrays.asList(titlesSplit));
 
-                    String[] topTreeArtistsSplit = topThreeArtists.split(",");
-                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<String>(Arrays.asList(topTreeArtistsSplit));
+                    String[] topThreeArtistsSplit = artists.substring(1, artists.length() - 1).split(", ");
+                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<>(Arrays.asList(topThreeArtistsSplit));
 
                     // Convert CSV string to HashMap<String, Integer> for artists and genres
                     HashMap<String, Integer> artistsMap = new HashMap<>();

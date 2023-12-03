@@ -82,7 +82,8 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
                     Profile profile = profileFactory.create(bio, topThreeArtistsArrayList, spotifyHandle);
                     Playlist playlist = playlistsDataAccessObject.getPlaylist(playlistId);
-                    if (playlist == null) {
+
+                    if (playlistId.isEmpty()) {
                         playlist = playlistFactory.create(playlistId, new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                                 0.0, 0.0,0.0,0.0, new ArrayList<>());
                     }
@@ -118,7 +119,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                     writer.newLine();
                 }
             }
-
             writer.close();
 
         } catch (IOException e) {
@@ -172,7 +172,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         // Update the usernamePlaylist map to the new playlist
         usernamePlaylist.put(username, playlist);
         ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
-        String artists = String.join(",", topThreeArtists);
+        String artists = topThreeArtists.toString();
         String playlistId = playlist.getPlaylistId();
 
         // Update the users csv file
