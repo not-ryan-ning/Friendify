@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 
 public class MatchState {
     private LinkedHashMap<String, Double> topSimilarUsers;
-
     private String username;
 
     public MatchState(MatchState copy) {
