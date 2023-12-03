@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.accept_request.AcceptRequestController;
+import interface_adapter.accept_request.AcceptRequestState;
 import interface_adapter.accept_request.AcceptRequestViewModel;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
@@ -137,10 +138,15 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     acceptRequest.addActionListener(
                             new ActionListener() {
                                 public void actionPerformed(ActionEvent evt) {
+                                    DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
+                                    AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
+
                                     if (evt.getSource().equals(acceptRequest)) {
                                         // Retrieve the associated request name
                                         String associatedString = (String) acceptRequest.getClientProperty("userString");
+
                                         displayRequestsState.setRequestName(associatedString);
+                                        acceptRequestState.setAcceptError(null);
 
                                         acceptRequestController.execute(
                                                 displayRequestsState.getUsername(),
@@ -152,13 +158,20 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     );
                     requestComponents.add(requestUsername);
                     requestComponents.add(viewProfile);
+                    requestComponents.add(acceptRequest);
                 }
                 requestComponents.revalidate();
                 requestComponents.repaint();
 
             } else if (evt.getPropertyName().equals("acceptRequestState")) {
-                JOptionPane.showMessageDialog(this, "You have accepted a request.");
-        }
+                AcceptRequestState state = (AcceptRequestState) evt.getNewValue();
+
+                if (state.getAcceptError() != null) {
+                    JOptionPane.showMessageDialog(this, state.getAcceptError());
+                } else {
+                    JOptionPane.showMessageDialog(this, state.getAcceptedMessage());
+                }
+            }
         }
     }
 }

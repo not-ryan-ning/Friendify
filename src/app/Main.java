@@ -8,6 +8,7 @@ import entity.CommonPlaylistFactory;
 import entity.CommonProfileFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.accept_request.AcceptRequestViewModel;
 import interface_adapter.authorize.AuthorizeViewModel;
 import interface_adapter.choose_playlist.ChoosePlaylistViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
@@ -37,6 +38,8 @@ public class Main {
 
         JFrame application = new JFrame("Friendify");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setSize(500, 300);
+
 
         CardLayout cardLayout = new CardLayout();
 
@@ -64,6 +67,7 @@ public class Main {
         DisplayCommonProfileViewModel displayCommonProfileViewModel = new DisplayCommonProfileViewModel();
         ChoosePlaylistViewModel choosePlaylistViewModel = new ChoosePlaylistViewModel();
         AuthorizeViewModel authorizeViewModel = new AuthorizeViewModel();
+        AcceptRequestViewModel acceptRequestViewModel = new AcceptRequestViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         FilePlaylistsDataAccessObject filePlaylistsDataAccessObject;
@@ -140,7 +144,9 @@ public class Main {
                 displayCommonProfileViewModel,
                 displayFriendProfileViewModel,
                 userDataAccessObject,
-                goBackViewModel);
+                goBackViewModel,
+                acceptRequestViewModel,
+                userDataAccessObject);
         views.add(displayRequestsView, displayRequestsView.viewname);
 
         DisplayFriendsView displayFriendsView = DisplayFriendsUseCaseFactory.create(viewManagerModel,

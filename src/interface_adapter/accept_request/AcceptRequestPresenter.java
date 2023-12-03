@@ -19,4 +19,11 @@ public class AcceptRequestPresenter implements AcceptRequestOutputBoundary {
         this.viewManagerModel.setActiveView(acceptRequestViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailView(String error) {
+        AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
+        acceptRequestState.setAcceptError(error);
+        acceptRequestViewModel.firePropertyChanged();
+    }
 }

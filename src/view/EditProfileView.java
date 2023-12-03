@@ -322,7 +322,8 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             });
         } else if (evt.getPropertyName().equals("choosePlaylistState")) {
             ChoosePlaylistState choosePlaylistState = (ChoosePlaylistState) evt.getNewValue();
-            JOptionPane.showMessageDialog(this, choosePlaylistState.getPlaylistName());
+            JOptionPane.showMessageDialog(this, choosePlaylistState.getPlaylistName() + " saved");
+
 
         } else if (evt.getPropertyName().equals("editSpotifyHandleState")) {
             EditSpotifyHandleState editSpotifyHandleState = (EditSpotifyHandleState) evt.getNewValue();
@@ -332,14 +333,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         loggedInViewModel.setState(loggedInState);
 
     }
-    private static void openWebLink(String url) {
-        try {
-            Desktop.getDesktop().browse(new URI(url));
-        } catch (IOException | URISyntaxException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private static <K, V> K getKeyByValue(Map<K, V> map, V value) {
         for (Map.Entry<K, V> entry : map.entrySet()) {
             if (entry.getValue().equals(value)) {
