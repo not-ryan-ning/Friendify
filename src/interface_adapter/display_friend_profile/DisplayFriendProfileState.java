@@ -25,27 +25,11 @@ public class DisplayFriendProfileState {
      */
     public DisplayFriendProfileState() {}
 
-<<<<<<< HEAD
-    /**
-     * Gets the friend profile associated with this state.
-     *
-     * @return The friend profile.
-     */
-    public Profile getFriendProfile() {
-        return friendProfile;
-    }
-
-    public void setFriendProfile(Profile friendProfile) {
-        this.friendProfile = friendProfile;
-    }
-
     /**
      * Gets the username associated with this state.
      *
      * @return The username.
      */
-=======
->>>>>>> main
     public String getUsername() {
         return username;
     }
