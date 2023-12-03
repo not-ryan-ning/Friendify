@@ -3,6 +3,7 @@ package data_access;
 import entity.*;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_profile.DisplayProfileUserDataAccessInterface;
 import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
 import use_case.edit_bio.EditBioUserDataAccessInterface;
 import use_case.edit_spotify_handle.EditSpotifyHandleUserDataAccessInterface;
@@ -15,7 +16,8 @@ import java.util.*;
 
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
-        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface {
+        MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
+        DisplayProfileUserDataAccessInterface {
     private final File usersFile;
 
     // Contains the content in each column
