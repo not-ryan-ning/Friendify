@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 public class ArtistStrategy implements MatchingStrategy {
 
+    /**
+     * Calculates the cosine similarity score based on the common artists and its frequency in two playlists.
+     * @param playlist1 The first Playlist object for comparison. The first playlist for comparison.
+     * @param playlist2 The second Playlist object for comparison. The second playlist for comparison.
+     * @return The cosine similarity score between the two playlists.
+     */
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         HashMap<String, Integer> artistFrequency1 = playlist1.getArtists();
@@ -30,6 +36,12 @@ public class ArtistStrategy implements MatchingStrategy {
         }
     }
 
+    /**
+     * Calculates the magnitude of a playlist's artist frequencies, which is used in the
+     * computation of cosine similarity.
+     * @param artistFrequency A mapping of artist names to their frequencies in the playlist.
+     * @return The magnitude of the artist frequencies in the playlist.
+     */
     private double calculateMagnitude(HashMap<String, Integer> artistFrequency) {
         double magnitude = 0.0;
         for (int frequency: artistFrequency.values()) {

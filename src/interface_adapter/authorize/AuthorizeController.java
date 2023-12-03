@@ -2,14 +2,11 @@ package interface_adapter.authorize;
 
 import use_case.authorize.AuthorizeInputBoundary;
 
+/**
+ * Initiates authorization-related operations
+ */
 public class AuthorizeController {
     final AuthorizeInputBoundary authorizeInteractor;
-
-    /**
-     * The AuthorizeController class is responsible for handling authorization-related operations.
-     *
-     * @param authorizeInteractor
-     */
     public AuthorizeController(AuthorizeInputBoundary authorizeInteractor) {
         this.authorizeInteractor = authorizeInteractor;
     }
@@ -17,5 +14,4 @@ public class AuthorizeController {
     public void execute() {
         authorizeInteractor.execute();
     }
-
 }

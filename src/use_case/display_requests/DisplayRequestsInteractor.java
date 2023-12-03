@@ -12,8 +12,7 @@ public class DisplayRequestsInteractor implements DisplayRequestsInputBoundary {
     }
 
     /**
-     * This method is responsible for getting the list of friend requests for the given username
-     * and displaying it.
+     * Gets the list of friend requests for the given username and displays it by calling prepareSuccessView
      *
      * @param username The username of the current user trying to see their requests
      */

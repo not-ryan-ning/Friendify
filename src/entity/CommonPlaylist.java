@@ -3,6 +3,10 @@ package entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Implementation of the Playlist interface representing a common playlist with the attributes
+ * playlist ID, titles, artists, genres, acousticness, energy, instrumentalness, valence, and top three artists.
+ */
 public class CommonPlaylist implements Playlist{
     private final String playlistId;
     private final ArrayList<String> titles;
@@ -14,6 +18,20 @@ public class CommonPlaylist implements Playlist{
     private final double valence;
     private final ArrayList<String> topThreeArtists;
 
+
+    /**
+     * Constructs a CommonPlaylist object with the specified attributes.
+     *
+     * @param playlistId The unique identifier for the playlist.
+     * @param titles The list of song titles in the playlist.
+     * @param artists A mapping of artist names to their frequencies in the playlist.
+     * @param genres A mapping of genre names to their frequencies in the playlist.
+     * @param acousticness The acousticness value of the playlist.
+     * @param energy The energy value of the playlist.
+     * @param instrumentalness The instrumentalness value of the playlist.
+     * @param valence The valence value of the playlist
+     * @param topThreeArtists The list of the top three artists in the playlist.
+     */
     public CommonPlaylist(String playlistId, ArrayList<String> titles, HashMap<String, Integer> artists,
                           HashMap<String, Integer> genres, double acousticness, double energy,
                           double instrumentalness, double valence, ArrayList<String> topThreeArtists) {

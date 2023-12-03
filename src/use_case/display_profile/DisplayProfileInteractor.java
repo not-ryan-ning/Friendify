@@ -20,7 +20,7 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
 
     /**
      * Executes the display profile use case based on the provided input data. If the user is a friend, the
-     * friend profile is displayed; otherwise, the common profile is shown
+     * friend profile is displayed; otherwise, the common profile is shown by calling the appropriate prepareSuccessView methods
      * @param displayProfileInputData The input data containing the username of the profile to be displayed.
      */
     @Override
