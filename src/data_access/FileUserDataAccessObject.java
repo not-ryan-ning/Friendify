@@ -154,6 +154,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {
+        // For the csv
         receiver.getRequests().removeIf(String::isEmpty);
         receiver.getRequests().add(sender.getUsername());
         return receiver.getRequests();
@@ -161,16 +162,28 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
     public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
+        double similarityScore;
 
+        // Retrieve the current user's Playlist Object
         Playlist currentPlaylist = currentUser.getPlaylist();
 
+        // Loop through all the users in the system
         for (User user : accounts.values()) {
-            // Execute if the current user is not already friends with the user being checked
+
+            // Execute if the current user is not already friends with the user being checked,
             // and if the current user is not the user being checked
-            if (currentUser.getFriends() != null & !currentUser.getFriends().contains(user.getUsername()) & !currentUser.equals(user)) {
-                // Retrieve the playlist to check
+            if (!currentUser.getFriends().contains(user.getUsername()) & !currentUser.equals(user)) {
+                // Retrieve the Playlist Object to check
                 Playlist playlistToCheck = user.getPlaylist();
-                Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+
+                // Execute if the current user or the user being checked has not uploaded a playlist
+                if (playlistToCheck.getPlaylistId().isEmpty() || currentPlaylist.getPlaylistId().isEmpty()) {
+                    similarityScore = 0;
+
+                } else {
+                    similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
+                }
+
                 scores.put(user.getUsername(), similarityScore);
             }
         }

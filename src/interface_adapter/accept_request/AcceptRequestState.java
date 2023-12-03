@@ -2,6 +2,9 @@ package interface_adapter.accept_request;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the state of user accepting a friend request
+ */
 public class AcceptRequestState {
     private ArrayList<String> requests;
     private String username;

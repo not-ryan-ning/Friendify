@@ -13,6 +13,10 @@ public class AcceptRequestPresenter implements AcceptRequestOutputBoundary {
         this.acceptRequestViewModel = acceptRequestViewModel;
     }
 
+    /**
+     * Updates a new state with the updated requests stored in acceptRequestOutputData
+     * @param acceptRequestOutputData The OutputData object containing the updated requests for the current user.
+     */
     @Override
     public void prepareSuccessView(AcceptRequestOutputData acceptRequestOutputData) {
         AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
