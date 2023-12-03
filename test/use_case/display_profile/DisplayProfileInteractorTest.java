@@ -14,7 +14,7 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class DisplayProfileInteractorTest {
-    final DisplayProfileUserDataAccessInterface userDataAccessObject;
+    final DisplayProfileUserDataAccessInterface userDataAccessObject = new FileUserDataAccessObject();
     final DisplayProfileOutputBoundary displayProfilePresenter;
     final DisplayProfileViewModel displayProfileViewModel;
     final ViewManagerModel viewManagerModel;
@@ -66,8 +66,6 @@ public class DisplayProfileInteractorTest {
         assertEquals("Common Profile", viewManagerModel.getActiveView());
 
     }
-
-
 
 
 }
