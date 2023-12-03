@@ -5,7 +5,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TitleStrategy implements MatchingStrategy {
-
+    /**
+     * Calculates the Jaccard similarity score between two playlists based on common songs.
+     * The Jaccard similarity score is found by the size of the intersection of the two sets of titles divided by
+     * the size of the union of the sets.
+     * @param playlist1 The first Playlist object for comparison.
+     * @param playlist2 The second Playlist object for comparison.
+     * @return The Jaccard similarity score between the two playlists.
+     */
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         // Get the lists of song titles from the input Playlist Objects, and create sets to get unique elements

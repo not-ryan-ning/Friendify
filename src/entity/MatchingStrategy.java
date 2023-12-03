@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface MatchingStrategy {
     /**
-     *
+     * Calculates similarity score of two user's playlists
      * @param playlist1 The first Playlist object for comparison.
      * @param playlist2 The second Playlist object for comparison.
      * @return A double representing the similarity score between the two playlists. The score depends
