@@ -95,15 +95,18 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
                 request.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
+                        MatchState matchState = matchViewModel.getState();
+                        SendRequestState sendRequestState = sendRequestViewModel.getState();
+
                         if (evt.getSource().equals(request)) {
-                            // Retrieve the associated username
+                            // Retrieve the associated username with the user being requested
                             String associatedString = (String) request.getClientProperty("userString");
-                            MatchState matchState = matchViewModel.getState();
                             String senderUsername = matchState.getUsername();
 
-                            SendRequestState sendRequestState = sendRequestViewModel.getState();
+                            // Setting the receiverUsername and requestError attributes in the state
                             sendRequestState.setReceiverUsername(associatedString);
                             String receiverUsername = sendRequestState.getReceiverUsername();
+                            sendRequestState.setRequestError(null);
 
                             sendRequestController.execute(senderUsername, receiverUsername);
                         }
