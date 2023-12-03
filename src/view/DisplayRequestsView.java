@@ -105,7 +105,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
             if (!(requests.isEmpty())) {
                 for (String request : requests) {
-                    acceptRequestState.setRequestName();
+                   // acceptRequestState.setRequestName();
 
                     JLabel requestUsername = new JLabel(request);
                     buttons.add(requestUsername);

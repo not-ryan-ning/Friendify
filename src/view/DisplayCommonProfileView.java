@@ -32,7 +32,7 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         this.displayCommonProfileViewModel.addPropertyChangeListener(this);
         this.goBackViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Common User's Profile");
+        JLabel title = new JLabel("User's Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel usernameInfo = new JLabel(DisplayCommonProfileViewModel.USERNAME_LABEL);
@@ -91,5 +91,4 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         bio.setText(currentState.getBio());
         topThreeArtists.setText(String.join(", ", currentState.getTopThreeArtists()));
     }
-
 }

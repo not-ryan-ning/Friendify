@@ -21,7 +21,7 @@ public class AcceptRequestPresenter implements AcceptRequestOutputBoundary {
     public void prepareSuccessView(AcceptRequestOutputData acceptRequestOutputData) {
         AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
         acceptRequestState.setRequests(acceptRequestOutputData.getRequests());
-        acceptRequestState.setAcceptedUsername(acceptRequestOutputData.);
+        acceptRequestState.setAcceptedUsername(acceptRequestOutputData.getAcceptedUsername());
         acceptRequestViewModel.setState(acceptRequestState);
         acceptRequestViewModel.firePropertyChanged();
 

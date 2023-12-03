@@ -16,7 +16,6 @@ public class DisplayRequestsPresenter implements DisplayRequestsOutputBoundary {
 
     @Override
     public void prepareSuccessView(DisplayRequestsOutputData requests) {
-        // On success, switch to requests of users view
         DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
         displayRequestsState.setRequests(requests.getRequests());
         displayRequestsViewModel.setState(displayRequestsState);

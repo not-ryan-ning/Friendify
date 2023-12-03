@@ -7,8 +7,6 @@ import java.beans.PropertyChangeSupport;
 
 public class DisplayRequestsViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Display Requests View";
-    public static final String VIEW_BUTTON_LABEL = "View Profile";
-    public static final String ACCEPT_BUTTON_LABEL = "Accept Request";
     private DisplayRequestsState state = new DisplayRequestsState();
     public DisplayRequestsViewModel() {
         super("display requests");
