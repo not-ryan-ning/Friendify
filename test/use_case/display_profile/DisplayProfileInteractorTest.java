@@ -3,8 +3,13 @@ package use_case.display_profile;
 import data_access.FileUserDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
+import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
+import interface_adapter.display_profile.DisplayProfilePresenter;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import org.junit.jupiter.api.BeforeEach;
+import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
+import use_case.display_requests.DisplayRequestsUserDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,10 +25,15 @@ public class DisplayProfileInteractorTest {
      * First add three users, one is a friend, one isn't and one is logged in trying to see both profiles.
      */
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize the objects before each test
         viewManagerModel = new ViewManagerModel();
-        displayProfileInteractor = ...
+        UserFactory uf = new CommonUserFactory();
+        ProfileFactory pf = new CommonProfileFactory();
+        DisplayProfileUserDataAccessInterface user = new FileUserDataAccessObject("./users", uf, pf);
+        displayProfileInteractor = new DisplayProfileInteractor(user, new DisplayProfilePresenter(
+                new DisplayFriendProfileViewModel(), new DisplayCommonProfileViewModel(), viewManagerModel),
+                new DisplayProfileViewModel());
     }
     @BeforeEach
     public void addThreeUsers() {

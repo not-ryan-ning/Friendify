@@ -1,6 +1,9 @@
 package use_case.display_playlists;
 
+import data_access.SpotifyAPIDataAccessObject;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_playlists.DisplayPlaylistsPresenter;
+import interface_adapter.display_playlists.DisplayPlaylistsViewModel;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import use_case.display_friends.DisplayFriendsInteractor;
@@ -16,7 +19,8 @@ public class DisplayPlaylistsInteractorTest {
     public void setUp() {
         // Initialize the objects before each test
         viewManagerModel = new ViewManagerModel();
-        displayPlaylistsInteractor = ...
+        DisplayPlaylistsSpotifyAPIDataAccessInterface playlist = new SpotifyAPIDataAccessObject();
+        displayPlaylistsInteractor = new DisplayPlaylistsInteractor(playlist, new DisplayPlaylistsPresenter(viewManagerModel, new DisplayPlaylistsViewModel()));
     }
     @Test
     public void testExecute() {

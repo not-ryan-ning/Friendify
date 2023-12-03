@@ -17,7 +17,7 @@ public class ChoosePlaylistInteractorTest {
     public void setUp() {
         // Initialize the objects before each test
         viewManagerModel = new ViewManagerModel();
-        choosePlaylistInteractor = new ...
+        choosePlaylistInteractor = new ChoosePlaylistInteractor()
     }
     @Test
     public void testExecute() {
