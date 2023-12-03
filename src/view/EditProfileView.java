@@ -275,7 +275,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             EditBioState editBioState = (EditBioState) evt.getNewValue();
             changeBioInputField.setText(editBioState.getBio());
             loggedInState.setBio(editBioState.getBio());
-            loggedInViewModel.setState(loggedInState);
 
         } else if (evt.getPropertyName().equals("authorizeState")) {
             AuthorizeState authorizeState = (AuthorizeState) evt.getNewValue();
@@ -318,10 +317,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                         choosePlaylistState.setPlaylistName(playlistName);
                         choosePlaylistState.setAccessToken(displayPlaylistsState.getAccessToken());
                         choosePlaylistViewModel.setState(choosePlaylistState);
-
-                        // Optionally display the selected playlist details
-                        System.out.println("Selected Playlist Name: " + playlistName);
-                        System.out.println("Selected Playlist ID: " + playlistId);
                     }
                 }
             });
@@ -332,7 +327,9 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         } else if (evt.getPropertyName().equals("editSpotifyHandleState")) {
             EditSpotifyHandleState editSpotifyHandleState = (EditSpotifyHandleState) evt.getNewValue();
             changeSpotifyInputField.setText(editSpotifyHandleState.getSpotifyHandle());
+            loggedInState.setSpotifyHandle(editSpotifyHandleState.getSpotifyHandle());
         }
+        loggedInViewModel.setState(loggedInState);
 
     }
     private static void openWebLink(String url) {

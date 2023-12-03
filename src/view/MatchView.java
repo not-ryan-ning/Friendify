@@ -27,6 +27,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     private JPanel buttons;
     private JPanel matchComponents;
 
+    private JPanel buttons;  // Declare buttons as a field to make it accessible in propertyChange method
+
     public MatchView(MatchViewModel matchViewModel,
                      SendRequestViewModel sendRequestViewModel,
                      SendRequestController sendRequestController,
@@ -60,7 +62,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
@@ -123,7 +124,6 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
 
             if (state.getRequestError() != null) {
                 JOptionPane.showMessageDialog(this, state.getRequestError());
-
             } else {
                 JOptionPane.showMessageDialog(this, state.getRequestSentMessage());
             }

@@ -15,7 +15,7 @@ public class DisplayCommonProfileViewModel extends ViewModel {
     private DisplayCommonProfileState state = new DisplayCommonProfileState();
 
     public DisplayCommonProfileViewModel() {
-        super("common profile");
+        super("display common profile");
     }
 
     public void setState(DisplayCommonProfileState state) {
@@ -25,7 +25,7 @@ public class DisplayCommonProfileViewModel extends ViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public void firePropertyChanged() {
-        support.firePropertyChange("commonProfileState", null, this.state);
+        support.firePropertyChange("displayCommonProfileState", null, this.state);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

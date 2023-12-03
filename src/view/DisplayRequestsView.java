@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.display_common_profile.DisplayCommonProfileState;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.display_requests.DisplayRequestsController;
@@ -30,6 +31,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final LoggedInViewModel loggedInViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
+    private JPanel buttons;  // Declare buttons as a field to make it accessible in propertyChange method
 
     public DisplayRequestsView(DisplayRequestsViewModel displayRequestsViewModel,
                                DisplayRequestsController displayRequestsController,
@@ -57,59 +59,77 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         JLabel title = new JLabel(DisplayRequestsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel buttons = new JPanel();
+        buttons = new JPanel();
 
         JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
-        back.addActionListener(this);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(buttons);
+
         back.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(back)) {
-                            goBackController.execute();
-                        }
+            new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(back)) {
+                        goBackController.execute();
                     }
                 }
+            }
         );
+    }
 
-        DisplayRequestsState currentState = displayRequestsViewModel.getState();
-        ArrayList<String> requests = currentState.getRequests();
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
 
-        if (!(requests == null)) {
-            for (String request : requests) {
-                JLabel requestUsername = new JLabel(request);
-                this.add(requestUsername);
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property Change: " + evt.getPropertyName());
+        if (evt.getPropertyName().equals("displayRequestsState")) {
+            DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
+            ArrayList<String> requests = displayRequestsState.getRequests();
+            // AcceptRequestsState acceptRequestsState = acceptRequestsViewModel.getState();
 
-                JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
-                // Associate each view profile button with the corresponding request username
-                viewProfile.putClientProperty("userString", request);
-                buttons.add(viewProfile);
+            buttons.removeAll();
 
-                // JButton acceptRequest = new JButton(AcceptRequestsViewModel.ACCEPT_BUTTON_LABEL);
+            if (!(requests == null)) {
+                for (String request : requests) {
+                    // acceptRequestsState.setRequestName()
+
+                    JLabel requestUsername = new JLabel(request);
+                    buttons.add(requestUsername);
+
+                    JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
+
+                    // Associate each view profile button with the corresponding request username
+                    viewProfile.putClientProperty("userString", request);
+                    buttons.add(viewProfile);
+
+                    viewProfile.addActionListener(
+                            new ActionListener() {
+                                public void actionPerformed(ActionEvent evt) {
+                                    if (evt.getSource().equals(viewProfile)) {
+                                        // Retrieve the associated request name
+                                        String associatedString = (String) viewProfile.getClientProperty("userString");
+                                        displayRequestsState.setRequestName(associatedString);
+
+                                        displayProfileController.execute(
+                                                displayRequestsState.getUsername(),
+                                                displayRequestsState.getRequestName()
+                                        );
+                                    }
+                                }
+                            }
+                    );
+                }
+                buttons.revalidate();
+                buttons.repaint();
+// JButton acceptRequest = new JButton(AcceptRequestsViewModel.ACCEPT_BUTTON_LABEL);
                 // Associate each accept button with the corresponding request username
                 // acceptRequest.putClientProperty("userString", request);
                 // buttons.add(acceptRequest);
-
-                viewProfile.addActionListener(
-                        new ActionListener() {
-                            public void actionPerformed(ActionEvent evt) {
-                                if (evt.getSource().equals(viewProfile)) {
-                                    DisplayRequestsState currentState = displayRequestsViewModel.getState();
-                                    // Retrieve the associated request name
-                                    String associatedString = (String) viewProfile.getClientProperty("userString");
-                                    currentState.setRequestName(associatedString);
-
-                                    displayProfileController.execute(
-                                            currentState.getUsername(),
-                                            currentState.getRequestName()
-                                    );
-                                }
-                            }
-                        }
-                );
-            }
-
 
 //            acceptRequest.addActionListener(
 //                    new ActionListener() {
@@ -128,23 +148,14 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 //                        }
 //                    }
 //            );
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            } else if (evt.getPropertyName().equals("displayCommonProfileState")){
+                DisplayCommonProfileState displayCommonProfileState = (DisplayCommonProfileState) evt.getNewValue();
+                System.out.println("Request username: " + displayCommonProfileState.getUsername());
 
-            this.add(title);
-            this.add(buttons);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("acceptRequestsState")) {
+            } else if (evt.getPropertyName().equals("acceptRequestsState")) {
             // AcceptRequestsState acceptRequestsState = (AcceptRequestsState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, "You have accepted a request.");
+        }
         }
     }
 }
