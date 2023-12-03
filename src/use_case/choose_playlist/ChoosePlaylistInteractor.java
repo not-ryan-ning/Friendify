@@ -26,6 +26,14 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         this.playlistFactory = playlistFactory;
     }
 
+    /**
+     * Executes the function of choosing a playlist, updating user and playlist information based on
+     * the provided input data. This method is responsible for retrieving playlist information from
+     * the Spotify data access object, creating a Playlist object, associating it with the user, and
+     *s toring it in the data access objects.
+     * @param username This is the username of the user choosing the playlist
+     * @param choosePlaylistInputData Input data containing details about the playlist
+     */
     @Override
     public void execute(String username, ChoosePlaylistInputData choosePlaylistInputData) {
         String playlistId = choosePlaylistInputData.getPlaylistId();
