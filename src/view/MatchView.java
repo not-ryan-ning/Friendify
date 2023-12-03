@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
@@ -23,6 +24,8 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     private final SendRequestController sendRequestController;
     private final GoBackViewModel goBackViewModel;
     private final GoBackController goBackController;
+    private JPanel buttons;
+    private JPanel matchComponents;
 
     private JPanel buttons;  // Declare buttons as a field to make it accessible in propertyChange method
 
@@ -44,14 +47,25 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
         JLabel title = new JLabel(MatchViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        buttons = new JPanel();  // Initialize buttons
+        buttons = new JPanel();
+        matchComponents = new JPanel();
 
         JButton back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
 
+        back.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(back)) {
+                            goBackController.execute();
+                        }
+                    }
+                }
+        );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
+        this.add(matchComponents);
         this.add(buttons);
     }
 
@@ -64,50 +78,46 @@ public class MatchView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("matchState")) {
             MatchState currentState = matchViewModel.getState();
-            HashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
-            SendRequestState sendRequestState = sendRequestViewModel.getState();
+            LinkedHashMap<String, Double> topSimilarUsers = currentState.getTopSimilarUsers();
 
-            // Clear existing components from the buttons panel
-            buttons.removeAll();
+            // Clear previous components
+            matchComponents.removeAll();
 
-            if (topSimilarUsers != null) {
-                for (String username : topSimilarUsers.keySet()) {
-                    sendRequestState.setReceiverUsername(username);
+            for (HashMap.Entry<String, Double> entry : topSimilarUsers.entrySet()) {
+                String username = entry.getKey();
+                Double similarityScore = entry.getValue();
 
-                    JLabel matchUsername = new JLabel(username);
-                    JLabel similarityScore = new JLabel(topSimilarUsers.get(username).toString());
+                JLabel match = new JLabel(username + ": " + similarityScore);
 
-                    buttons.add(matchUsername);
-                    buttons.add(similarityScore);
+                // Create a button for sending a friend request
+                JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
 
-                    JButton request = new JButton(MatchViewModel.REQUEST_BUTTON_LABEL);
+                // Associate the button with the username
+                request.putClientProperty("userString", username);
 
-                    // Associate each request button with the corresponding top similar username
-                    request.putClientProperty("userString", username);
-                    buttons.add(request);
+                request.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(request)) {
+                            // Retrieve the associated username
+                            String associatedString = (String) request.getClientProperty("userString");
+                            MatchState matchState = matchViewModel.getState();
+                            String senderUsername = matchState.getUsername();
 
-                    request.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent evt) {
-                            if (evt.getSource().equals(request)) {
-                                // Retrieve the associated username
-                                String associatedString = (String) request.getClientProperty("userString");
-                                MatchState matchState = matchViewModel.getState();
-                                String senderUsername = matchState.getUsername();
+                            SendRequestState sendRequestState = sendRequestViewModel.getState();
+                            sendRequestState.setReceiverUsername(associatedString);
+                            String receiverUsername = sendRequestState.getReceiverUsername();
 
-                                SendRequestState sendRequestState = sendRequestViewModel.getState();
-                                sendRequestState.setReceiverUsername(associatedString);
-                                String receiverUsername = sendRequestState.getReceiverUsername();
-
-                                sendRequestController.execute(senderUsername, receiverUsername);
-                            }
+                            sendRequestController.execute(senderUsername, receiverUsername);
                         }
-                    });
-                }
+                    }
+                });
+
+                matchComponents.add(match);
+                matchComponents.add(request);
             }
 
-            // Repaint the panel to reflect changes
-            buttons.revalidate();
-            buttons.repaint();
+            matchComponents.revalidate();
+            matchComponents.repaint();
 
         } else if (evt.getPropertyName().equals("sendRequestState")) {
             SendRequestState state = (SendRequestState) evt.getNewValue();

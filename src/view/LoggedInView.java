@@ -134,7 +134,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(friends)) {
-
                             displayFriendsController.execute(currentState.getUsername());
                         }
                     }
@@ -145,7 +144,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(match)) {
-
                             matchController.execute(currentState.getUsername());
                         }
                     }

@@ -1,10 +1,9 @@
 package interface_adapter.match;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MatchState {
-    private HashMap<String, Double> topSimilarUsers;
+    private LinkedHashMap<String, Double> topSimilarUsers;
 
     private String username;
 
@@ -12,10 +11,10 @@ public class MatchState {
         this.topSimilarUsers = copy.topSimilarUsers;
     }
     public MatchState() {}
-    public HashMap<String, Double> getTopSimilarUsers() {
+    public LinkedHashMap<String, Double> getTopSimilarUsers() {
         return topSimilarUsers;
     }
-    public void setTopSimilarUsers(HashMap<String, Double> topSimilarUsers) {
+    public void setTopSimilarUsers(LinkedHashMap<String, Double> topSimilarUsers) {
         this.topSimilarUsers = topSimilarUsers;
     }
     public String getUsername() {
