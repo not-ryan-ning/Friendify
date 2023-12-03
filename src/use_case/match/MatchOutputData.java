@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 public class MatchOutputData {
     private final HashMap<String, Double> topSimilarUsers;
-
     public MatchOutputData(HashMap<String, Double> topSimilarUsers) {
         this.topSimilarUsers = topSimilarUsers;
     }
