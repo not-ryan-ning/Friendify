@@ -2,6 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of the User interface representing a common user with the attributes
+ * username, password, profile, playlist, friends, and requests.
+ */
 public class CommonUser implements User {
     private final String username;
     private final String password;

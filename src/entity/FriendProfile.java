@@ -2,6 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of the Profile interface representing a friend profile with the attributes
+ * bio, topThreeArtists and spotify handle of a user.
+ */
 public class FriendProfile implements Profile {
     private final String bio;
     private final ArrayList<String> topThreeArtists;
