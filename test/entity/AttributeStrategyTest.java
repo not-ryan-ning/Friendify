@@ -29,7 +29,7 @@ public class AttributeStrategyTest {
 
     @Test
     // Test 100% similarity between two playlists, should return 1.0 (most similar)
-    public void testBasicCase() {
+    public void testFullSimilarity() {
         Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 1.0, 1.0,
                 new ArrayList<>());
