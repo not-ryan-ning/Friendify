@@ -8,7 +8,7 @@ public class AttributeStrategy implements MatchingStrategy {
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         // Initialize two HashMaps for each playlist
         // Each Key represents a song attribute
-        // Each Value represents a normalized percentage of an attribute for a playlist
+        // Each Value represents a normalized for a playlist
         Map<String, Double> playlist1Attributes = new HashMap<>();
         Map<String, Double> playlist2Attributes = new HashMap<>();
 
@@ -35,7 +35,7 @@ public class AttributeStrategy implements MatchingStrategy {
         }
 
         // Similarity score square root of total Euclidean distance.
-        // Score of 0 means that the playlists are exactly identical
+        // Score of 1.0 means that the playlists are exactly identical and 0.0 means not identical.
         return 1.0 - (Math.sqrt(totalSumEuclideanDistances) / 2.0);
     }
 }
