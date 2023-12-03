@@ -120,7 +120,9 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
         playlists.put(playlist.getPlaylistId(), playlist);
         this.save();
     }
-
+    @Override
+    public boolean isIn(String playlistId) { return playlists.containsKey(playlistId); }
+    @Override
     public Playlist getPlaylist(String playlistId) {
         return playlists.get(playlistId);
     }

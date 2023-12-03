@@ -34,35 +34,13 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Error: Passwords don't match, please try again.");
 
         } else {
-            // Create empty profile and playlist objects when new user create
-            // (!) Empty ArrayLists are initialized
-            Profile profile = profileFactory.create("", new ArrayList<String>(), "");
-            Playlist playlist = playlistFactory.create("", new ArrayList<String>(), new HashMap<>(), new HashMap<>(), 0.0, 0.0, 0.0, 0.0, new ArrayList<>());
-
+            Profile profile = profileFactory.create("", new ArrayList<>(), "");
+            Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                    0.0, 0.0, 0.0, 0.0, new ArrayList<>());
             User user = userFactory.create(signupInputData.getUsername(),
-                    signupInputData.getPassword(),
-                    profile,
-                    playlist,
-                    new ArrayList<String>(),
-                    new ArrayList<String>());
+                    signupInputData.getPassword(), profile, playlist, new ArrayList<>(), new ArrayList<>());
 
             userDataAccessObject.save(user);
-            user.setProfile(profile);
-            user.getProfile().setBio("");
-            user.getProfile().setTopThreeArtists(new ArrayList<String>());
-            user.getProfile().setSpotifyHandle("");
-            user.setPlaylist(playlist);
-            user.getPlaylist().setPlaylistId("");
-            user.getPlaylist().setTitles(new ArrayList<String>());
-            user.getPlaylist().setArtists(new HashMap<>());
-            user.getPlaylist().setGenres(new HashMap<>());
-            user.getPlaylist().setAcousticness(0.0);
-            user.getPlaylist().setEnergy(0.0);
-            user.getPlaylist().setInstrumentalness(0.0);
-            user.getPlaylist().setValence(0.0);
-            user.getPlaylist().setTopThreeArtists(new ArrayList<>());
-            user.setFriends(new ArrayList<String>());
-            user.setRequests(new ArrayList<String>());
 
             SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), false);
             userPresenter.prepareSuccessView(signupOutputData);

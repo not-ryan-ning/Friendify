@@ -185,7 +185,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             username.setText("Username: " + loggedInState.getUsername());
             bio.setText("Bio: " + loggedInState.getBio());
             spotifyHandle.setText("Spotify Handle: " + loggedInState.getSpotifyHandle());
-            topThreeArtists.setText("Top 3 Artists: " + String.join(", ", loggedInState.getTopThreeArtists()));
+            if (! loggedInState.getTopThreeArtists().isEmpty()) {
+                topThreeArtists.setText("Top 3 Artists: " + String.join(", ", loggedInState.getTopThreeArtists()));
+            }
 
         } else if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState state = (DisplayRequestsState) evt.getNewValue();
