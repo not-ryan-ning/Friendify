@@ -131,14 +131,14 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         saveBio = new JButton(EditBioViewModel.SAVE_BIO_BUTTON_LABEL);
         buttons.add(saveBio);
 
+        saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
+        buttons.add(saveSpotifyHandle);
+
         displayPlaylists = new JButton(DisplayPlaylistsViewModel.DISPLAY_PLAYLISTS_BUTTON_LABEL);
         buttons.add(displayPlaylists);
 
         savePlaylist = new JButton(ChoosePlaylistViewModel.SAVE_PLAYLIST_BUTTON_LABEL);
         buttons.add(savePlaylist);
-
-        saveSpotifyHandle = new JButton(EditSpotifyHandleViewModel.SAVE_SPOTIFY_HANDLE_BUTTON_LABEL);
-        buttons.add(saveSpotifyHandle);
 
         back = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(back);
