@@ -28,8 +28,7 @@ public class GoBackPresenterTest {
         }
         assertNotNull(app);
 
-        // MODIFY FOR GO BACK:
-        Component root = app.getComponent(0); //but there are multiple go back buttons that are in different frames
+        Component root = app.getComponent(0);
         Component cp = ((JRootPane) root).getContentPane();
         JPanel jp = (JPanel) cp;
         JPanel jp2 = (JPanel) jp.getComponent(0);
@@ -48,7 +47,6 @@ public class GoBackPresenterTest {
         JButton button = getButton();
         button.doClick();
 
-        // how do we initialize viewManagerModel and LoginViewModel and logoutViewModel?
         GoBackPresenter goBackPresenter = new GoBackPresenter(viewManagerModel, goBackViewModel, loggedInViewModel);
         goBackPresenter.prepareSuccessView();
 
