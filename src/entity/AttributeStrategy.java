@@ -1,32 +1,41 @@
 package entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AttributeStrategy implements MatchingStrategy {
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
-        double acousticness1 = playlist1.getAcousticness();
-        double acousticness2 = playlist2.getAcousticness();
-        double energy1 = playlist1.getEnergy();
-        double energy2 = playlist2.getEnergy();
-        double instrumentalness1 = playlist1.getInstrumentalness();
-        double instrumentalness2 = playlist2.getInstrumentalness();
-        double valence1 = playlist1.getValence();
-        double valence2 = playlist2.getValence();
+        // Initialize two HashMaps for each playlist
+        // Each Key represents a song attribute
+        // Each Value represents a normalized for a playlist
+        Map<String, Double> playlist1Attributes = new HashMap<>();
+        Map<String, Double> playlist2Attributes = new HashMap<>();
 
-        // Calculate dot product
-        double dotProduct = acousticness1 * acousticness2 + energy1 * energy2 +
-                instrumentalness1 * instrumentalness2 + valence1 * valence2;
+        playlist1Attributes.put("Acoustiness", playlist1.getAcousticness());
+        playlist2Attributes.put("Acoustiness", playlist2.getAcousticness());
 
-        // Calculate magnitudes
-        double magnitude1 = Math.sqrt(acousticness1 * acousticness1 + energy1 * energy1 +
-                instrumentalness1 * instrumentalness1 + valence1 * valence1);
-        double magnitude2 = Math.sqrt(acousticness2 * acousticness2 + energy2 * energy2 +
-                instrumentalness2 * instrumentalness2 + valence2 * valence2);
+        playlist1Attributes.put("Energy", playlist1.getEnergy());
+        playlist2Attributes.put("Energy", playlist2.getEnergy());
 
-        // Calculate cosine similarity
-        if (magnitude1 == 0 || magnitude2 == 0) {
-            return 0.0; // Handle the case when one or both playlists have no attributes
-        } else {
-            return dotProduct / (magnitude1 * magnitude2);
+        playlist1Attributes.put("Instrumentalness", playlist1.getInstrumentalness());
+        playlist2Attributes.put("Instrumentalness", playlist2.getInstrumentalness());
+
+        playlist1Attributes.put("Valence", playlist1.getValence());
+        playlist2Attributes.put("Valence", playlist2.getValence());
+
+        Double totalSumEuclideanDistances = 0.0;
+
+        // Calculate the Euclidean distances
+        // For each attribute, calculate the difference between two playlists, then square the difference
+        // The formula is as follows (playlist1.attribute - playlist2.attribute) ** 2
+        for (String attribute : playlist1Attributes.keySet()) {
+            totalSumEuclideanDistances += Math.pow((playlist1Attributes.get(attribute) -
+                    playlist2Attributes.get(attribute)), 2);
         }
+
+        // Similarity score square root of total Euclidean distance.
+        // Score of 1.0 means that the playlists are exactly identical and 0.0 means not identical.
+        return 1.0 - (Math.sqrt(totalSumEuclideanDistances) / 2.0);
     }
 }
