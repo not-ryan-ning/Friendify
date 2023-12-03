@@ -6,6 +6,9 @@ import interface_adapter.display_profile.DisplayProfileState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functions related to displaying profiles
+ */
 public class DisplayProfileViewModel extends ViewModel {
 
     private DisplayProfileState state = new DisplayProfileState();

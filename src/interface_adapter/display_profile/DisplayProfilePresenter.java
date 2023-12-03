@@ -10,7 +10,6 @@ import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 
 public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
-//    private final DisplayProfileViewModel displayProfileViewModel;
 
     private ViewManagerModel viewManagerModel;
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
