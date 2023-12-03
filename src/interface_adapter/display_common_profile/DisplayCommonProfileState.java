@@ -19,7 +19,8 @@ public class DisplayCommonProfileState {
         return username;
     }
     public String getBio() { return bio; }
-    public void setBio(String bio) { this.bio = bio; }
     public ArrayList<String> getTopThreeArtists() { return topThreeArtists; }
+    public void setUsername(String username) { this.username = username; }
+    public void setBio(String bio) { this.bio = bio; }
     public void setTopThreeArtists(ArrayList<String> topThreeArtists) { this.topThreeArtists = topThreeArtists; }
 }

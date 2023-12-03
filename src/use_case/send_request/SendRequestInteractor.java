@@ -27,7 +27,8 @@ public class SendRequestInteractor implements SendRequestInputBoundary {
         } else {
             ArrayList<String> requests = sendRequestUserDAO.sendFriendRequest(sender, receiver);
             receiver.setRequests(requests);
-            sendRequestUserDAO.editFile(receiverUsername, "requests", requests.toString());
+            String requestsString = requests.toString();
+            sendRequestUserDAO.editFile(receiverUsername, "requests", requestsString);
 
             SendRequestOutputData sendRequestOutputData = new SendRequestOutputData(receiver.getUsername(), false);
             sendRequestPresenter.prepareSuccessView(sendRequestOutputData);

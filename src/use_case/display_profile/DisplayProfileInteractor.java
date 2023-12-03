@@ -25,7 +25,7 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
         User otherUser = userDataAccessObject.get(otherUsername);
         Profile profile = otherUser.getProfile();
 
-        DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData(profile.getBio(),
+        DisplayProfileOutputData displayProfileOutputData = new DisplayProfileOutputData(otherUser.getUsername(), profile.getBio(),
                 profile.getTopThreeArtists(), profile.getSpotifyHandle());
 
         // if user is a friend, then they can view the friends-only user profile:
