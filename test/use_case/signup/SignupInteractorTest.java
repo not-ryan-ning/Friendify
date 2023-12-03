@@ -34,6 +34,6 @@ public class SignupInteractorTest {
     @Test
     public void testExecute() {
         signupInteractor.execute(new SignupInputData("user", "p", "p"));
-       // assertEquals("display matches", viewManagerModel.getActiveView());
+        assertEquals("sign up", viewManagerModel.getActiveView());
     }
 }
