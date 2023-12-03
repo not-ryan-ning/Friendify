@@ -6,6 +6,10 @@ public class LogoutInteractor implements LogoutInputBoundary {
     public LogoutInteractor(LogoutOutputBoundary logoutOutputBoundary) {
         this.logoutPresenter = logoutOutputBoundary;
     }
+
+    /**
+     * Calls the logout presenter's prepareSuccessView method to change views.
+     */
     @Override
     public void execute() {
         logoutPresenter.prepareSuccessView();

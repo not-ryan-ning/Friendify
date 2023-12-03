@@ -6,6 +6,10 @@ public class EditProfileInteractor implements EditProfileInputBoundary {
     public EditProfileInteractor(EditProfileOutputBoundary editProfileOutputBoundary) {
         this.editProfilePresenter = editProfileOutputBoundary;
     }
+
+    /**
+     * Calls the editProfile presenter's prepareSuccessView method to change views.
+     */
     @Override
     public void execute() {
         editProfilePresenter.prepareSuccessView();
