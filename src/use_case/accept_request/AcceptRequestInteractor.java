@@ -17,8 +17,8 @@ public class AcceptRequestInteractor implements AcceptRequestInputBoundary {
     // Remove request from currentUser, add acceptedUser to currentUser's friend list
     // Add currentUser to acceptedUser's friend list
     // Save information about both users
-    public void execute(AcceptRequestInputData acceptRequestInputData) {
-        User currentUser = acceptRequestFileUserDAO.get(acceptRequestInputData.getCurrentUsername());
+    public void execute(String currentUsername, AcceptRequestInputData acceptRequestInputData) {
+        User currentUser = acceptRequestFileUserDAO.get(currentUsername);
         User acceptedUser = acceptRequestFileUserDAO.get(acceptRequestInputData.getAcceptedUsername());
 
         currentUser.getRequests().remove(acceptedUser.getUsername());
