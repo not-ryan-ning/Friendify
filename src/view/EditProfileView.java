@@ -33,7 +33,11 @@ import interface_adapter.edit_spotify_handle.EditSpotifyHandleController;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleState;
 import interface_adapter.edit_spotify_handle.EditSpotifyHandleViewModel;
 
-
+/**
+ * The EditProfileView class represents the view that displays prompts which allows users to modify their information.
+ *  This view includes labels and buttons so a user can change and save their bio, playlist, spotify handle as well as
+ *  go back to the loggedinView.
+ */
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "edit profile";
     private final JTextField changeBioInputField = new JTextField(50);

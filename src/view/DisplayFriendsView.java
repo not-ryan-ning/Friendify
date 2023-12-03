@@ -13,6 +13,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * The DisplayFriendsView class represents the view that displays a user's list of friends.
+ *  This view includes labels and buttons so a user can view a friend's profile or go back to the loggedInView.
+ */
 public class DisplayFriendsView extends JPanel implements ActionListener, PropertyChangeListener {
     public String viewname = "display friends";
     private final DisplayFriendsController displayFriendsController;

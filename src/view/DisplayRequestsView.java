@@ -17,6 +17,11 @@ import entity.User;
 import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.logged_in.LoggedInViewModel;
 
+/**
+ * The DisplayRequestsView class represents the view that displays a user's list of requests.
+ *  This view includes labels and buttons so a user can view a request's profile, accept the request
+ *  or go back to the loggedInView.
+ */
 public class DisplayRequestsView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewname = "display requests";

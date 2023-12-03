@@ -14,6 +14,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
+/**
+ *  The MatchView class represents a panel for displaying the logged-in user's matches.
+ * This view displays a list of matched users with their similarity scores, and buttons for the logged-in user to
+ * send requests or go back to the loggedinView.
+ */
 public class MatchView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display matches";
     private final MatchViewModel matchViewModel;
