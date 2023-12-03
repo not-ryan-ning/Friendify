@@ -10,4 +10,5 @@ public interface AcceptRequestUserDataAccessInterface {
     ArrayList<String> updateCurrentUserFriends(User currentUser, User acceptedUser);
     ArrayList<String> updateAcceptedUserFriends(User currentUser, User acceptedUser);
     User get(String currentUsername);
+    boolean isFriend(User accepter, User sender);
 }

@@ -142,11 +142,13 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public ArrayList<String> updateCurrentUserFriends(User currentUser, User acceptedUser) {
+        currentUser.getFriends().removeIf(String::isEmpty);
         currentUser.getFriends().add(acceptedUser.getUsername());
         return currentUser.getFriends();
     }
 
     public ArrayList<String> updateAcceptedUserFriends(User currentUser, User acceptedUser) {
+        acceptedUser.getFriends().removeIf(String::isEmpty);
         acceptedUser.getFriends().add(currentUser.getUsername());
         return acceptedUser.getFriends();
     }
@@ -161,6 +163,10 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
 
     public boolean isRequested(User sender, User receiver) {
         return receiver.getRequests().contains(sender.getUsername());
+    }
+
+    public boolean isFriend(User accepter, User sender) {
+        return accepter.getFriends().contains(sender.getUsername()) | sender.getFriends().contains(accepter.getUsername());
     }
 
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {

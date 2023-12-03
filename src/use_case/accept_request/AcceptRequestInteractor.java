@@ -30,15 +30,17 @@ public class AcceptRequestInteractor implements AcceptRequestInputBoundary {
     public void execute(String currentUsername, AcceptRequestInputData acceptRequestInputData) {
         User currentUser = acceptRequestFileUserDAO.get(currentUsername);
         User acceptedUser = acceptRequestFileUserDAO.get(acceptRequestInputData.getAcceptedUsername());
+        if (acceptRequestFileUserDAO.isFriend(currentUser, acceptedUser)) {
+            acceptRequestPresenter.prepareFailView("You have already accepted " + acceptedUser.getUsername());
+        } else {
+            ArrayList<String> requests = acceptRequestFileUserDAO.acceptFriendRequest(currentUser, acceptedUser);
+            ArrayList<String> currentUserFriends = acceptRequestFileUserDAO.updateCurrentUserFriends(currentUser, acceptedUser);
+            ArrayList<String> acceptedUserFriends = acceptRequestFileUserDAO.updateAcceptedUserFriends(currentUser, acceptedUser);
 
-        ArrayList<String> requests = acceptRequestFileUserDAO.acceptFriendRequest(currentUser, acceptedUser);
-        ArrayList<String> currentUserFriends = acceptRequestFileUserDAO.updateCurrentUserFriends(currentUser, acceptedUser);
-        ArrayList<String> acceptedUserFriends = acceptRequestFileUserDAO.updateAcceptedUserFriends(currentUser, acceptedUser);
-
-        acceptRequestFileUserDAO.editFile(currentUsername, "requests", requests.toString());
-        acceptRequestFileUserDAO.editFile(currentUsername, "friends", currentUserFriends.toString());
-        acceptRequestFileUserDAO.editFile(acceptRequestInputData.getAcceptedUsername(), "friends", acceptedUserFriends.toString());
-
-        acceptRequestPresenter.prepareSuccessView();
+            acceptRequestFileUserDAO.editFile(currentUsername, "requests", requests.toString());
+            acceptRequestFileUserDAO.editFile(currentUsername, "friends", currentUserFriends.toString());
+            acceptRequestFileUserDAO.editFile(acceptRequestInputData.getAcceptedUsername(), "friends", acceptedUserFriends.toString());
+            acceptRequestPresenter.prepareSuccessView();
+        }
     }
 }

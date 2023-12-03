@@ -9,13 +9,14 @@ public class AcceptRequestState {
     private ArrayList<String> requests;
     private String username;
     private String acceptedUsername;
+    private String acceptError = null;
+    private final String acceptedMessage = "Accepted";
     public AcceptRequestState(AcceptRequestState copy) {
         this.requests = copy.requests;
         this.username = copy.username;
         this.acceptedUsername = copy.acceptedUsername;
     }
-    public AcceptRequestState() {
-    }
+    public AcceptRequestState() {}
     public ArrayList<String> getRequests() {
         return requests;
     }
@@ -26,5 +27,8 @@ public class AcceptRequestState {
     }
     public void setUsername(String username) { this.username = username; }
     public void setAcceptedUsername(String acceptedUsername) { this.acceptedUsername = acceptedUsername; }
+    public String getAcceptError() { return acceptError; }
+    public void setAcceptError(String acceptError) { this.acceptError = acceptError; }
+    public String getAcceptedMessage() { return acceptedMessage; }
 }
 

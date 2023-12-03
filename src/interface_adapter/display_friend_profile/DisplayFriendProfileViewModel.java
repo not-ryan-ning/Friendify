@@ -15,7 +15,7 @@ public class DisplayFriendProfileViewModel extends ViewModel {
     private DisplayFriendProfileState state = new DisplayFriendProfileState();
 
     public DisplayFriendProfileViewModel() {
-        super("friend profile");
+        super("display friend profile");
     }
 
     public void setState(DisplayFriendProfileState state) {
