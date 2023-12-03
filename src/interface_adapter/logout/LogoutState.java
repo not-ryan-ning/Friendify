@@ -1,5 +1,8 @@
 package interface_adapter.logout;
 
+/**
+ * Represents the state of a user logging out of their account.
+ */
 public class LogoutState {
     private String loggedoutUser = "";
 

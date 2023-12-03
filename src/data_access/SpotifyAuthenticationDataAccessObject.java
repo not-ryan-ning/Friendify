@@ -52,6 +52,14 @@ public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAu
     static class CallbackHandler implements HttpHandler {
         private String accessToken;
 
+        /**
+         * Handles an HTTP exchange by extracting the authorization code from the callback URL,
+         * performing token exchange using the authorization code, and sending an HTTP response.
+         *
+         * @param exchange the exchange containing the request from the
+         *                 client and used to send the response
+         * @throws IOException
+         */
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             URI requestUri = exchange.getRequestURI();
@@ -70,6 +78,10 @@ public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAu
             }
         }
 
+        /**
+         * This method will be called by startLocalServer to wait for the access token
+         * @return A string representing access token.
+         */
         public String waitForAccessToken() {
             while (accessToken == null) {
                 try {
@@ -99,6 +111,12 @@ public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAu
     }
 
     private static class AccessTokenExchanger {
+        /**
+         * Gets access token from Spotify API using authorization code
+         * @param authorizationCode Code needed to get access token
+         * @return String representing access token
+         * @throws IOException
+         */
         public String exchange(String authorizationCode) throws IOException {
             String tokenRequestBody = "grant_type=authorization_code&code=" + authorizationCode + "&redirect_uri=" + REDIRECT_URI;
             String authHeader = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes());

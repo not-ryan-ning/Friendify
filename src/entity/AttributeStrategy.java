@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AttributeStrategy implements MatchingStrategy {
+    /**
+     * Calculates the euclidean distance similarity score based on the common attributes and its frequency in two playlists.
+     * @param playlist1 The first Playlist object for comparison. The first playlist for comparison.
+     * @param playlist2 The second Playlist object for comparison. The second playlist for comparison.
+     * @return The euclidean distance similarity score between the two playlists.
+     */
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         // Initialize two HashMaps for each playlist

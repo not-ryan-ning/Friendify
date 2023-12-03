@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and behavior related to editing user bio.
+ */
 public class EditBioViewModel extends ViewModel {
 
     public static final String BIO_LABEL = "Type Bio";

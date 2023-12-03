@@ -31,7 +31,6 @@ import java.io.IOException;
 
 public class DisplayFriendsUseCaseFactory {
     private DisplayFriendsUseCaseFactory() {}
-
     public static DisplayFriendsView create(
             ViewManagerModel viewManagerModel,
             LoggedInViewModel loggedInViewModel,
@@ -52,7 +51,6 @@ public class DisplayFriendsUseCaseFactory {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
-
         return null;
     }
 

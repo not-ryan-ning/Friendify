@@ -1,6 +1,4 @@
 package view;
-
-import interface_adapter.display_common_profile.DisplayCommonProfileState;
 import interface_adapter.display_friends.DisplayFriendsController;
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_friends.DisplayFriendsViewModel;
@@ -8,7 +6,6 @@ import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
-import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 
 import javax.swing.*;
@@ -19,6 +16,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+/**
+ * The DisplayFriendsView class represents the view that displays a user's list of friends.
+ *  This view includes labels and buttons so a user can view a friend's profile or go back to the loggedInView.
+ */
 public class DisplayFriendsView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public String viewname = "display friends";

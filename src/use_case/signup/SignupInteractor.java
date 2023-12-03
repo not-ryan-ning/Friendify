@@ -24,6 +24,15 @@ public class SignupInteractor implements SignupInputBoundary {
         this.playlistFactory = playlistFactory;
     }
 
+    /**
+     * Executes process of signing a user up based on the provided signup input data.
+     * If the given username already exists, a failure view is prepared with an error message.
+     * If the passwords do not match, a failure view is prepared with an appropriate error message.
+     * Otherwise, a new user is created with an empty profile and playlist, and the user is saved. Then,
+     * a success view is then prepared with the user's information.
+     *
+     * @param signupInputData The input data containing the username, password, and repeat password for the signup.
+     */
     @Override
     public void execute(SignupInputData signupInputData) {
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {

@@ -14,6 +14,11 @@ public class DisplayFriendsInteractor implements DisplayFriendsInputBoundary {
         this.displayFriendsPresenter = displayFriendsOutputBoundary;
     }
 
+    /**
+     * Executes the function of displaying a user's list of friends, passing this in to presenter.
+     *
+     * @param username The user whose friends are displayed.
+     */
     @Override
     public void execute(String username) {
         User user = userDataAccessObject.get(username);

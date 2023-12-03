@@ -12,6 +12,14 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The DisplayCommonProfileView class represents the view that displays the common user profile.
+ * It extends JPanel and implements ActionListener and PropertyChangeListener to handle user
+ * interactions and property changes.
+ *  This view includes labels for the username, bio, and Spotify handle,
+ *  as well as a button to go back to the logged in view.
+ */
+
 public class DisplayCommonProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display common profile";
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
@@ -84,6 +92,12 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
         System.out.println("Click " + e.getActionCommand());
     }
 
+    /**
+     * Responds to property change events, updating DisplayCommonProfileView to display their username, bio and
+     * top 3 artists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayCommonProfileState currentState = displayCommonProfileViewModel.getState();

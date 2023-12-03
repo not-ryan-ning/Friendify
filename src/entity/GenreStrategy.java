@@ -3,6 +3,13 @@ package entity;
 import java.util.HashMap;
 
 public class GenreStrategy implements MatchingStrategy {
+    /**
+     * Calculates the cosine similarity score between two playlists based on the frequency
+     * of genres in each playlist.
+     * @param playlist1 The first Playlist object for comparison.
+     * @param playlist2 The second Playlist object for comparison.
+     * @return The cosine similarity score between the two playlists based on their genre frequencies.
+     */
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         // Calculates the dot product of the genre frequencies and then normalizes it
@@ -31,6 +38,12 @@ public class GenreStrategy implements MatchingStrategy {
         }
     }
 
+    /**
+     * Calculates the magnitude of a playlist's genre frequencies, which is used in the
+     * computation of cosine similarity.
+     * @param genreFrequency A mapping of genre names to their frequencies in the playlist.
+     * @return The magnitude of the genre frequencies in the playlist.
+     */
     private double calculateMagnitude(HashMap<String, Integer> genreFrequency) {
         double magtinude = 0.0;
         for (int frequency: genreFrequency.values()) {

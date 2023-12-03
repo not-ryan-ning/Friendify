@@ -2,6 +2,10 @@ package entity;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of the Profile interface representing a common profile with the attributes
+ * bio, topThreeArtists and spotify handle of a user.
+ */
 public class CommonProfile implements Profile{
     private String bio;
     private ArrayList<String> topThreeArtists;

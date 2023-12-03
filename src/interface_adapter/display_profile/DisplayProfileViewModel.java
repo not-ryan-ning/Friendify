@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functions related to displaying profiles
+ */
 public class DisplayProfileViewModel extends ViewModel {
     public static String VIEW_BUTTON_LABEL = "Profile";
 

@@ -3,6 +3,10 @@ package interface_adapter.authorize;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * Represents the state of authorization, including the access token and related constants
+ * for Spotify OAuth 2.0 authentication.
+ */
 public class AuthorizeState {
     private String accessToken = "";
     private static final String CLIENT_ID = "7af39c08f4c242b89347deca0538bbb1";

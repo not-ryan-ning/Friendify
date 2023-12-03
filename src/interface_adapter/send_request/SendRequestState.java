@@ -1,5 +1,8 @@
 package interface_adapter.send_request;
 
+/**
+ * Represents the state of a user sending a request to another user
+ */
 public class SendRequestState {
     private String username = "";
     private String receiverUsername = "";

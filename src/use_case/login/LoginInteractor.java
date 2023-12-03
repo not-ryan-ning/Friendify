@@ -12,6 +12,13 @@ public class LoginInteractor implements LoginInputBoundary {
         this.loginPresenter = loginOutputBoundary;
     }
 
+    /**
+     * Checks if given username exists in user data object and if the
+     * password matches the saved password for the given username. If these are valid,
+     * it gets the user's information, constructs a LoginOutputData object, and notifies the login
+     * presenter to prepare the view for a successful login. Otherwise, it notifies the presenter with a fail message.
+     * @param loginInputData The input data containing the username and password for login.
+     */
     @Override
     public void execute(LoginInputData loginInputData) {
         String username = loginInputData.getUsername();

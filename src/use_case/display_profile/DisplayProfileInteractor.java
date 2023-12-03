@@ -17,6 +17,11 @@ public class DisplayProfileInteractor implements DisplayProfileInputBoundary {
         this.displayProfileViewModel = displayProfileViewModel;
     }
 
+    /**
+     * Executes the display profile use case based on the provided input data. If the user is a friend, the
+     * friend profile is displayed; otherwise, the common profile is shown by calling the appropriate prepareSuccessView methods
+     * @param displayProfileInputData The input data containing the username of the profile to be displayed.
+     */
     @Override
     public void execute(String username, DisplayProfileInputData displayProfileInputData) {
         String otherUsername = displayProfileInputData.getOtherUsername();

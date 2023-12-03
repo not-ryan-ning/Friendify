@@ -14,6 +14,11 @@ public class DisplayRequestsPresenter implements DisplayRequestsOutputBoundary {
         this.displayRequestsViewModel = displayRequestsViewModel;
     }
 
+    /**
+     * Prepares and switches the view to display requests based on the response data.
+     *
+     * @param requests The output data containing information about display requests.
+     */
     @Override
     public void prepareSuccessView(DisplayRequestsOutputData requests) {
         DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();

@@ -2,6 +2,9 @@ package interface_adapter.match;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Represents the state of a user matching with other users.
+ */
 public class MatchState {
     private LinkedHashMap<String, Double> topSimilarUsers;
     private String username;

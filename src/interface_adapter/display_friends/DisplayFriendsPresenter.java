@@ -4,6 +4,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.display_friends.DisplayFriendsOutputBoundary;
 import use_case.display_friends.DisplayFriendsOutputData;
 
+/**
+ * Handles outputs related to displaying friends and updating the corresponding view models.
+ */
 public class DisplayFriendsPresenter implements DisplayFriendsOutputBoundary {
 
     private final DisplayFriendsViewModel displayFriendsViewModel;

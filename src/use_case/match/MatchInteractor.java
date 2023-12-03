@@ -15,6 +15,13 @@ public class MatchInteractor implements MatchInputBoundary {
         this.matchPresenter = matchingOutputBoundary;
     }
 
+    /**
+     * Calculates weighted averages of the similarity scores generated from four concrete matching
+     * strategies: TitleStrategy, ArtistStrategy, GenreStrategy, and AttributeStrategy.
+     * Using the weighted averages, get the top three users (or less) in terms of similarity to the current user.
+     * Finally, invoke the Presenter with the Output Data.
+     * @param currentUsername The username of the currently logged-in user
+     */
     @Override
     public void execute(String currentUsername) {
         User currentUser = matchUserDAO.get(currentUsername);

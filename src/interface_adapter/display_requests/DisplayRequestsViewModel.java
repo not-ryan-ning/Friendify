@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functions related to displaying requests
+ */
 public class DisplayRequestsViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Display Requests View";
     private DisplayRequestsState state = new DisplayRequestsState();

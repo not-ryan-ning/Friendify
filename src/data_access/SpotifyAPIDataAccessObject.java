@@ -12,9 +12,15 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
 
+
 public class SpotifyAPIDataAccessObject implements DisplayPlaylistsSpotifyAPIDataAccessInterface,
         ChoosePlaylistSpotifyAPIDataAccessInterface {
     // Return all the playlists the user has that maps playlistId to playlistName
+    /**
+     * Gets all of a user's playlists, mapping playlistId to playlistName
+     * @param accessToken The token used to authenticate user
+     * @return Hashmap of all of a user's playlists
+     */
     public HashMap<String, String> getPlaylists(String accessToken) {
         String playlistUrl = "https://api.spotify.com/v1/me/playlists";
 
@@ -52,6 +58,12 @@ public class SpotifyAPIDataAccessObject implements DisplayPlaylistsSpotifyAPIDat
         return null;
     }
 
+    /**
+     * @param username the username of current user
+     * @param playlistId the id of the user's playlist
+     * @param accessToken The access token to authenticate the user
+     * @return An arraylist of objects containing information about a playlist
+     */
     // Get all information about the chosen playlist from the API and store them in the playlist csv file and the users
     // csv file (playlist id only)
     public ArrayList<Object> getPlaylistInfo(String username, String playlistId, String accessToken) {

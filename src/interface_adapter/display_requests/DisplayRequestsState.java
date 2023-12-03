@@ -1,6 +1,9 @@
 package interface_adapter.display_requests;
 import java.util.ArrayList;
 
+/**
+ * Represents the state for displaying requests, including the list of requests, a username, and a request name.
+ */
 public class DisplayRequestsState {
     private ArrayList<String> requests;
     private String username;

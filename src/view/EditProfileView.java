@@ -10,9 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -38,8 +35,12 @@ import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import org.w3c.dom.ls.LSOutput;
 
+/**
+ * The EditProfileView class represents the view that displays prompts which allows users to modify their information.
+ *  This view includes labels and buttons so a user can change and save their bio, playlist, spotify handle as well as
+ *  go back to the loggedinView.
+ */
 public class EditProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "edit profile";
     private final JTextField changeBioInputField = new JTextField(50);
@@ -261,6 +262,12 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         this.add(buttonsAndScroll);
     }
 
+    /**
+     * Responds to property change events (button clicks), updating the edit profile view based on certain changes.
+     * It maps each unique button click to the corresponding change it results in.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());

@@ -10,6 +10,10 @@ import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 
 public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
     private ViewManagerModel viewManagerModel;
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
@@ -20,31 +24,47 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
 
-
+    /**
+     * Prepares and switches the view to display a friend profile based on the response data.
+     *
+     * @param response The output data containing information about the friend profile.
+     */
     @Override
     public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
         DisplayFriendProfileState displayFriendProfileState = displayFriendProfileViewModel.getState();
+<<<<<<< HEAD
+=======
 
         displayFriendProfileState.setBio(response.getBio());
         displayFriendProfileState.setTopThreeArtists(response.getTopThreeArtists());
         displayFriendProfileState.setSpotifyHandle(response.getSpotifyHandle());
 
+>>>>>>> main
         this.displayFriendProfileViewModel.setState(displayFriendProfileState);
         this.displayFriendProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(displayFriendProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
+
+    /**
+     * Prepares and switches the view to display a common profile based on the response data.
+     *
+     * @param response The output data containing information about the common profile.
+     */
     @Override
     public void prepareSuccessViewCommon(DisplayProfileOutputData response) {
         // switch to the common view profile of the user
         DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
+<<<<<<< HEAD
+=======
 
         displayCommonProfileState.setUsername(response.getUsername());
         displayCommonProfileState.setBio(response.getBio());
         displayCommonProfileState.setTopThreeArtists(response.getTopThreeArtists());
 
+>>>>>>> main
         this.displayCommonProfileViewModel.setState(displayCommonProfileState);
         this.displayCommonProfileViewModel.firePropertyChanged();
 

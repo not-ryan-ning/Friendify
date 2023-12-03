@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and behavior related to displaying a friend profile view
+ */
 public class DisplayFriendProfileViewModel extends ViewModel {
     public final String TITLE_LABEL = "Common Profile View";
     public static final String USERNAME_LABEL = "Username: ";

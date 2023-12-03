@@ -21,6 +21,11 @@ import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 
+/**
+ * The DisplayRequestsView class represents the view that displays a user's list of requests.
+ *  This view includes labels and buttons so a user can view a request's profile, accept the request
+ *  or go back to the loggedInView.
+ */
 public class DisplayRequestsView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewname = "display requests";
@@ -88,7 +93,11 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         this.add(buttons);
     }
 
-    @Override
+    /**
+     * Responds to property change events, updating DisplayRequestsView to display a message if user accepts.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }

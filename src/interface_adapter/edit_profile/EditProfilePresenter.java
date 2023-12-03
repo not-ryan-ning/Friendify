@@ -3,6 +3,9 @@ package interface_adapter.edit_profile;
 import interface_adapter.ViewManagerModel;
 import use_case.edit_profile.EditProfileOutputBoundary;
 
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class EditProfilePresenter implements EditProfileOutputBoundary{
     private final EditProfileViewModel editProfileViewModel;
     private ViewManagerModel viewManagerModel;

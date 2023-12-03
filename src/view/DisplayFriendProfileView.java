@@ -12,6 +12,13 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The DisplayFriendProfileView class represents the view that displays the friend user profile.
+ * It extends JPanel and implements ActionListener and PropertyChangeListener to handle user
+ * interactions and property changes.
+ *  This view includes labels for the username, bio, Spotify handle, and top three artists, which only friends can see,
+ *  as well as a button to go back to the logged in view.
+ */
 public class DisplayFriendProfileView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "display friend profile";
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
@@ -83,6 +90,12 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         System.out.println("Click " + e.getActionCommand());
     }
 
+    /**
+     * Responds to property change events, updating DisplayFriendProfileView to display the username, bio, spotify handle
+     * and top 3 artists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         DisplayFriendProfileState currentState = displayFriendProfileViewModel.getState();

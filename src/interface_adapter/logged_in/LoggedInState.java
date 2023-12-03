@@ -4,6 +4,9 @@ import entity.User;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the state of a user being logged in
+ */
 public class LoggedInState {
     private String username;
     private String bio;

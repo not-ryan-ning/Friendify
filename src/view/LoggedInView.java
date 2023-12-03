@@ -2,7 +2,6 @@ package view;
 
 import interface_adapter.display_friends.DisplayFriendsState;
 import interface_adapter.display_requests.DisplayRequestsState;
-import interface_adapter.edit_bio.EditBioState;
 import interface_adapter.edit_profile.EditProfileController;
 import interface_adapter.edit_profile.EditProfileState;
 import interface_adapter.edit_profile.EditProfileViewModel;
@@ -13,11 +12,9 @@ import interface_adapter.display_requests.DisplayRequestsController;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.match.MatchController;
 import interface_adapter.match.MatchState;
 import interface_adapter.match.MatchViewModel;
-import interface_adapter.send_request.SendRequestState;
 
 
 import javax.swing.*;
@@ -26,8 +23,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
 
+/**
+ * The LoggedInView class represents the view of the "main homepage" which users see once they are logged in.
+ * It extends JPanel and implements ActionListener and PropertyChangeListener to handle user
+ * interactions and property changes.
+ * This view includes labels for the username, bio, Spotify handle, and top three artists, which only friends can see,
+ * of the loggedin user, as well as buttons to match with others, logout, see requests and friends and edit their
+ * profile.
+ */
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "logged in";
@@ -175,7 +179,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
-
+    /**
+     * Responds to property change events (button clicks), updating the logged in view based on certain changes. It maps
+     * each unique button click to the corresponding change it results in.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState currentState = loggedInViewModel.getState();

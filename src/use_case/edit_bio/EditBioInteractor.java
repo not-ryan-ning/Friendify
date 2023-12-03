@@ -11,7 +11,12 @@ public class EditBioInteractor implements EditBioInputBoundary {
         this.editBioUserDAO = editBioUserDataAccessInterface;
         this.editBioPresenter = editBioOutputBoundary;
     }
-  
+
+    /**
+     * Allows a user to change and save their bio.
+     * @param username The username of the user that wants to change their bio.
+     * @param editBioInputData Input data that contains the new bio to change to.
+     */
     @Override
     public void execute(String username, EditBioInputData editBioInputData) {
         //get the new bio from the input data
