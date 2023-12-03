@@ -37,6 +37,7 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
             save();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(playlistsFile))) {
+                String header = reader.readLine();
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -61,13 +62,48 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     ArrayList<String> topThreeArtistsArrayList = new ArrayList<String>(Arrays.asList(topTreeArtistsSplit));
 
                     // Convert CSV string to HashMap<String, Integer> for artists and genres
-                    HashMap<String, Integer> artistsMap = (HashMap<String, Integer>) Arrays.stream(artists.split("\n"))
-                            .map(entry -> entry.split(","))
-                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+                    HashMap<String, Integer> artistsMap = new HashMap<>();
+                    artistsMap.put("defaultArtists", 0);
 
-                    HashMap<String, Integer> genresMap = (HashMap<String, Integer>) Arrays.stream(genres.split("\n"))
-                            .map(entry -> entry.split(","))
-                            .collect(Collectors.toMap(parts -> parts[0], parts -> Integer.parseInt(parts[1])));
+                    if (!artists.isEmpty()) {
+                        artistsMap = Arrays.stream(artists.split("\n"))
+                                .map(entry -> entry.split(","))
+                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
+                                .collect(Collectors.toMap(
+                                        parts -> parts[0],
+                                        parts -> {
+                                            try {
+                                                return Integer.parseInt(parts[1]);
+                                            } catch (NumberFormatException e) {
+                                                // Handle non-numeric case, e.g., set a default value
+                                                return 0;
+                                            }
+                                        },
+                                        (existing, replacement) -> existing,
+                                        HashMap::new
+                                ));
+                    }
+
+                    HashMap<String, Integer> genresMap = new HashMap<>();
+                    genresMap.put("defaultGenre", 0);
+                    if (!genres.isEmpty()) {
+                        genresMap = Arrays.stream(genres.split("\n"))
+                                .map(entry -> entry.split(","))
+                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
+                                .collect(Collectors.toMap(
+                                        parts -> parts[0],
+                                        parts -> {
+                                            try {
+                                                return Integer.parseInt(parts[1]);
+                                            } catch (NumberFormatException e) {
+                                                // Handle non-numeric case, e.g., set a default value
+                                                return 0;
+                                            }
+                                        },
+                                        (existing, replacement) -> existing,
+                                        HashMap::new
+                                ));
+                    }
 
                     Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsMap, genresMap,
                             Double.parseDouble(acousticness), Double.parseDouble(energy), Double.parseDouble(instrumentalness),
@@ -93,11 +129,11 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter(playlistsFile));
-            writer.write(String.join("\\|", headers.keySet()));
+            writer.write(String.join("|", headers.keySet()));
             writer.newLine();
 
             for (Playlist playlist : playlists.values()) {
-                String line = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s",
                         playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists(), playlist.getGenres(),
                         playlist.getAcousticness(), playlist.getEnergy(),
                         playlist.getInstrumentalness(), playlist.getValence(), playlist.getTopThreeArtists());

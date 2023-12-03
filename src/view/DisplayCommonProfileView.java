@@ -13,7 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class DisplayCommonProfileView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "User's Profile";
+    public final String viewName = "display common profile";
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;

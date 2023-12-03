@@ -9,7 +9,7 @@ public class EditProfileViewModel extends ViewModel {
     public static String TITLE_LABEL = "Edit Profile";
     private EditProfileState state = new EditProfileState();
     public EditProfileViewModel() {
-        super("editProfile");
+        super("edit profile");
     }
     public void setState(EditProfileState editProfileState) {
         this.state = editProfileState;

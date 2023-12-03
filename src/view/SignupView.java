@@ -24,6 +24,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private final JButton signUp;
 
+
     public SignupView(SignupController controller, SignupViewModel signupViewModel) {
         this.signupController = controller;
         this.signupViewModel = signupViewModel;

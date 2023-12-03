@@ -1,14 +1,14 @@
 package use_case.match;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MatchOutputData {
-    private final HashMap<String, Double> topSimilarUsers;
+    private LinkedHashMap<String, Double> topSimilarUsers;
 
-    public MatchOutputData(HashMap<String, Double> topSimilarUsers) {
+    public MatchOutputData(LinkedHashMap<String, Double> topSimilarUsers) {
         this.topSimilarUsers = topSimilarUsers;
     }
-    public HashMap<String, Double> getTopSimilarUsers() {
+    public LinkedHashMap<String, Double> getTopSimilarUsers() {
         return topSimilarUsers;
     }
 }

@@ -66,65 +66,23 @@ public class Main {
         AuthorizeViewModel authorizeViewModel = new AuthorizeViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
-        FileUserDataAccessObject displayRequestsUserDataAccessObject;
-        FileUserDataAccessObject displayFriendsUserDataAccessObject;
-        FileUserDataAccessObject matchUserDataAccessObject;
-        FileUserDataAccessObject sendRequestUserDataAccessObject;
-        FileUserDataAccessObject editBioUserDataAccessObject;
-        SpotifyAPIDataAccessObject displayPlaylistsSpotifyAPIDataAccessObject;
-        SpotifyAuthenticationDataAccessObject authorizeSpotifyAuthenticationDataAccessObject;
-        FileUserDataAccessObject choosePlaylistUserDataAccessObject;
-        FilePlaylistsDataAccessObject choosePlaylistPlaylistDataAccessObject;
-        SpotifyAPIDataAccessObject choosePlaylistSpotifyAPIDataAccessObject;
-        FileUserDataAccessObject editSpotifyHandleUserDataAccessObject;
-        FileUserDataAccessObject displayProfileUserDataAccessObject;
+        FilePlaylistsDataAccessObject filePlaylistsDataAccessObject;
+        SpotifyAPIDataAccessObject spotifyAPIDataAccessObject;
+        SpotifyAuthenticationDataAccessObject spotifyAuthenticationDataAccessObject;
 
         try {
-            userDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            displayRequestsUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            displayFriendsUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            matchUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            sendRequestUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            editBioUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            displayPlaylistsSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
-
-            authorizeSpotifyAuthenticationDataAccessObject = new SpotifyAuthenticationDataAccessObject();
-
-            choosePlaylistUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
-
-            choosePlaylistPlaylistDataAccessObject = new FilePlaylistsDataAccessObject("./playlists.csv",
+            filePlaylistsDataAccessObject = new FilePlaylistsDataAccessObject("./playlists.csv",
                     new CommonPlaylistFactory());
 
-            choosePlaylistSpotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
-
-            editSpotifyHandleUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
+            userDataAccessObject = new FileUserDataAccessObject("./users.csv",
                     new CommonUserFactory(),
-                    new CommonProfileFactory());
+                    new CommonPlaylistFactory(),
+                    new CommonProfileFactory(),
+                    filePlaylistsDataAccessObject);
 
-            displayProfileUserDataAccessObject = new FileUserDataAccessObject("./users.csv",
-                    new CommonUserFactory(),
-                    new CommonProfileFactory());
+            spotifyAPIDataAccessObject = new SpotifyAPIDataAccessObject();
 
+            spotifyAuthenticationDataAccessObject = new SpotifyAuthenticationDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -140,18 +98,18 @@ public class Main {
                 loginViewModel,
                 logoutViewModel,
                 displayRequestsViewModel,
-                displayRequestsUserDataAccessObject,
+                userDataAccessObject,
                 displayFriendsViewModel,
-                displayFriendsUserDataAccessObject,
+                userDataAccessObject,
                 matchViewModel,
-                matchUserDataAccessObject,
+                userDataAccessObject,
                 editProfileViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         MatchView matchView = MatchUseCaseFactory.create(viewManagerModel,
                 matchViewModel,
                 sendRequestViewModel,
-                sendRequestUserDataAccessObject,
+                userDataAccessObject,
                 goBackViewModel,
                 loggedInViewModel);
         views.add(matchView, matchView.viewName);
@@ -160,54 +118,54 @@ public class Main {
                 loggedInViewModel,
                 editProfileViewModel,
                 editBioViewModel,
-                editBioUserDataAccessObject,
+                userDataAccessObject,
                 displayPlaylistsViewModel,
-                displayPlaylistsSpotifyAPIDataAccessObject,
+                spotifyAPIDataAccessObject,
                 authorizeViewModel,
-                authorizeSpotifyAuthenticationDataAccessObject,
+                spotifyAuthenticationDataAccessObject,
                 choosePlaylistViewModel,
-                choosePlaylistUserDataAccessObject,
-                choosePlaylistPlaylistDataAccessObject,
-                choosePlaylistSpotifyAPIDataAccessObject,
+                userDataAccessObject,
+                filePlaylistsDataAccessObject,
+                spotifyAPIDataAccessObject,
                 editSpotifyHandleViewModel,
-                editSpotifyHandleUserDataAccessObject,
+                userDataAccessObject,
                 goBackViewModel);
         views.add(editProfileView, editProfileView.viewName);
 
         DisplayRequestsView displayRequestsView = DisplayRequestsUseCaseFactory.create(viewManagerModel,
                 loggedInViewModel,
                 displayRequestsViewModel,
-                displayRequestsUserDataAccessObject,
+                userDataAccessObject,
                 displayProfileViewModel,
                 displayCommonProfileViewModel,
                 displayFriendProfileViewModel,
-                displayProfileUserDataAccessObject,
+                userDataAccessObject,
                 goBackViewModel);
-        views.add(displayRequestsView);
+        views.add(displayRequestsView, displayRequestsView.viewname);
 
         DisplayFriendsView displayFriendsView = DisplayFriendsUseCaseFactory.create(viewManagerModel,
                 loggedInViewModel,
                 displayFriendsViewModel,
-                displayFriendsUserDataAccessObject,
+                userDataAccessObject,
                 displayProfileViewModel,
                 displayCommonProfileViewModel,
                 displayFriendProfileViewModel,
-                displayProfileUserDataAccessObject,
+                userDataAccessObject,
                 goBackViewModel);
-        views.add(displayFriendsView);
+        views.add(displayFriendsView, displayFriendsView.viewname);
 
         DisplayCommonProfileView displayCommonProfileView = DisplayProfileUseCaseFactory.create(
                 viewManagerModel,
                 loggedInViewModel,
                 displayCommonProfileViewModel,
                 goBackViewModel);
-        views.add(displayCommonProfileView);
+        views.add(displayCommonProfileView, displayCommonProfileView.viewName);
 
         DisplayFriendProfileView displayFriendProfileView = DisplayProfileUseCaseFactory.create(viewManagerModel,
                 loggedInViewModel,
                 displayFriendProfileViewModel,
                 goBackViewModel);
-        views.add(displayFriendProfileView);
+        views.add(displayFriendProfileView, displayFriendProfileView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();

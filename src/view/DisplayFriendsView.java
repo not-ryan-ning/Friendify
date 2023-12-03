@@ -66,32 +66,36 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
         DisplayFriendsState currentState = displayFriendsViewModel.getState();
         ArrayList<String> friends = currentState.getFriends();
 
-        for (String friend: friends) {
-            JLabel friendUsername = new JLabel(friend);
-            this.add(friendUsername);
+        if (!(friends == null)) {
+            for (String friend: friends) {
+                JLabel friendUsername = new JLabel(friend);
+                this.add(friendUsername);
 
-            JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
-            // Associate each view profile button with the corresponding friend username
-            viewProfile.putClientProperty("userString", friend);
-            buttons.add(viewProfile);
+                JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
+                // Associate each view profile button with the corresponding friend username
+                viewProfile.putClientProperty("userString", friend);
+                buttons.add(viewProfile);
 
-            viewProfile.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(viewProfile)) {
-                            DisplayFriendsState currentState = displayFriendsViewModel.getState();
-                            // Retrieve the associated friend name
-                            String associatedString = (String) viewProfile.getClientProperty("userString");
-                            currentState.setFriendName(associatedString);
+                viewProfile.addActionListener(
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent evt) {
+                                System.out.println("Click " + evt.getActionCommand());
+                                if (evt.getSource().equals(viewProfile)) {
+                                    DisplayFriendsState currentState = displayFriendsViewModel.getState();
+                                    // Retrieve the associated friend name
+                                    String associatedString = (String) viewProfile.getClientProperty("userString");
+                                    currentState.setFriendName(associatedString);
 
-                            displayProfileController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getFriendName()
-                            );
+                                    displayProfileController.execute(
+                                            currentState.getUsername(),
+                                            currentState.getFriendName()
+                                    );
+                                }
+                            }
                         }
-                    }
-                }
-            );
+                );
+        }
+
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             this.add(title);
@@ -106,6 +110,6 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Not implemented yet
+        System.out.println("Property Change: " + evt.getPropertyName());
     }
 }

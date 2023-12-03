@@ -115,7 +115,7 @@ public class LoginUseCaseFactory {
 
     private static DisplayRequestsController createDisplayRequestsUseCase(ViewManagerModel viewManagerModel,
                                                                           DisplayRequestsViewModel displayRequestsViewModel,
-                                                                          DisplayRequestsUserDataAccessInterface displayRequestsUserDataAccessObject) {
+                                                                          DisplayRequestsUserDataAccessInterface displayRequestsUserDataAccessObject) throws IOException {
         DisplayRequestsOutputBoundary displayRequestsOutputBoundary = new DisplayRequestsPresenter(viewManagerModel, displayRequestsViewModel);
         DisplayRequestsInputBoundary displayRequestsInteractor = new DisplayRequestsInteractor(displayRequestsUserDataAccessObject, displayRequestsOutputBoundary);
 
@@ -124,7 +124,7 @@ public class LoginUseCaseFactory {
 
     private static DisplayFriendsController createDisplayFriendsUseCase(ViewManagerModel viewManagerModel,
                                                                         DisplayFriendsViewModel displayFriendsViewModel,
-                                                                        DisplayFriendsUserDataAccessInterface displayFriendsUserDataAccessObject) {
+                                                                        DisplayFriendsUserDataAccessInterface displayFriendsUserDataAccessObject) throws IOException {
         DisplayFriendsOutputBoundary displayFriendsOutputBoundary = new DisplayFriendsPresenter(viewManagerModel, displayFriendsViewModel);
         DisplayFriendsInputBoundary displayFriendsInteractor = new DisplayFriendsInteractor(displayFriendsUserDataAccessObject, displayFriendsOutputBoundary);
 
@@ -133,14 +133,15 @@ public class LoginUseCaseFactory {
 
     private static MatchController createMatchUseCase(ViewManagerModel viewManagerModel,
                                                          MatchViewModel matchViewModel,
-                                                         MatchUserDataAccessInterface matchUserDataAccessObject) {
+                                                         MatchUserDataAccessInterface matchUserDataAccessObject) throws IOException {
         MatchOutputBoundary matchOutputBoundary = new MatchPresenter(viewManagerModel, matchViewModel);
         MatchInputBoundary matchInteractor = new MatchInteractor(matchUserDataAccessObject, matchOutputBoundary);
 
         return new MatchController(matchInteractor);
     }
 
-    private static EditProfileController createEditProfileUseCase(ViewManagerModel viewManagerModel, EditProfileViewModel editProfileViewModel) throws IOException {
+    private static EditProfileController createEditProfileUseCase(ViewManagerModel viewManagerModel,
+                                                                  EditProfileViewModel editProfileViewModel) throws IOException {
         EditProfileOutputBoundary editProfileOutputBoundary = new EditProfilePresenter(viewManagerModel, editProfileViewModel);
         EditProfileInputBoundary editProfileInteractor = new EditProfileInteractor(editProfileOutputBoundary);
 
