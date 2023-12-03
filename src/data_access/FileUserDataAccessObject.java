@@ -137,8 +137,9 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         return receiver.getRequests().contains(sender.getUsername());
     }
 
-    public void sendFriendRequest(User sender, User receiver) {
+    public ArrayList<String> sendFriendRequest(User sender, User receiver) {
         receiver.getRequests().add(sender.getUsername());
+        return receiver.getRequests();
     }
 
     public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
