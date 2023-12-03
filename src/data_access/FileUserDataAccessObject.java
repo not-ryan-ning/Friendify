@@ -133,7 +133,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         receiver.getRequests().add(sender.getUsername());
     }
 
-    HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
+    public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
         Playlist currentPlaylist = currentUser.getPlaylist();
 
