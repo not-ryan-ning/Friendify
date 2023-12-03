@@ -5,6 +5,12 @@ import java.util.HashMap;
 
 public class ArtistStrategy implements MatchingStrategy {
 
+    /**
+     * Returns a calculated similarity score
+     * @param playlist1 The first Playlist object for comparison.
+     * @param playlist2 The second Playlist object for comparison.
+     * @return
+     */
     @Override
     public double getSimilarityScore(Playlist playlist1, Playlist playlist2) {
         HashMap<String, Integer> artistFrequency1 = playlist1.getArtists();
