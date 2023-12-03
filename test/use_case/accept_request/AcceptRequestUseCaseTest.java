@@ -3,6 +3,7 @@ package use_case.accept_request;
 import data_access.MockFileUserDataAccessObject;
 import entity.*;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,5 +28,13 @@ public class AcceptRequestUseCaseTest {
         this.emptyProfile = profileFactory.create("", new ArrayList<>(), "");
         this.emptyPlaylist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0, new ArrayList<>());
+    }
+
+    @Test
+    // Test interactor can be initialized
+    public void testInteractorCreatedProperly() {
+        AcceptRequestInteractor interactor = new AcceptRequestInteractor(mockAcceptRequestFileUserDA0,
+                mockAcceptRequestPresenter);
+
     }
 }
