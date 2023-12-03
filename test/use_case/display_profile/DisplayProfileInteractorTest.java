@@ -14,10 +14,8 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 public class DisplayProfileInteractorTest {
-    final DisplayProfileUserDataAccessInterface userDataAccessObject = new FileUserDataAccessObject();
-    final DisplayProfileOutputBoundary displayProfilePresenter;
-    final DisplayProfileViewModel displayProfileViewModel;
-    final ViewManagerModel viewManagerModel;
+    private DisplayProfileInteractor displayProfileInteractor;
+    private ViewManagerModel viewManagerModel;
     /**
      * First add three users, one is a friend, one isn't and one is logged in trying to see both profiles.
      */
@@ -51,19 +49,13 @@ public class DisplayProfileInteractorTest {
      * Testing that the correct profile gets displayed depending on if the user is a friend or not.
      */
     public void testFriendExecute() {
-
-        DisplayProfileInteractor displayProfileInteractor = new DisplayProfileInteractor(userDataAccessObject,
-                displayProfilePresenter, displayProfileViewModel);
-        DisplayProfileInputData displayProfileInputData = new DisplayProfileInputData("user2");
-        displayProfileInteractor.execute("user1", displayProfileInputData);
-
-        // verify that prepareSuccessViewFriends is called once
-        assertEquals("Friend Profile", viewManagerModel.getActiveView());
+        displayProfileInteractor.execute("user1", new DisplayProfileInputData("user2"));
+        assertEquals("friend profile", viewManagerModel.getActiveView());
     }
 
     public void testNonFriendExecute() {
-        // verify that prepareSuccessViewCommon is called once
-        assertEquals("Common Profile", viewManagerModel.getActiveView());
+        displayProfileInteractor.execute("user1", new DisplayProfileInputData("user3"));
+        assertEquals("common profile", viewManagerModel.getActiveView());
 
     }
 
