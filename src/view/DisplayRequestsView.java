@@ -98,12 +98,13 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
             ArrayList<String> requests = displayRequestsState.getRequests();
+            requests.removeIf(String::isEmpty);
 
             requestComponents.removeAll();
 
             if (!(requests.isEmpty())) {
                 for (String request : requests) {
-                   // acceptRequestState.setRequestName();
+                    // acceptRequestState.setRequestName();
 
                     JLabel requestUsername = new JLabel(request);
                     buttons.add(requestUsername);
@@ -159,16 +160,14 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                 }
                 requestComponents.revalidate();
                 requestComponents.repaint();
+            }
+        } else if (evt.getPropertyName().equals("acceptRequestState")) {
+            AcceptRequestState state = (AcceptRequestState) evt.getNewValue();
 
-                if (evt.getPropertyName().equals("acceptRequestState")) {
-                    AcceptRequestState state = (AcceptRequestState) evt.getNewValue();
-
-                    if (state.getAcceptError() != null) {
-                        JOptionPane.showMessageDialog(this, state.getAcceptError());
-                    } else {
-                        JOptionPane.showMessageDialog(this, state.getAcceptedMessage());
-                    }
-                }
+            if (state.getAcceptError() != null) {
+                JOptionPane.showMessageDialog(this, state.getAcceptError());
+            } else {
+                JOptionPane.showMessageDialog(this, state.getAcceptedMessage());
             }
         }
     }
