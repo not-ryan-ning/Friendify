@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.*;
-import use_case.accept_request.AcceptRequestFileUserDataAccessInterface;
+import use_case.accept_request.AcceptRequestUserDataAccessInterface;
 import use_case.choose_playlist.ChoosePlaylistUserDataAccessInterface;
 import use_case.display_friends.DisplayFriendsUserDataAccessInterface;
 import use_case.display_profile.DisplayProfileUserDataAccessInterface;
@@ -19,7 +19,7 @@ import java.util.*;
 public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInterface, ChoosePlaylistUserDataAccessInterface,
         EditBioUserDataAccessInterface, EditSpotifyHandleUserDataAccessInterface, LoginUserDataAccessInterface,
         MatchUserDataAccessInterface, SendRequestUserDataAccessInterface, DisplayRequestsUserDataAccessInterface,
-        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface, AcceptRequestFileUserDataAccessInterface {
+        DisplayProfileUserDataAccessInterface, SignupUserDataAccessInterface, AcceptRequestUserDataAccessInterface {
         
     private final File usersFile;
 
@@ -136,9 +136,19 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     @Override
-    public void updateUserInformation(User user) {
-        accounts.remove(user.getUsername());
-        accounts.put(user.getUsername(), user);
+    public ArrayList<String> acceptFriendRequest(User currentUser, User acceptedUser) {
+        currentUser.getRequests().remove(acceptedUser.getUsername());
+        return currentUser.getRequests();
+    }
+
+    public ArrayList<String> updateCurrentUserFriends(User currentUser, User acceptedUser) {
+        currentUser.getFriends().add(acceptedUser.getUsername());
+        return currentUser.getFriends();
+    }
+
+    public ArrayList<String> updateAcceptedUserFriends(User currentUser, User acceptedUser) {
+        acceptedUser.getFriends().add(currentUser.getUsername());
+        return acceptedUser.getFriends();
     }
 
     public User get(String username) {

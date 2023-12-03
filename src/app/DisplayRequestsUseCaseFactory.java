@@ -16,7 +16,7 @@ import interface_adapter.go_back.GoBackController;
 import interface_adapter.go_back.GoBackPresenter;
 import interface_adapter.go_back.GoBackViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
-import use_case.accept_request.AcceptRequestFileUserDataAccessInterface;
+import use_case.accept_request.AcceptRequestUserDataAccessInterface;
 import use_case.accept_request.AcceptRequestInputBoundary;
 import use_case.accept_request.AcceptRequestInteractor;
 import use_case.accept_request.AcceptRequestOutputBoundary;
@@ -50,7 +50,7 @@ public class DisplayRequestsUseCaseFactory {
             DisplayProfileUserDataAccessInterface displayProfileUserDataAccessObject,
             GoBackViewModel goBackViewModel,
             AcceptRequestViewModel acceptRequestViewModel,
-            AcceptRequestFileUserDataAccessInterface acceptRequestsUserDataAccessObject
+            AcceptRequestUserDataAccessInterface acceptRequestsUserDataAccessObject
     ) {
         try {
             DisplayRequestsController displayRequestsController = createDisplayRequestsUseCase(viewManagerModel, displayRequestsViewModel, displayRequestsUserDataAccessObject);
@@ -80,7 +80,7 @@ public class DisplayRequestsUseCaseFactory {
         return new DisplayProfileController(displayProfileInteractor);
     }
 
-    private static AcceptRequestController createAcceptRequestUseCase(ViewManagerModel viewManagerModel, AcceptRequestViewModel acceptRequestViewModel, AcceptRequestFileUserDataAccessInterface acceptRequestFileUserDataAccessObject) {
+    private static AcceptRequestController createAcceptRequestUseCase(ViewManagerModel viewManagerModel, AcceptRequestViewModel acceptRequestViewModel, AcceptRequestUserDataAccessInterface acceptRequestFileUserDataAccessObject) {
         AcceptRequestOutputBoundary acceptRequestOutputBoundary = new AcceptRequestPresenter(viewManagerModel, acceptRequestViewModel);
         AcceptRequestInputBoundary acceptRequestInteractor = new AcceptRequestInteractor(acceptRequestFileUserDataAccessObject, acceptRequestOutputBoundary);
 
