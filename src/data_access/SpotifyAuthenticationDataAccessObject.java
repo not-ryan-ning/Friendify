@@ -115,6 +115,12 @@ public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAu
 
     // Put the concrete method in a separate class to align with Single Responsibility Principle
     private static class AccessTokenExchanger {
+        /**
+         * Gets access token from Spotify API using authorization code
+         * @param authorizationCode Code needed to get access token
+         * @return String representing access token
+         * @throws IOException
+         */
         public String exchange(String authorizationCode) throws IOException {
             String tokenRequestBody = "grant_type=authorization_code&code=" + authorizationCode + "&redirect_uri=" + REDIRECT_URI;
             String authHeader = Base64.getEncoder().encodeToString((CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
