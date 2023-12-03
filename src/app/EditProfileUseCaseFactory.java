@@ -50,7 +50,6 @@ public class EditProfileUseCaseFactory {
 
     /** Prevent instantiation. */
     private EditProfileUseCaseFactory() {}
-
     public static EditProfileView create(
             ViewManagerModel viewManagerModel,
             EditProfileViewModel editProfileViewModel,
