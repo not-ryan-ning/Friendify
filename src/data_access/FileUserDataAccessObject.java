@@ -154,6 +154,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {
+        // For the csv
         receiver.getRequests().removeIf(String::isEmpty);
         receiver.getRequests().add(sender.getUsername());
         return receiver.getRequests();
