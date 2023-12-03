@@ -16,7 +16,7 @@ public class DisplayProfileController {
     }
 
     /**
-     * Initiates the display profile functionality by calling the execute method.
+     * Initiates the display profile function by calling the execute method.
      *
      * @param username      The username of the current user who wants to view a profile.
      * @param otherUsername The username of the profile to be displayed.

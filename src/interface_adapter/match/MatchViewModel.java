@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functionality of matching a user with other users.
+ */
 public class MatchViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Display Matches View";
     public static final String REQUEST_BUTTON_LABEL = "Send Request";

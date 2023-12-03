@@ -4,7 +4,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.match.MatchOutputBoundary;
 import use_case.match.MatchOutputData;
-
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class MatchPresenter implements MatchOutputBoundary {
     private final MatchViewModel matchViewModel;
     private ViewManagerModel viewManagerModel;

@@ -6,6 +6,9 @@ import interface_adapter.ViewManagerModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
@@ -20,6 +23,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.loginViewModel = loginViewModel;
     }
 
+    /**
+     * Prepares and switches the view to the loggedin View if successful
+     */
     @Override
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
@@ -36,6 +42,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares the fail view with an error message.
+     */
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();

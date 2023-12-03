@@ -1,5 +1,9 @@
 package interface_adapter.login;
 
+
+/**
+ * Represents the state of a user logging into their account
+ */
 public class LoginState {
     private String username = "";
     private String usernameError = null;

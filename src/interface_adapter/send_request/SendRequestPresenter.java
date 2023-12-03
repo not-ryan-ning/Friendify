@@ -7,6 +7,9 @@ import use_case.send_request.SendRequestOutputData;
 
 import javax.swing.text.View;
 
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class SendRequestPresenter implements SendRequestOutputBoundary {
 
     private final SendRequestViewModel sendRequestViewModel;

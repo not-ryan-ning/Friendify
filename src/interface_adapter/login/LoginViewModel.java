@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and functionality of logging into an account.
+ */
 public class LoginViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Log In View";

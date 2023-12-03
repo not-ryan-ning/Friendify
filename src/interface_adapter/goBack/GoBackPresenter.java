@@ -2,6 +2,9 @@ package interface_adapter.goBack;
 
 import use_case.goBack.GoBackOutputBoundary;
 
+/**
+ * Prepares and updates view for corresponding operation.
+ */
 public class GoBackPresenter implements GoBackOutputBoundary {
     private final GoBackViewModel goBackViewModel;
     private ViewManagerModel viewManagerModel;

@@ -5,6 +5,9 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Represents the state and behavior related to editing user profile,
+ */
 public class EditSpotifyHandleViewModel extends ViewModel {
     public static final String SPOTIFY_HANDLE_LABEL = "Type Spotify Handle";
     public static final String SAVE_SPOTIFY_HANDLE_BUTTON_LABEL = "Save Spotify Handle";
