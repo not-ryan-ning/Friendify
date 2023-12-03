@@ -1,17 +1,46 @@
 # Friendify
 ## Problem Domain Description
-The problem domain of Friendify is social connections and friend-matching.
+Social connections and friend-matching
 
 ## Software Specification
-Friendify allows users to find and match with other users in the system based on the similarities of their Spotify playlists. The user first signs up for their account, and they create their profile which also includes their choice of Spotify playlist for matching. Afterwards, they can use the match functionality to view other users who have similar Spotify playlist features and choose to send friend requests to them. Once those requests are accepted, it displays their Spotify handles.
+Friendify allows users to match with other users in the system based on the similarities of their chosen Spotify playlist. 
+The user first creates their account and is taken to the logged-in page, which has the options to match, view friends, 
+view pending requests, and edit their profile. 
+In the edit profile page, the user can change their bio, spotify handle, and their chosen Spotify playlist.
+For match, the user gets the top 5 users who have the highest similarity scores with them. 
+The user can view their profiles and send requests to them, but the profiles have limited information until the 
+requested user accepts the friend request.
+Once the requests are accepted, users become friends and they can view each other's full profile. 
 
-## Proposed Entities for Domain
-- User (includes username, password, bio, friends, playlist)
-- Playlist (includes songs, artists, top three highlights)
-- Friend (Spotify handle)
+## Main Entities for Domain
+- User
+- Profile
+- Playlist
+- MatchingStrategies (TitleStrategy, ArtistStrategy, GenreStrategy, AttributeStrategy)
 
 ## Use Cases
-- Login, SignUp, LogOut, EditProfile, DisplayProfile, DisplayFriends, Match, SendRequests, AcceptRequests
+- Accept Request
+- Authorize
+- Choose Playlist
+- Display Friends
+- Display Playlists
+- Display Profile
+- Display Requests
+- Edit Bio
+- Edit Profile
+- Edit Spotify Handle
+- Go Back
+- Login
+- Logout
+- Match
+- Send Requests
+- Signup
 
 ## Developer Workflow
-Task (describe plan) -> Pull Request (Technical plan, concerns, limitations) -> Code (working commits/push) -> Midway Review -> Continue Coding －> Final Code Review (PR) -> Accept/Reject
+1. Task (describe plan)
+2. Pull Request (Technical plan, concerns, limitations)  
+3. Code (working commits/push)
+4. Midway Review
+5. Continue Coding
+6. Final Code Review (PR)
+7. Accept/Modify
