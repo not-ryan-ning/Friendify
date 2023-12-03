@@ -11,4 +11,13 @@ public class AcceptRequestState {
     }
     public AcceptRequestState() {
     }
+    public ArrayList<String> getRequests() {
+        return requests;
+    }
+    public String getUsername() { return username; }
+    public void setRequests(ArrayList<String> requests) {
+        this.requests = requests;
+    }
+    public void setUsername(String username) { this.username = username; }
 }
+
