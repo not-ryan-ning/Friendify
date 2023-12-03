@@ -10,10 +10,7 @@ import interface_adapter.display_friend_profile.DisplayFriendProfileViewModel;
 import interface_adapter.display_common_profile.DisplayCommonProfileViewModel;
 
 public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
-<<<<<<< HEAD
 
-=======
->>>>>>> main
     private ViewManagerModel viewManagerModel;
     private final DisplayFriendProfileViewModel displayFriendProfileViewModel;
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
@@ -33,14 +30,11 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     public void prepareSuccessViewFriends(DisplayProfileOutputData response) {
         // switch to the friends-only profile of the user
         DisplayFriendProfileState displayFriendProfileState = displayFriendProfileViewModel.getState();
-<<<<<<< HEAD
-=======
 
         displayFriendProfileState.setBio(response.getBio());
         displayFriendProfileState.setTopThreeArtists(response.getTopThreeArtists());
         displayFriendProfileState.setSpotifyHandle(response.getSpotifyHandle());
 
->>>>>>> main
         this.displayFriendProfileViewModel.setState(displayFriendProfileState);
         this.displayFriendProfileViewModel.firePropertyChanged();
 
@@ -57,14 +51,11 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
     public void prepareSuccessViewCommon(DisplayProfileOutputData response) {
         // switch to the common view profile of the user
         DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
-<<<<<<< HEAD
-=======
 
         displayCommonProfileState.setUsername(response.getUsername());
         displayCommonProfileState.setBio(response.getBio());
         displayCommonProfileState.setTopThreeArtists(response.getTopThreeArtists());
 
->>>>>>> main
         this.displayCommonProfileViewModel.setState(displayCommonProfileState);
         this.displayCommonProfileViewModel.firePropertyChanged();
 

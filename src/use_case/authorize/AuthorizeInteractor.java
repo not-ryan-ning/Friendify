@@ -12,22 +12,15 @@ public class AuthorizeInteractor implements AuthorizeInputBoundary{
         this.authorizePresenter = authorizeOutputBoundary;
     }
 
-<<<<<<< HEAD
     /**
      * Executes our authentication process by retrieving the access token from the Spotify
      * authentication data access object and notifying appropriate presenter with the result.
      */
-    public void execute() {
-        // accessToken can return null if the authentication process fails
-        String accessToken = spotifyAuthenticationDataAccessObject.getAccessToken();
-        AuthorizeOutputData authorizeOutputData = new AuthorizeOutputData(accessToken);
-=======
     public void execute(String authorizationLink) {
         try {
             // accessToken can return null if the authentication process fails
             String accessToken = spotifyAuthenticationDataAccessObject.getAccessToken(authorizationLink);
             AuthorizeOutputData authorizeOutputData = new AuthorizeOutputData(accessToken);
->>>>>>> main
 
             if (accessToken != null) {
                 authorizePresenter.prepareSuccessView(authorizeOutputData);

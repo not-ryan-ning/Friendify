@@ -170,8 +170,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         return accepter.getFriends().contains(sender.getUsername()) | sender.getFriends().contains(accepter.getUsername());
     }
 
-<<<<<<< HEAD
-=======
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {
         // For the csv
         receiver.getRequests().removeIf(String::isEmpty);
@@ -179,7 +177,6 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         return receiver.getRequests();
     }
 
->>>>>>> main
     public HashMap<String, Double> getScores(User currentUser, MatchingStrategy matchingStrategy) {
         HashMap<String, Double> scores = new HashMap<>();
         double similarityScore;
