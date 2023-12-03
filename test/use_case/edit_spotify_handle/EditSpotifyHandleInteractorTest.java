@@ -2,6 +2,7 @@ package use_case.edit_spotify_handle;
 
 import interface_adapter.ViewManagerModel;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import use_case.edit_profile.EditProfileInteractor;
 
 import static org.junit.Assert.*;
@@ -9,6 +10,12 @@ import static org.junit.Assert.*;
 public class EditSpotifyHandleInteractorTest {
     private EditSpotifyHandleInteractor editSpotifyHandleInteractor;
     private ViewManagerModel viewManagerModel;
+    @BeforeEach
+    public void setUp() {
+        // Initialize the objects before each test
+        viewManagerModel = new ViewManagerModel();
+        editSpotifyHandleInteractor = ...
+    }
     @Test
     public void testExecute() {
         editSpotifyHandleInteractor.execute("user", new EditSpotifyHandleInputData("handle"));

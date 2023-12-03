@@ -20,6 +20,12 @@ public class DisplayProfileInteractorTest {
      * First add three users, one is a friend, one isn't and one is logged in trying to see both profiles.
      */
     @BeforeEach
+    public void setUp() {
+        // Initialize the objects before each test
+        viewManagerModel = new ViewManagerModel();
+        displayProfileInteractor = ...
+    }
+    @BeforeEach
     public void addThreeUsers() {
         UserFactory uf = new CommonUserFactory();
         ProfileFactory pf = new CommonProfileFactory();

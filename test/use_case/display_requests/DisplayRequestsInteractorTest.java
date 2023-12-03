@@ -6,8 +6,11 @@ import entity.CommonProfile;
 import entity.CommonUser;
 import entity.User;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.display_friends.DisplayFriendsPresenter;
 import interface_adapter.display_requests.DisplayRequestsState;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import use_case.display_friends.DisplayFriendsOutputBoundary;
 import use_case.send_request.SendRequestInputData;
 
 import java.io.File;
@@ -21,12 +24,15 @@ public class DisplayRequestsInteractorTest {
     private DisplayRequestsInteractor displayRequestsInteractor;
     private ViewManagerModel viewManagerModel;
 
+    @BeforeEach
+    public void setUp() {
+        // Initialize the objects before each test
+        displayRequestsInteractor = new DisplayRequestsInteractor(new DisplayRequestsUserDataAccessInterface(), new DisplayFriendsPresenter())
+        viewManagerModel = new ViewManagerModel();
+    }
+
     @Test
     public void testExecute() {
-//        User user = new CommonUser("user1", "password1", new CommonProfile("Hi", new ArrayList<>(),
-//                "handle1"), new CommonPlaylist("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
-//                0, 0,0,0, new ArrayList<>()), new ArrayList<>(Arrays.asList("user2")), new ArrayList<>());
-
         displayRequestsInteractor.execute("user1");
         assertEquals("show requests", viewManagerModel.getActiveView());
     }
