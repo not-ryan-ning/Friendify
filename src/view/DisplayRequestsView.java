@@ -1,9 +1,7 @@
 package view;
 
 import interface_adapter.accept_request.AcceptRequestController;
-import interface_adapter.accept_request.AcceptRequestState;
 import interface_adapter.accept_request.AcceptRequestViewModel;
-import interface_adapter.display_common_profile.DisplayCommonProfileState;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.display_requests.DisplayRequestsController;
@@ -98,7 +96,6 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
-            AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
             ArrayList<String> requests = displayRequestsState.getRequests();
 
             requestComponents.removeAll();
