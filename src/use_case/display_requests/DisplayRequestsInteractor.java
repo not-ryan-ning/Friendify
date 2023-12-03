@@ -11,6 +11,12 @@ public class DisplayRequestsInteractor implements DisplayRequestsInputBoundary {
         this.displayRequestsPresenter = displayFriendsOutputBoundary;
     }
 
+    /**
+     * This method is responsible for getting the list of friend requests for the given username
+     * and displaying it.
+     *
+     * @param username The username of the current user trying to see their requests
+     */
     @Override
     public void execute(String username) {
         User user = userDataAccessObject.get(username);

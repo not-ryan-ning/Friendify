@@ -12,6 +12,12 @@ public class DisplayPlaylistsInteractor implements DisplayPlaylistsInputBoundary
         this.displayPlaylistsPresenter = displayPlaylistsOutputBoundary;
     }
 
+    /**
+     * This method retrieves the user's playlists from the Spotify API data access
+     * object using the access token given in displayPlaylistsInputData. The retrieved playlist information is
+     * stored in a DisplayPlaylistsOutputData object, which is passed to the display playlists presenter.
+     * @param displayPlaylistsInputData The input data containing access token for getting playlists.
+     */
     @Override
     public void execute(DisplayPlaylistsInputData displayPlaylistsInputData) {
         String accessToken = displayPlaylistsInputData.getAccessToken();
