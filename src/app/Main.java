@@ -177,6 +177,7 @@ public class Main {
         viewManagerModel.firePropertyChanged();
 
         application.pack();
+        application.setSize(800, 600);
         application.setVisible(true);
     }
 }

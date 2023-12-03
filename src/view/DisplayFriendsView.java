@@ -89,6 +89,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
         if (evt.getPropertyName().equals("displayFriendsState")) {
             DisplayFriendsState displayFriendsState = displayFriendsViewModel.getState();
             ArrayList<String> friends = displayFriendsState.getFriends();
+            friends.removeIf(String::isEmpty);
 
             friendsComponents.removeAll();
 

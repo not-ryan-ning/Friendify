@@ -138,6 +138,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     @Override
     public ArrayList<String> acceptFriendRequest(User currentUser, User acceptedUser) {
         currentUser.getRequests().remove(acceptedUser.getUsername());
+        currentUser.getRequests().removeIf(String::isEmpty);
         return currentUser.getRequests();
     }
 
