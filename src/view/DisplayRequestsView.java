@@ -1,6 +1,7 @@
 package view;
 
-import interface_adapter.display_common_profile.DisplayCommonProfileState;
+import interface_adapter.accept_request.AcceptRequestController;
+import interface_adapter.accept_request.AcceptRequestViewModel;
 import interface_adapter.display_profile.DisplayProfileController;
 import interface_adapter.display_profile.DisplayProfileViewModel;
 import interface_adapter.display_requests.DisplayRequestsController;
@@ -26,8 +27,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
     private final DisplayRequestsViewModel displayRequestsViewModel;
     private final DisplayProfileController displayProfileController;
     private final DisplayProfileViewModel displayProfileViewModel;
-    // private final AcceptRequestsController acceptRequestsController;
-    // private final AcceptRequestsViewModel acceptRequestsViewModel;
+    private final AcceptRequestController acceptRequestController;
+    private final AcceptRequestViewModel acceptRequestViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
@@ -38,8 +39,8 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                                DisplayRequestsController displayRequestsController,
                                DisplayProfileController displayProfileController,
                                DisplayProfileViewModel displayProfileViewModel,
-                               // AcceptRequestsController acceptRequestsController,
-                               // AcceptRequestsViewModel acceptRequestsViewModel,
+                               AcceptRequestController acceptRequestController,
+                               AcceptRequestViewModel acceptRequestViewModel,
                                LoggedInViewModel loggedInViewModel,
                                GoBackController goBackController,
                                GoBackViewModel goBackViewModel) {
@@ -47,15 +48,15 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         this.displayRequestsViewModel = displayRequestsViewModel;
         this.displayProfileController = displayProfileController;
         this.displayProfileViewModel = displayProfileViewModel;
-        // this.acceptRequestsController = acceptRequestsController;
-        // this.acceptRequestsViewModel = acceptRequestsViewModel;
+        this.acceptRequestController = acceptRequestController;
+        this.acceptRequestViewModel = acceptRequestViewModel;
         this.loggedInViewModel = loggedInViewModel;
         this.goBackController = goBackController;
         this.goBackViewModel = goBackViewModel;
 
         displayRequestsViewModel.addPropertyChangeListener(this);
         displayProfileViewModel.addPropertyChangeListener(this);
-        // acceptRequestsViewModel.addPropertyChangeListener(this);
+        acceptRequestViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(DisplayRequestsViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -96,22 +97,25 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
         if (evt.getPropertyName().equals("displayRequestsState")) {
             DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
             ArrayList<String> requests = displayRequestsState.getRequests();
-            // AcceptRequestsState acceptRequestsState = acceptRequestsViewModel.getState();
 
             requestComponents.removeAll();
 
             if (!(requests.isEmpty())) {
                 for (String request : requests) {
-                    // acceptRequestsState.setRequestName()
+                   // acceptRequestState.setRequestName();
 
                     JLabel requestUsername = new JLabel(request);
                     buttons.add(requestUsername);
 
                     JButton viewProfile = new JButton(DisplayProfileViewModel.VIEW_BUTTON_LABEL);
+                    JButton acceptRequest = new JButton(AcceptRequestViewModel.ACCEPT_BUTTON_LABEL);
 
                     // Associate each view profile button with the corresponding request username
                     viewProfile.putClientProperty("userString", request);
+                    acceptRequest.putClientProperty("userString", request);
+
                     buttons.add(viewProfile);
+                    buttons.add(acceptRequest);
 
                     viewProfile.addActionListener(
                             new ActionListener() {
@@ -129,36 +133,31 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                                 }
                             }
                     );
+
+                    acceptRequest.addActionListener(
+                            new ActionListener() {
+                                public void actionPerformed(ActionEvent evt) {
+                                    if (evt.getSource().equals(acceptRequest)) {
+                                        // Retrieve the associated request name
+                                        String associatedString = (String) acceptRequest.getClientProperty("userString");
+                                        displayRequestsState.setRequestName(associatedString);
+
+                                        acceptRequestController.execute(
+                                                displayRequestsState.getUsername(),
+                                                displayRequestsState.getRequestName()
+                                        );
+                                    }
+                                }
+                            }
+                    );
                     requestComponents.add(requestUsername);
                     requestComponents.add(viewProfile);
                 }
                 requestComponents.revalidate();
                 requestComponents.repaint();
-// JButton acceptRequest = new JButton(AcceptRequestsViewModel.ACCEPT_BUTTON_LABEL);
-                // Associate each accept button with the corresponding request username
-                // acceptRequest.putClientProperty("userString", request);
-                // buttons.add(acceptRequest);
 
-//            acceptRequest.addActionListener(
-//                    new ActionListener() {
-//                        public void actionPerformed(ActionEvent evt) {
-//                            if (evt.getSource().equals(acceptRequest)) {
-//                                AcceptRequestsState currentState = acceptRequestViewModel.getState();
-//                                // Retrieve the associated request name
-//                                String associatedString = (String) acceptRequest.getClientProperty("userString");
-//                                currentState.setRequestName(associatedString);
-//
-//                                acceptRequestController.execute(
-//                                        currentState.getUsername(),
-//                                        currentState.getRequestName()
-//                                ); // Ryan's use case
-//                            }
-//                        }
-//                    }
-//            );
-            } else if (evt.getPropertyName().equals("acceptRequestsState")) {
-            // AcceptRequestsState acceptRequestsState = (AcceptRequestsState) evt.getNewValue();
-            JOptionPane.showMessageDialog(this, "You have accepted a request.");
+            } else if (evt.getPropertyName().equals("acceptRequestState")) {
+                JOptionPane.showMessageDialog(this, "You have accepted a request.");
         }
         }
     }
