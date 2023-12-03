@@ -30,23 +30,25 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
         this.goBackViewModel = goBackViewModel;
 
         this.displayFriendProfileViewModel.addPropertyChangeListener(this);
+        this.goBackViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("User's Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel usernameInfo = new JLabel("Username: ");
+        JLabel usernameInfo = new JLabel(DisplayFriendProfileViewModel.USERNAME_LABEL);
         username = new JLabel();
 
-        JLabel bioInfo = new JLabel("Bio: ");
+        JLabel bioInfo = new JLabel(DisplayFriendProfileViewModel.BIO_LABEL);
         bio = new JLabel();
 
-        JLabel spotifyInfo = new JLabel("Spotify handle: ");
-        spotifyHandle = new JLabel();
-
-        JLabel topThreeArtistsInfo = new JLabel("Top 3 Artists: ");
+        JLabel topThreeArtistsInfo = new JLabel(DisplayFriendProfileViewModel.TOP_THREE_ARTISTS_LABEL);
         topThreeArtists = new JLabel();
 
+        JLabel spotifyInfo = new JLabel(DisplayFriendProfileViewModel.SPOTIFY_HANDLE);
+        spotifyHandle = new JLabel();
+
         JPanel buttons = new JPanel();
+
         JButton goBack = new JButton(GoBackViewModel.BACK_BUTTON_LABEL);
         buttons.add(goBack);
 
@@ -83,10 +85,10 @@ public class DisplayFriendProfileView extends JPanel implements ActionListener, 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayFriendProfileState state = (DisplayFriendProfileState) evt.getNewValue();
-        username.setText(state.getUsername());
-        bio.setText(state.getBio());
-        topThreeArtists.setText(String.join(", ", state.getTopThreeArtists()));
-        spotifyHandle.setText(state.getSpotifyHandle());
+        DisplayFriendProfileState currentState = displayFriendProfileViewModel.getState();
+        username.setText(currentState.getUsername());
+        bio.setText(currentState.getBio());
+        topThreeArtists.setText(String.join(", ", currentState.getTopThreeArtists()));
+        spotifyHandle.setText(currentState.getSpotifyHandle());
     }
 }

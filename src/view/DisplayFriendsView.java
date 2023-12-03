@@ -20,6 +20,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class DisplayFriendsView extends JPanel implements ActionListener, PropertyChangeListener {
+
     public String viewname = "display friends";
     private final DisplayFriendsController displayFriendsController;
     private final DisplayFriendsViewModel displayFriendsViewModel;
@@ -91,7 +92,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
             friendsComponents.removeAll();
 
-            if (!(friends == null)) {
+            if (!(friends.isEmpty())) {
                 for (String friend: friends) {
                     JLabel friendUsername = new JLabel(friend);
                     buttons.add(friendUsername);
@@ -100,6 +101,7 @@ public class DisplayFriendsView extends JPanel implements ActionListener, Proper
 
                     // Associate each view profile button with the corresponding friend username
                     viewProfile.putClientProperty("userString", friend);
+
                     buttons.add(viewProfile);
 
                     viewProfile.addActionListener(
