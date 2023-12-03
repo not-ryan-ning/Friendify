@@ -138,10 +138,13 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     acceptRequest.addActionListener(
                             new ActionListener() {
                                 public void actionPerformed(ActionEvent evt) {
+                                    DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
                                     AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
+
                                     if (evt.getSource().equals(acceptRequest)) {
                                         // Retrieve the associated request name
                                         String associatedString = (String) acceptRequest.getClientProperty("userString");
+
                                         displayRequestsState.setRequestName(associatedString);
                                         acceptRequestState.setAcceptError(null);
 
@@ -160,14 +163,13 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                 requestComponents.revalidate();
                 requestComponents.repaint();
 
-                if (evt.getPropertyName().equals("acceptRequestState")) {
-                    AcceptRequestState state = (AcceptRequestState) evt.getNewValue();
+            } else if (evt.getPropertyName().equals("acceptRequestState")) {
+                AcceptRequestState state = (AcceptRequestState) evt.getNewValue();
 
-                    if (state.getAcceptError() != null) {
-                        JOptionPane.showMessageDialog(this, state.getAcceptError());
-                    } else {
-                        JOptionPane.showMessageDialog(this, state.getAcceptedMessage());
-                    }
+                if (state.getAcceptError() != null) {
+                    JOptionPane.showMessageDialog(this, state.getAcceptError());
+                } else {
+                    JOptionPane.showMessageDialog(this, state.getAcceptedMessage());
                 }
             }
         }
