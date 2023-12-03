@@ -2,7 +2,7 @@ package use_case.accept_request;
 
 import entity.User;
 
-public class AcceptRequestInteractor {
+public class AcceptRequestInteractor implements AcceptRequestInputBoundary {
     final AcceptRequestFileUserDataAccessInterface acceptRequestFileUserDAO;
     final AcceptRequestOutputBoundary acceptRequestPresenter;
 
