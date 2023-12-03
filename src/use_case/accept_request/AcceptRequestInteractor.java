@@ -39,7 +39,6 @@ public class AcceptRequestInteractor implements AcceptRequestInputBoundary {
         acceptRequestFileUserDAO.editFile(currentUsername, "friends", currentUserFriends.toString());
         acceptRequestFileUserDAO.editFile(acceptRequestInputData.getAcceptedUsername(), "friends", acceptedUserFriends.toString());
 
-        AcceptRequestOutputData acceptRequestOutputData = new AcceptRequestOutputData(currentUser.getRequests());
-        acceptRequestPresenter.prepareSuccessView(acceptRequestOutputData);
+        acceptRequestPresenter.prepareSuccessView();
     }
 }
