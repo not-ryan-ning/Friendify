@@ -53,57 +53,58 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
                     String topThreeArtists = String.valueOf(col[headers.get("topThreeArtists")]);
 
                     // Convert CSV string to Arraylist<String> for titles and topThreeArtists
-                    String[] titlesSplit = titles.substring(1, artists.length() - 1).split(", ");
+                    String[] titlesSplit = titles.substring(1, titles.length() - 1).split(", ");
                     ArrayList<String> titlesArrayList = new ArrayList<>(Arrays.asList(titlesSplit));
 
-                    String[] topThreeArtistsSplit = artists.substring(1, artists.length() - 1).split(", ");
+                    String[] topThreeArtistsSplit = topThreeArtists.substring(1, topThreeArtists.length() - 1).split(", ");
                     ArrayList<String> topThreeArtistsArrayList = new ArrayList<>(Arrays.asList(topThreeArtistsSplit));
 
                     // Convert CSV string to HashMap<String, Integer> for artists and genres
-                    HashMap<String, Integer> artistsMap = new HashMap<>();
-                    artistsMap.put("defaultArtists", 0);
 
-                    if (!artists.isEmpty()) {
-                        artistsMap = Arrays.stream(artists.split("\n"))
-                                .map(entry -> entry.split(","))
-                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
-                                .collect(Collectors.toMap(
-                                        parts -> parts[0],
-                                        parts -> {
-                                            try {
-                                                return Integer.parseInt(parts[1]);
-                                            } catch (NumberFormatException e) {
-                                                // Handle non-numeric case, e.g., set a default value
-                                                return 0;
-                                            }
-                                        },
-                                        (existing, replacement) -> existing,
-                                        HashMap::new
-                                ));
+                    // Remove curly braces and spaces
+                    String cleanedArtistsInput = artists.replaceAll("[{}\\s]", "");
+                    String cleanedGenresInput = genres.replaceAll("[{}\\s]", "");
+
+                    // Split into key-value pairs
+                    String[] artistsKeyValuePairs = cleanedArtistsInput.split(",");
+                    String[] genresKeyValuePairs = cleanedGenresInput.split(",");
+
+                    // Split each key-value pair and populate the HashMap
+                    HashMap<String, Integer> artistsHashMap = new HashMap<>();
+                    for (String pair : artistsKeyValuePairs) {
+                        String[] entry = pair.split("=");
+
+                        if (entry.length == 2) {
+                            String key = entry[0];
+                            try {
+                                int value = Integer.parseInt(entry[1]);
+                                artistsHashMap.put(key, value);
+                            } catch (NumberFormatException e) {
+                                System.err.println("Invalid value for key '" + key + "': " + entry[1]);
+                                // Handle non-numeric case, e.g., set a default value
+                                artistsHashMap.put(key, 0);
+                            }
+                        }
                     }
 
-                    HashMap<String, Integer> genresMap = new HashMap<>();
-                    genresMap.put("defaultGenre", 0);
-                    if (!genres.isEmpty()) {
-                        genresMap = Arrays.stream(genres.split("\n"))
-                                .map(entry -> entry.split(","))
-                                .filter(parts -> parts.length == 2)  // Filter out entries without expected length
-                                .collect(Collectors.toMap(
-                                        parts -> parts[0],
-                                        parts -> {
-                                            try {
-                                                return Integer.parseInt(parts[1]);
-                                            } catch (NumberFormatException e) {
-                                                // Handle non-numeric case, e.g., set a default value
-                                                return 0;
-                                            }
-                                        },
-                                        (existing, replacement) -> existing,
-                                        HashMap::new
-                                ));
+                    HashMap<String, Integer> genresHashMap = new HashMap<>();
+                    for (String pair : genresKeyValuePairs) {
+                        String[] entry = pair.split("=");
+
+                        if (entry.length == 2) {
+                            String key = entry[0];
+                            try {
+                                int value = Integer.parseInt(entry[1]);
+                                genresHashMap.put(key, value);
+                            } catch (NumberFormatException e) {
+                                System.err.println("Invalid value for key '" + key + "': " + entry[1]);
+                                // Handle non-numeric case, e.g., set a default value
+                                genresHashMap.put(key, 0);
+                            }
+                        }
                     }
 
-                    Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsMap, genresMap,
+                    Playlist playlist = playlistFactory.create(playlistId, titlesArrayList, artistsHashMap, genresHashMap,
                             Double.parseDouble(acousticness), Double.parseDouble(energy), Double.parseDouble(instrumentalness),
                             Double.parseDouble(valence), topThreeArtistsArrayList);
 
@@ -134,7 +135,7 @@ public class FilePlaylistsDataAccessObject implements ChoosePlaylistPlaylistData
 
             for (Playlist playlist : playlists.values()) {
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s",
-                        playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists(), playlist.getGenres(),
+                        playlist.getPlaylistId(), playlist.getTitles(), playlist.getArtists().toString(), playlist.getGenres().toString(),
                         playlist.getAcousticness(), playlist.getEnergy(),
                         playlist.getInstrumentalness(), playlist.getValence(), playlist.getTopThreeArtists());
                 writer.write(line);

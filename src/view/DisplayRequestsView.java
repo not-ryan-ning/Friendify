@@ -100,7 +100,7 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
 
             requestComponents.removeAll();
 
-            if (!(requests == null)) {
+            if (!(requests.isEmpty())) {
                 for (String request : requests) {
                     // acceptRequestsState.setRequestName()
 

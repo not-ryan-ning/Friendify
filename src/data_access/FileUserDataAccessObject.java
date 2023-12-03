@@ -114,7 +114,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                 } else {
                     String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
                             user.getUsername(), user.getPassword(),
-                            "", "[]", "", "", "[]", "[]");
+                            "", "", "", "", "", "");
                     writer.write(line);
                     writer.newLine();
                 }
@@ -146,6 +146,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {
+        receiver.getRequests().removeIf(String::isEmpty);
         receiver.getRequests().add(sender.getUsername());
         return receiver.getRequests();
     }
