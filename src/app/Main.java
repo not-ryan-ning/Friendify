@@ -141,7 +141,7 @@ public class Main {
                 displayFriendProfileViewModel,
                 userDataAccessObject,
                 goBackViewModel);
-        views.add(displayRequestsView);
+        views.add(displayRequestsView, displayRequestsView.viewname);
 
         DisplayFriendsView displayFriendsView = DisplayFriendsUseCaseFactory.create(viewManagerModel,
                 loggedInViewModel,
@@ -152,20 +152,20 @@ public class Main {
                 displayFriendProfileViewModel,
                 userDataAccessObject,
                 goBackViewModel);
-        views.add(displayFriendsView);
+        views.add(displayFriendsView, displayFriendsView.viewname);
 
         DisplayCommonProfileView displayCommonProfileView = DisplayProfileUseCaseFactory.create(
                 viewManagerModel,
                 loggedInViewModel,
                 displayCommonProfileViewModel,
                 goBackViewModel);
-        views.add(displayCommonProfileView);
+        views.add(displayCommonProfileView, displayCommonProfileView.viewName);
 
         DisplayFriendProfileView displayFriendProfileView = DisplayProfileUseCaseFactory.create(viewManagerModel,
                 loggedInViewModel,
                 displayFriendProfileViewModel,
                 goBackViewModel);
-        views.add(displayFriendProfileView);
+        views.add(displayFriendProfileView, displayFriendProfileView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
