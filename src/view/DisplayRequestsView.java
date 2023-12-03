@@ -139,10 +139,13 @@ public class DisplayRequestsView extends JPanel implements ActionListener, Prope
                     acceptRequest.addActionListener(
                             new ActionListener() {
                                 public void actionPerformed(ActionEvent evt) {
+                                    DisplayRequestsState displayRequestsState = displayRequestsViewModel.getState();
                                     AcceptRequestState acceptRequestState = acceptRequestViewModel.getState();
+
                                     if (evt.getSource().equals(acceptRequest)) {
                                         // Retrieve the associated request name
                                         String associatedString = (String) acceptRequest.getClientProperty("userString");
+
                                         displayRequestsState.setRequestName(associatedString);
                                         acceptRequestState.setAcceptError(null);
 

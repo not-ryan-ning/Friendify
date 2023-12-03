@@ -17,16 +17,8 @@ public class AcceptRequestState {
         this.acceptedUsername = copy.acceptedUsername;
     }
     public AcceptRequestState() {}
-    public ArrayList<String> getRequests() {
-        return requests;
-    }
     public String getUsername() { return username; }
-    public String getAcceptedUsername() { return acceptedUsername; }
-    public void setRequests(ArrayList<String> requests) {
-        this.requests = requests;
-    }
     public void setUsername(String username) { this.username = username; }
-    public void setAcceptedUsername(String acceptedUsername) { this.acceptedUsername = acceptedUsername; }
     public String getAcceptError() { return acceptError; }
     public void setAcceptError(String acceptError) { this.acceptError = acceptError; }
     public String getAcceptedMessage() { return acceptedMessage; }

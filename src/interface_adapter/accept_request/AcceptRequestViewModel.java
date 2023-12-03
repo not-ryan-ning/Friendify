@@ -13,7 +13,7 @@ public class AcceptRequestViewModel extends ViewModel {
     public static final String ACCEPT_BUTTON_LABEL = "Accept Request";
     private AcceptRequestState state = new AcceptRequestState();
     public AcceptRequestViewModel() {
-        super("accept request");
+        super("display requests");
     }
     public void setState(AcceptRequestState newState) { this.state = newState; }
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
