@@ -23,11 +23,11 @@ public class SendRequestInteractor implements SendRequestInputBoundary {
         if (sendRequestUserDAO.isRequested(sender, receiver)) {
             sendRequestPresenter.prepareFailView("You have already requested " + receiverUsername);
 
-        //execute if the sender has not previously requested the receiver
+            //execute if the sender has not previously requested the receiver
         } else {
             ArrayList<String> requests = sendRequestUserDAO.sendFriendRequest(sender, receiver);
             receiver.setRequests(requests);
-            System.out.println(receiver.getRequests());
+            sendRequestUserDAO.editFile(receiverUsername, "requests", requests.toString());
 
             SendRequestOutputData sendRequestOutputData = new SendRequestOutputData(receiver.getUsername(), false);
             sendRequestPresenter.prepareSuccessView(sendRequestOutputData);

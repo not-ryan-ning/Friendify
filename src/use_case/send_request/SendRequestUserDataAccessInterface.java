@@ -22,4 +22,5 @@ public interface SendRequestUserDataAccessInterface {
      */
     ArrayList<String> sendFriendRequest(User sender, User receiver);
     User get(String username);
+    void editFile(String Username, String column, String newValue);
 }
