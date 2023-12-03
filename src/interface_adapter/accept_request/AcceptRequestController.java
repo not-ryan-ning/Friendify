@@ -10,5 +10,8 @@ public class AcceptRequestController {
         this.acceptRequestInteractor = acceptRequestInteractor;
     }
 
+    public void execute(AcceptRequestInputData acceptRequestInputData) {
+        acceptRequestInteractor.execute(acceptRequestInputData);
+    }
 
 }
