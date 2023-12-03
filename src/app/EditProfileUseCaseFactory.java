@@ -88,7 +88,7 @@ public class EditProfileUseCaseFactory {
             return new EditProfileView(editProfileController, editProfileViewModel, editBioController, editBioViewModel,
                     displayPlaylistsController, displayPlaylistsViewModel, authorizeController, authorizeViewModel,
                     choosePlaylistController, choosePlaylistViewModel, editSpotifyHandleController, editSpotifyHandleViewModel,
-                    goBackController, goBackViewModel);
+                    goBackController, goBackViewModel, loggedInViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }

@@ -12,8 +12,8 @@ public class LoggedInViewModel extends ViewModel {
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
-    public static final String REQUESTS_BUTTON_LABEL = "Requests";
-    public static final String FRIENDS_BUTTON_LABEL = "Friends";
+    public static final String REQUESTS_BUTTON_LABEL = "My Requests";
+    public static final String FRIENDS_BUTTON_LABEL = "My Friends";
     public static final String MATCH_BUTTON_LABEL = "Match";
     public static final String EDIT_PROFILE_BUTTON_LABEL = "Edit Profile";
 

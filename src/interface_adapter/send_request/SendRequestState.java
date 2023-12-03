@@ -3,7 +3,6 @@ package interface_adapter.send_request;
 public class SendRequestState {
     private String username = "";
     private String receiverUsername = "";
-    private String username = "";
     private String requestError = null;
     private final String requestSentMessage = "Request Sent";
 

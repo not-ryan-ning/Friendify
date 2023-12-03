@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CommonPlaylist implements Playlist{
-    private final String playlistId;
-    private final ArrayList<String> titles;
-    private final HashMap<String, Integer> artists;
-    private final HashMap<String, Integer> genres;
-    private final double acousticness;
-    private final double energy;
-    private final double instrumentalness;
-    private final double valence;
-    private final ArrayList<String> topThreeArtists;
+    private String playlistId;
+    private ArrayList<String> titles;
+    private HashMap<String, Integer> artists;
+    private HashMap<String, Integer> genres;
+    private double acousticness;
+    private double energy;
+    private double instrumentalness;
+    private double valence;
+    private ArrayList<String> topThreeArtists;
 
     public CommonPlaylist(String playlistId, ArrayList<String> titles, HashMap<String, Integer> artists,
                           HashMap<String, Integer> genres, double acousticness, double energy,
@@ -62,5 +62,50 @@ public class CommonPlaylist implements Playlist{
     @Override
     public ArrayList<String> getTopThreeArtists() {
         return topThreeArtists;
+    }
+
+    @Override
+    public void setPlaylistId(String playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    @Override
+    public void setTitles(ArrayList<String> titles) {
+        this.titles = titles;
+    }
+
+    @Override
+    public void setArtists(HashMap<String, Integer> artists) {
+        this.artists = artists;
+    }
+
+    @Override
+    public void setGenres(HashMap<String, Integer> genres) {
+        this.genres = genres;
+    }
+
+    @Override
+    public void setAcousticness(double acousticness) {
+        this.acousticness = acousticness;
+    }
+
+    @Override
+    public void setEnergy(double energy) {
+        this.energy = energy;
+    }
+
+    @Override
+    public void setInstrumentalness(double instrumentalness) {
+        this.instrumentalness = instrumentalness;
+    }
+
+    @Override
+    public void setValence(double valence) {
+        this.valence = valence;
+    }
+
+    @Override
+    public void setTopThreeArtists(ArrayList<String> topThreeArtists) {
+        this.topThreeArtists = topThreeArtists;
     }
 }

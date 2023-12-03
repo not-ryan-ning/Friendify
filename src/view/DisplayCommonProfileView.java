@@ -13,7 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class DisplayCommonProfileView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "User's Profile";
+    public final String viewName = "display common profile";
     private final DisplayCommonProfileViewModel displayCommonProfileViewModel;
     private final GoBackController goBackController;
     private final GoBackViewModel goBackViewModel;
@@ -86,9 +86,10 @@ public class DisplayCommonProfileView extends JPanel implements ActionListener, 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        DisplayCommonProfileState state = (DisplayCommonProfileState) evt.getNewValue();
-        username.setText(state.getUsername());
-        bio.setText(state.getBio());
-        topThreeArtists.setText(String.join(",", state.getTopThreeArtists()));
+        DisplayCommonProfileState currentState = displayCommonProfileViewModel.getState();
+        username.setText(currentState.getUsername());
+        bio.setText(currentState.getBio());
+        topThreeArtists.setText(String.join(", ", currentState.getTopThreeArtists()));
     }
+
 }

@@ -12,7 +12,7 @@ public class DisplayPlaylistsViewModel extends ViewModel {
 
     private DisplayPlaylistsState state = new DisplayPlaylistsState();
 
-    public DisplayPlaylistsViewModel() { super("DisplayPlaylists"); }
+    public DisplayPlaylistsViewModel() { super("display playlists"); }
 
     public void setState(DisplayPlaylistsState state) { this.state = state; }
 
