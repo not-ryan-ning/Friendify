@@ -41,7 +41,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         this.playlistFactory = playlistFactory;
         this.usersFile = new File(csvPath);
         this.playlistsDataAccessObject = filePlaylistsDataAccessObject;
-      
+
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("bio", 2);
@@ -71,18 +71,19 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
                     String requests = String.valueOf(col[headers.get("requests")]);
 
                     // column format: username, password, bio, artists, spotifyHandle, playlistId, friends, requests
-                    String[] artistsSplit = artists.split(",");
-                    ArrayList<String> topThreeArtists = new ArrayList<String>(Arrays.asList(artistsSplit));
+                    String[] topThreeArtistsSplit = artists.substring(1, artists.length() - 1).split(", ");  // Remove square brackets and split
+                    ArrayList<String> topThreeArtistsArrayList = new ArrayList<>(Arrays.asList(topThreeArtistsSplit));
 
-                    String[] friendsSplit = friends.split(",");
-                    ArrayList<String> friendsArrayList = new ArrayList<String>(Arrays.asList(friendsSplit));
+                    String[] friendsSplit = friends.substring(1, friends.length() - 1).split(", ");  // Remove square brackets and split
+                    ArrayList<String> friendsArrayList = new ArrayList<>(Arrays.asList(friendsSplit));
 
-                    String[] requestsSplit = requests.split(",");
-                    ArrayList<String> requestsArrayList = new ArrayList<String>(Arrays.asList(requestsSplit));
+                    String[] requestsSplit = requests.substring(1, requests.length() - 1).split(", ");  // Remove square brackets and split
+                    ArrayList<String> requestsArrayList = new ArrayList<>(Arrays.asList(requestsSplit));
 
-                    Profile profile = profileFactory.create(bio, topThreeArtists, spotifyHandle);
+                    Profile profile = profileFactory.create(bio, topThreeArtistsArrayList, spotifyHandle);
                     Playlist playlist = playlistsDataAccessObject.getPlaylist(playlistId);
-                    if (playlist == null) {
+
+                    if (playlistId.isEmpty()) {
                         playlist = playlistFactory.create(playlistId, new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                                 0.0, 0.0,0.0,0.0, new ArrayList<>());
                     }
@@ -103,14 +104,21 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
-                        user.getUsername(), user.getPassword(), user.getProfile().getBio(),
-                        user.getProfile().getTopThreeArtists(), user.getProfile().getSpotifyHandle(),
-                        user.getPlaylist().getPlaylistId(), user.getFriends(), user.getRequests());
-                writer.write(line);
-                writer.newLine();
+                if (user.getPlaylist() != null && user.getProfile() != null){
+                    String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
+                            user.getUsername(), user.getPassword(), user.getProfile().getBio(),
+                            user.getProfile().getTopThreeArtists(), user.getProfile().getSpotifyHandle(),
+                            user.getPlaylist().getPlaylistId(), user.getFriends(), user.getRequests());
+                    writer.write(line);
+                    writer.newLine();
+                } else {
+                    String line = String.format("%s|%s|%s|%s|%s|%s|%s|%s",
+                            user.getUsername(), user.getPassword(),
+                            "", "", "", "", "", "");
+                    writer.write(line);
+                    writer.newLine();
+                }
             }
-
             writer.close();
 
         } catch (IOException e) {
@@ -138,6 +146,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
     }
 
     public ArrayList<String> sendFriendRequest(User sender, User receiver) {
+        receiver.getRequests().removeIf(String::isEmpty);
         receiver.getRequests().add(sender.getUsername());
         return receiver.getRequests();
     }
@@ -150,7 +159,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         for (User user : accounts.values()) {
             // Execute if the current user is not already friends with the user being checked
             // and if the current user is not the user being checked
-            if (!currentUser.getFriends().contains(user.getUsername()) & !currentUser.equals(user)) {
+            if (currentUser.getFriends() != null & !currentUser.getFriends().contains(user.getUsername()) & !currentUser.equals(user)) {
                 // Retrieve the playlist to check
                 Playlist playlistToCheck = user.getPlaylist();
                 Double similarityScore = matchingStrategy.getSimilarityScore(currentPlaylist, playlistToCheck);
@@ -164,7 +173,7 @@ public class FileUserDataAccessObject implements DisplayFriendsUserDataAccessInt
         // Update the usernamePlaylist map to the new playlist
         usernamePlaylist.put(username, playlist);
         ArrayList<String> topThreeArtists = playlist.getTopThreeArtists();
-        String artists = String.join(",", topThreeArtists);
+        String artists = topThreeArtists.toString();
         String playlistId = playlist.getPlaylistId();
 
         // Update the users csv file

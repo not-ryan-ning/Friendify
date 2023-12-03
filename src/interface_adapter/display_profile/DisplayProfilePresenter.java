@@ -41,6 +41,7 @@ public class DisplayProfilePresenter implements DisplayProfileOutputBoundary {
         // switch to the common view profile of the user
         DisplayCommonProfileState displayCommonProfileState = displayCommonProfileViewModel.getState();
 
+        displayCommonProfileState.setUsername(response.getUsername());
         displayCommonProfileState.setBio(response.getBio());
         displayCommonProfileState.setTopThreeArtists(response.getTopThreeArtists());
 

@@ -32,24 +32,31 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         String playlistName = choosePlaylistInputData.getPlaylistName();
         String accessToken = choosePlaylistInputData.getAccessToken();
 
-        ArrayList<Object> playlistInfo = spotifyDataAccessObject.getPlaylistInfo(username, playlistId, accessToken);
-        ArrayList<String> titles = (ArrayList<String>) playlistInfo.get(0);
-        HashMap<String, Integer> artists = (HashMap<String, Integer>) playlistInfo.get(1);
-        HashMap<String, Integer> genres = (HashMap<String, Integer>) playlistInfo.get(2);
-        double acousticness = (double) playlistInfo.get(3);
-        double energy = (double) playlistInfo.get(4);
-        double instrumentalness = (double) playlistInfo.get(5);
-        double valence = (double) playlistInfo.get(6);
-        ArrayList<String> topTreeArtists = (ArrayList<String>) playlistInfo.get(7);
-
-        Playlist playlist = playlistFactory.create(playlistId, titles, artists, genres, acousticness,
-                energy, instrumentalness, valence, topTreeArtists);
-
         User user = userDataAccessObject.get(username);
+        Playlist playlist;
+
+        if (! playlistDataAccessObject.isIn(playlistId)) {
+            ArrayList<Object> playlistInfo = spotifyDataAccessObject.getPlaylistInfo(username, playlistId, accessToken);
+            ArrayList<String> titles = (ArrayList<String>) playlistInfo.get(0);
+            HashMap<String, Integer> artists = (HashMap<String, Integer>) playlistInfo.get(1);
+            HashMap<String, Integer> genres = (HashMap<String, Integer>) playlistInfo.get(2);
+            double acousticness = (double) playlistInfo.get(3);
+            double energy = (double) playlistInfo.get(4);
+            double instrumentalness = (double) playlistInfo.get(5);
+            double valence = (double) playlistInfo.get(6);
+            ArrayList<String> topTreeArtists = (ArrayList<String>) playlistInfo.get(7);
+
+            playlist = playlistFactory.create(playlistId, titles, artists, genres, acousticness,
+                    energy, instrumentalness, valence, topTreeArtists);
+
+            playlistDataAccessObject.storePlaylist(playlist);
+        } else {
+            playlist = playlistDataAccessObject.getPlaylist(playlistId);
+        }
+
         user.setPlaylist(playlist);
-        user.getProfile().setTopThreeArtists(topTreeArtists);
+        user.getProfile().setTopThreeArtists(playlist.getTopThreeArtists());
         userDataAccessObject.editPlaylist(user.getUsername(), playlist);
-        playlistDataAccessObject.storePlaylist(playlist);
 
         ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName);
         choosePlaylistPresenter.prepareSuccessView(choosePlaylistOutputData);
