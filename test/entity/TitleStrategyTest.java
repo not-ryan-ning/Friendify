@@ -71,4 +71,22 @@ public class TitleStrategyTest {
 
         assertEquals(0.5, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
+
+    /**
+     * Test 0% similarity between artist in both playlists, should output 0.0 - most dissimilar
+     */
+    @Test
+    public void testNoSimilarity() {
+        ArrayList<String> title1 = new ArrayList<>(List.of("Left Right"));
+        ArrayList<String> title2 = new ArrayList<>(List.of("Pretender"));
+
+        Playlist playlist1 = factory.create("", title1, new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("", title2, new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
