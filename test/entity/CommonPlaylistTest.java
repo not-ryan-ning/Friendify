@@ -33,4 +33,15 @@ public class CommonPlaylistTest {
 
         assertNotNull(playlist);
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetPlaylistId() {
+        Playlist playlist = playlistFactory.create("1A2B3C", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0 ,0.0, 0.0, new ArrayList<>());
+
+        assertEquals("1A2B3C", playlist.getPlaylistId());
+    }
 }
