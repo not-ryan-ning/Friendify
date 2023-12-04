@@ -32,4 +32,28 @@ public class ArtistStrategyTest {
         assertNotNull(this.matchingStrategy);
     }
 
+    /**
+     * Test 100% similarity between artist in both playlists, should output 1.0 - most similar
+     */
+    @Test
+    public void testFullSimilarity() {
+        HashMap<String, Integer> artist1 = new HashMap<>();
+        artist1.put("Valley", 3);
+        artist1.put("Owl City", 4);
+        artist1.put("NIKI", 3);
+
+        HashMap<String, Integer> artist2 = new HashMap<>();
+        artist2.put("Valley", 3);
+        artist2.put("Owl City", 4);
+        artist2.put("NIKI", 3);
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
+
 }
