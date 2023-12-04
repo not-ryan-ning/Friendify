@@ -32,4 +32,14 @@ public class CommonProfileTest {
 
         assertNotNull(profile);
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetBio() {
+        Profile profile = profileFactory.create("hello!", new ArrayList<>(), "");
+
+        assertEquals("hello!", profile.getBio());
+    }
 }
