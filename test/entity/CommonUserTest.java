@@ -33,4 +33,15 @@ public class CommonUserTest {
         this.emptyPlaylist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0 ,0.0, 0.0, new ArrayList<>());
     }
+
+    /**
+     * Test that user can be created
+     */
+    @Test
+    public void testUserCreatedProperly() {
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+
+        assertNotNull(user);
+    }
 }
