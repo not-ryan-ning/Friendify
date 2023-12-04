@@ -8,8 +8,8 @@ import use_case.go_back.GoBackInputBoundary;
 public class GoBackController {
     final GoBackInputBoundary goBackUseCaseInteractor;
 
-    public GoBackController(GoBackInputBoundary logoutUseCaseInteractor) {
-        this.goBackUseCaseInteractor = logoutUseCaseInteractor;
+    public GoBackController(GoBackInputBoundary goBackUseCaseInteractor) {
+        this.goBackUseCaseInteractor = goBackUseCaseInteractor;
     }
 
     /**

@@ -253,6 +253,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+
         buttonsAndScroll.add(scrollPane);
         buttonsAndScroll.add(buttons);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -330,6 +331,7 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
         } else if (evt.getPropertyName().equals("choosePlaylistState")) {
             ChoosePlaylistState choosePlaylistState = (ChoosePlaylistState) evt.getNewValue();
             JOptionPane.showMessageDialog(this, choosePlaylistState.getPlaylistName() + " saved");
+            loggedInState.setTopThreeArtists(choosePlaylistState.getTopThreeArtists());
 
 
         } else if (evt.getPropertyName().equals("editSpotifyHandleState")) {
@@ -337,8 +339,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
             changeSpotifyInputField.setText(editSpotifyHandleState.getSpotifyHandle());
             loggedInState.setSpotifyHandle(editSpotifyHandleState.getSpotifyHandle());
         }
-        loggedInViewModel.setState(loggedInState);
-
     }
     private static <K, V> K getKeyByValue(Map<K, V> map, V value) {
         for (Map.Entry<K, V> entry : map.entrySet()) {
@@ -346,6 +346,6 @@ public class EditProfileView extends JPanel implements ActionListener, PropertyC
                 return entry.getKey();
             }
         }
-        return null; // Value not found in the map
+        return null;
     }
 }

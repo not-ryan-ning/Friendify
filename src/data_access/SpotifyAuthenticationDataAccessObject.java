@@ -41,7 +41,6 @@ public class SpotifyAuthenticationDataAccessObject implements AuthorizeSpotifyAu
 
         // Wait for the callback and retrieve the access token
         String accessToken = callbackHandler.waitForAccessToken();
-        System.out.println("Access token received: " + accessToken);
 
         // Stop the local server after receiving the callback
         server.stop(0);
