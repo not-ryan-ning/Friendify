@@ -42,4 +42,15 @@ public class CommonProfileTest {
 
         assertEquals("hello!", profile.getBio());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetTopThreeArtists() {
+        ArrayList<String> topThree = new ArrayList<>(Arrays.asList("artist1", "artist2", "artist3"));
+        Profile profile = profileFactory.create("", topThree, "");
+
+        assertEquals(topThree, profile.getTopThreeArtists());
+    }
 }
