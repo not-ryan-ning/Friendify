@@ -74,4 +74,16 @@ public class CommonProfileTest {
 
         assertEquals("bye!", profile.getBio());
     }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetTopThreeArtists() {
+        ArrayList<String> topThree = new ArrayList<>(Arrays.asList("artist1", "artist2", "artist3"));
+        Profile profile = profileFactory.create("", new ArrayList<>(), "");
+        profile.setTopThreeArtists(topThree);
+
+        assertEquals(topThree, profile.getTopThreeArtists());
+    }
 }
