@@ -84,4 +84,27 @@ public class GenreStrategyTest {
         assertEquals(0.5, Double.parseDouble(
                 df.format(matchingStrategy.getSimilarityScore(playlist1, playlist2))), 0.0001);
     }
+
+    /**
+     * Test 0% similarity between artist in both playlists, should output 0.0 - most dissimilar
+     */
+    @Test
+    public void testNoSimilarity() {
+        HashMap<String, Integer> genre1 = new HashMap<>();
+        genre1.put("Jazz", 2);
+
+        HashMap<String, Integer> genre2 = new HashMap<>();
+        genre2.put("Hyperpop", 1);
+
+        Playlist playlist1 = factory.create("", new ArrayList<>(), new HashMap<>(), genre1,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("", new ArrayList<>(), new HashMap<>(), genre2,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
