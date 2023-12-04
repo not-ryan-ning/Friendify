@@ -35,4 +35,22 @@ public class TitleStrategyTest {
     public void testStrategyCreatedProperly() {
         assertNotNull(this.matchingStrategy);
     }
+
+    /**
+     * Test 100% similarity between artist in both playlists, should output 1.0 - most similar
+     */
+    @Test
+    public void testFullSimilarity() {
+        ArrayList<String> title1 = new ArrayList<>(List.of("Pretender"));
+        ArrayList<String> title2 = new ArrayList<>(List.of("Pretender"));
+
+        Playlist playlist1 = factory.create("", title1, new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("", title2, new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
