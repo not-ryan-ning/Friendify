@@ -71,7 +71,7 @@ public class CommonUserTest {
      */
     @Test
     public void testGetProfile() {
-        Profile customProfile = new CommonProfile("hello!", new ArrayList<>(), "@spotifyUser123");
+        Profile customProfile = profileFactory.create("hello!", new ArrayList<>(), "@spotifyUser123");
         User user = userFactory.create("", "", customProfile, emptyPlaylist,
                 new ArrayList<>(), new ArrayList<>());
 
@@ -83,7 +83,7 @@ public class CommonUserTest {
      */
     @Test
     public void testGetPlaylist() {
-        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist customPlaylist = playlistFactory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 2.0, 3.0, new ArrayList<>());
         User user = userFactory.create("", "", emptyProfile, customPlaylist,
                 new ArrayList<>(), new ArrayList<>());
@@ -120,7 +120,7 @@ public class CommonUserTest {
      */
     @Test
     public void testSetPlaylist() {
-        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist customPlaylist = playlistFactory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 2.0, 3.0, new ArrayList<>());
         User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
                 new ArrayList<>(), new ArrayList<>());
