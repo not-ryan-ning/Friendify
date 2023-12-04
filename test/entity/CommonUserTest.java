@@ -55,4 +55,15 @@ public class CommonUserTest {
 
         assertEquals("Aleister Crowley", user.getUsername());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetPassword() {
+        User user = userFactory.create("", "totallysecretpassword", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+
+        assertEquals("totallysecretpassword", user.getPassword());
+    }
 }
