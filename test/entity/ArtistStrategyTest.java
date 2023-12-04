@@ -24,4 +24,12 @@ public class ArtistStrategyTest {
         this.matchingStrategy = new AttributeStrategy();
     }
 
+    /**
+     * Basic test to see if strategy can be initialized
+     */
+    @Test
+    public void testStrategyCreatedProperly() {
+        assertNotNull(this.matchingStrategy);
+    }
+
 }
