@@ -27,4 +27,12 @@ public class TitleStrategyTest {
         this.factory = new CommonPlaylistFactory();
         this.matchingStrategy = new TitleStrategy();
     }
+
+    /**
+     * Basic test to see if strategy can be initialized
+     */
+    @Test
+    public void testStrategyCreatedProperly() {
+        assertNotNull(this.matchingStrategy);
+    }
 }
