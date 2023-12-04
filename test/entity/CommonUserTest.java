@@ -66,4 +66,16 @@ public class CommonUserTest {
 
         assertEquals("totallysecretpassword", user.getPassword());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetProfile() {
+        Profile customProfile = new CommonProfile("hello!", new ArrayList<>(), "@spotifyUser123");
+        User user = userFactory.create("", "", customProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+
+        assertEquals(customProfile, user.getProfile());
+    }
 }
