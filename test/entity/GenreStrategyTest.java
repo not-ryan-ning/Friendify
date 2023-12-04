@@ -26,4 +26,12 @@ public class GenreStrategyTest {
         this.factory = new CommonPlaylistFactory();
         this.matchingStrategy = new GenreStrategy();
     }
+
+    /**
+     * Basic test to see if strategy can be initialized
+     */
+    @Test
+    public void testStrategyCreatedProperly() {
+        assertNotNull(this.matchingStrategy);
+    }
 }
