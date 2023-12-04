@@ -69,4 +69,17 @@ public class CommonPlaylistTest {
 
         assertEquals(customArtists, playlist.getArtists());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetGenres() {
+        HashMap<String, Integer> customGenres = new HashMap<>();
+        customGenres.put("genre1", 4);
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), customGenres,
+                0.0, 0.0, 0.0, 0.0, new ArrayList<>());
+
+        assertEquals(customGenres, playlist.getGenres());
+    }
 }
