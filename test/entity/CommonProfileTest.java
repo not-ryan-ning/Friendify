@@ -63,4 +63,15 @@ public class CommonProfileTest {
 
         assertEquals("@User123", profile.getSpotifyHandle());
     }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetBio() {
+        Profile profile = profileFactory.create("hello!", new ArrayList<>(), "");
+        profile.setBio("bye!");
+
+        assertEquals("bye!", profile.getBio());
+    }
 }
