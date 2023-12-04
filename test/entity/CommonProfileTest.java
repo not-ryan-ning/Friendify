@@ -53,4 +53,14 @@ public class CommonProfileTest {
 
         assertEquals(topThree, profile.getTopThreeArtists());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetSpotifyHandle() {
+        Profile profile = profileFactory.create("", new ArrayList<>(), "@User123");
+
+        assertEquals("@User123", profile.getSpotifyHandle());
+    }
 }
