@@ -126,4 +126,16 @@ public class CommonPlaylistTest {
 
         assertEquals(1.0, playlist.getValence(), 0.0001);
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetTopThreeArtists() {
+        ArrayList<String> topThree = new ArrayList<>(Arrays.asList("artist1", "artist2", "artist3"));
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, topThree);
+
+        assertEquals(topThree, playlist.getTopThreeArtists());
+    }
 }
