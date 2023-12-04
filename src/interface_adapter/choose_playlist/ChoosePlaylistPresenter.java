@@ -26,6 +26,7 @@ public class ChoosePlaylistPresenter implements ChoosePlaylistOutputBoundary {
     public void prepareSuccessView(ChoosePlaylistOutputData response) {
         ChoosePlaylistState choosePlaylistState = choosePlaylistViewModel.getState();
         choosePlaylistState.setPlaylistName(response.getPlaylistName());
+        choosePlaylistState.setTopThreeArtists(response.getTopThreeArtists());
         this.choosePlaylistViewModel.setState(choosePlaylistState);
         this.choosePlaylistViewModel.firePropertyChanged();
 

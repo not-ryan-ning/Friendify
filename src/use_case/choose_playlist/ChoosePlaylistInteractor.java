@@ -66,7 +66,7 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         user.getProfile().setTopThreeArtists(playlist.getTopThreeArtists());
         userDataAccessObject.editPlaylist(user.getUsername(), playlist);
 
-        ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName);
+        ChoosePlaylistOutputData choosePlaylistOutputData = new ChoosePlaylistOutputData(playlistName, playlist.getTopThreeArtists());
         choosePlaylistPresenter.prepareSuccessView(choosePlaylistOutputData);
     }
 }

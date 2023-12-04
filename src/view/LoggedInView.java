@@ -190,7 +190,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         LoggedInState currentState = loggedInViewModel.getState();
 
         if (evt.getPropertyName().equals("loggedInState")) {
-            LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
+            LoggedInState loggedInState = loggedInViewModel.getState();
             username.setText("Username: " + loggedInState.getUsername());
             bio.setText("Bio: " + loggedInState.getBio());
             spotifyHandle.setText("Spotify Handle: " + loggedInState.getSpotifyHandle());

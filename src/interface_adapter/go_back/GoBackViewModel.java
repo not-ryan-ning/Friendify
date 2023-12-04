@@ -12,7 +12,7 @@ public class GoBackViewModel extends ViewModel {
     public static final String BACK_BUTTON_LABEL = "Go Back to Home Page";
     private GoBackState state = new GoBackState();
     public GoBackViewModel() {
-        super("go back");
+        super("logged in");
     }
 
     public void setState(GoBackState state) {
