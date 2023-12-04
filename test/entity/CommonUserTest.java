@@ -91,4 +91,16 @@ public class CommonUserTest {
 
         assertEquals(customPlaylist, user.getPlaylist());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetFriends() {
+        ArrayList<String> customFriends = new ArrayList<>(List.of("Lemony Snicket"));
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                customFriends, new ArrayList<>());
+
+        assertEquals(customFriends, user.getFriends());
+    }
 }
