@@ -3,6 +3,7 @@ package entity;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,6 +55,33 @@ public class ArtistStrategyTest {
                 new ArrayList<>());
 
         assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
+
+    /**
+     * Test 50% similarity between artist in both playlists, should output 0.5
+     */
+    @Test
+    public void testHalfSimilarity() {
+        HashMap<String, Integer> artist1 = new HashMap<>();
+        artist1.put("Valley", 2);
+
+        HashMap<String, Integer> artist2 = new HashMap<>();
+        artist2.put("Valley", 1);
+        artist2.put("NIKI", 1);
+        artist2.put("Owl City", 1);
+        artist2.put("Hippo Campus", 1);
+
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        assertEquals(0.5, Double.parseDouble(
+                df.format(matchingStrategy.getSimilarityScore(playlist1, playlist2))), 0.0001);
     }
 
 }
