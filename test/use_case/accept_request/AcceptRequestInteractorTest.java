@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class AcceptRequestUseCaseTest {
+public class AcceptRequestInteractorTest {
     private UserFactory userFactory;
     private ProfileFactory profileFactory;
     private PlaylistFactory playlistFactory;
