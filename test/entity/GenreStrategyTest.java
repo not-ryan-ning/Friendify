@@ -57,4 +57,31 @@ public class GenreStrategyTest {
 
         assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
+
+    /**
+     * Test 50% similarity between artist in both playlists, should output 0.5
+     */
+    @Test
+    public void testHalfSimilarity() {
+        HashMap<String, Integer> genre1 = new HashMap<>();
+        genre1.put("Jazz", 2);
+
+        HashMap<String, Integer> genre2 = new HashMap<>();
+        genre2.put("Jazz", 1);
+        genre2.put("Pop", 1);
+        genre2.put("Hyperpop", 1);
+        genre2.put("Country", 1);
+
+        Playlist playlist1 = factory.create("", new ArrayList<>(), new HashMap<>(), genre1,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("", new ArrayList<>(), new HashMap<>(), genre2,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        DecimalFormat df = new DecimalFormat("#.#");
+
+        assertEquals(0.5, Double.parseDouble(
+                df.format(matchingStrategy.getSimilarityScore(playlist1, playlist2))), 0.0001);
+    }
 }
