@@ -47,10 +47,10 @@ public class ArtistStrategyTest {
         artist2.put("Valley", 3);
         artist2.put("Owl City", 4);
         artist2.put("NIKI", 3);
-        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -71,10 +71,10 @@ public class ArtistStrategyTest {
         artist2.put("Owl City", 1);
         artist2.put("Hippo Campus", 1);
 
-        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -94,10 +94,10 @@ public class ArtistStrategyTest {
 
         HashMap<String, Integer> artist2 = new HashMap<>();
         artist2.put("NIKI", 1);
-        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -109,10 +109,10 @@ public class ArtistStrategyTest {
      */
     @Test
     public void testEmptyPlaylists() {
-        Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist playlist1 = factory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist playlist2 = factory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
