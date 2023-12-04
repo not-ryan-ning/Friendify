@@ -93,4 +93,15 @@ public class CommonPlaylistTest {
 
         assertEquals(1.0, playlist.getAcousticness(), 0.0001);
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetEnergy() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 1.0, 0.0, 0.0, new ArrayList<>());
+
+        assertEquals(1.0, playlist.getEnergy(), 0.0001);
+    }
 }
