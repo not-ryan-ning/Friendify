@@ -89,4 +89,19 @@ public class TitleStrategyTest {
 
         assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
     }
+
+    /**
+     * Test both playlists empty, should output 0.0
+     */
+    @Test
+    public void testEmptyPlaylists() {
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
