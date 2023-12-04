@@ -78,4 +78,17 @@ public class CommonUserTest {
 
         assertEquals(customProfile, user.getProfile());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetPlaylist() {
+        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                1.0, 1.0, 2.0, 3.0, new ArrayList<>());
+        User user = userFactory.create("", "", emptyProfile, customPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+
+        assertEquals(customPlaylist, user.getPlaylist());
+    }
 }
