@@ -1,0 +1,25 @@
+package entity;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.junit.Assert.*;
+
+/**
+ * Testing file for CommonProfile Class
+ */
+public class CommonProfileTest {
+    private ProfileFactory profileFactory;
+
+    /**
+     * Create CommonProfile factory
+     */
+    @Before
+    public void init() {
+        this.profileFactory = new CommonProfileFactory();
+    }
+}
