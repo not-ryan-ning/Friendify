@@ -44,4 +44,16 @@ public class CommonPlaylistTest {
 
         assertEquals("1A2B3C", playlist.getPlaylistId());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetTitles() {
+        ArrayList<String> customTitles = new ArrayList<>(Arrays.asList("title1", "title2"));
+        Playlist playlist = playlistFactory.create("", customTitles, new HashMap<>(), new HashMap<>(),
+                0.0, 0.0 ,0.0, 0.0, new ArrayList<>());
+
+        assertEquals(customTitles, playlist.getTitles());
+    }
 }
