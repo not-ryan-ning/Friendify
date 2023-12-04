@@ -3,6 +3,9 @@ package interface_adapter.display_playlists;
 import use_case.display_playlists.DisplayPlaylistsInputBoundary;
 import use_case.display_playlists.DisplayPlaylistsInputData;
 
+/**
+ * Initiates operations related to displaying playlists
+ */
 public class DisplayPlaylistsController {
     final DisplayPlaylistsInputBoundary displayPlaylistsInteractor;
 

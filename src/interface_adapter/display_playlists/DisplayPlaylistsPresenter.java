@@ -6,6 +6,9 @@ import use_case.display_playlists.DisplayPlaylistsOutputBoundary;
 import use_case.display_playlists.DisplayPlaylistsOutputData;
 import use_case.login.LoginOutputData;
 
+/**
+ * Handles outputs related to displaying playlists and updating the corresponding view models.
+ */
 public class DisplayPlaylistsPresenter implements DisplayPlaylistsOutputBoundary {
 
     private final DisplayPlaylistsViewModel displayPlaylistsViewModel;
@@ -19,8 +22,6 @@ public class DisplayPlaylistsPresenter implements DisplayPlaylistsOutputBoundary
 
     @Override
     public void prepareSuccessView(DisplayPlaylistsOutputData response) {
-        // On success, switch to the logged in view.
-
         DisplayPlaylistsState displayPlaylistsState = displayPlaylistsViewModel.getState();
         displayPlaylistsState.setPlaylistIdName(response.getPlaylistIdName());
         this.displayPlaylistsViewModel.setState(displayPlaylistsState);
