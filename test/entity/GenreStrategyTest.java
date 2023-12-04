@@ -34,4 +34,27 @@ public class GenreStrategyTest {
     public void testStrategyCreatedProperly() {
         assertNotNull(this.matchingStrategy);
     }
+
+    /**
+     * Test 100% similarity between artist in both playlists, should output 1.0 - most similar
+     */
+    @Test
+    public void testFullSimilarity() {
+        HashMap<String, Integer> genre1 = new HashMap<>();
+        genre1.put("Jazz", 3);
+        genre1.put("Pop", 4);
+
+        HashMap<String, Integer> genre2 = new HashMap<>();
+        genre2.put("Jazz", 3);
+        genre2.put("Pop", 4);
+
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), genre1,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), new HashMap<>(), genre2,
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(1.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
 }
