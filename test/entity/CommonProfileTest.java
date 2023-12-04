@@ -86,4 +86,15 @@ public class CommonProfileTest {
 
         assertEquals(topThree, profile.getTopThreeArtists());
     }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetSpotifyHandle() {
+        Profile profile = profileFactory.create("", new ArrayList<>(), "");
+        profile.setSpotifyHandle("@User123");
+
+        assertEquals("@User123", profile.getSpotifyHandle());
+    }
 }
