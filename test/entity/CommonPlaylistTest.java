@@ -82,4 +82,15 @@ public class CommonPlaylistTest {
 
         assertEquals(customGenres, playlist.getGenres());
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetAcoustciness() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                1.0, 0.0, 0.0, 0.0, new ArrayList<>());
+
+        assertEquals(1.0, playlist.getAcousticness(), 0.0001);
+    }
 }
