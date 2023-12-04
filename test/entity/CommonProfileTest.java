@@ -22,4 +22,14 @@ public class CommonProfileTest {
     public void init() {
         this.profileFactory = new CommonProfileFactory();
     }
+
+    /**
+     * Test that Profile can be created
+     */
+    @Test
+    public void testPlaylistCreatedProperly() {
+        Profile profile = profileFactory.create("", new ArrayList<>(), "");
+
+        assertNotNull(profile);
+    }
 }
