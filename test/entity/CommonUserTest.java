@@ -44,4 +44,15 @@ public class CommonUserTest {
 
         assertNotNull(user);
     }
+
+    /**
+     * Testing getter methods
+     */
+    @Test
+    public void testGetUsername() {
+        User user = userFactory.create("Aleister Crowley", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+
+        assertEquals("Aleister Crowley", user.getUsername());
+    }
 }
