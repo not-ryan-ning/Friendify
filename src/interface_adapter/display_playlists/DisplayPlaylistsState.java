@@ -2,6 +2,9 @@ package interface_adapter.display_playlists;
 
 import java.util.HashMap;
 
+/**
+ * Represents state for displaying playlists to a user.
+ */
 public class DisplayPlaylistsState {
     private HashMap<String, String> playlistIdName;
     private String accessToken;

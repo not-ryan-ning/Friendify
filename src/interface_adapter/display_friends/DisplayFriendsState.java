@@ -2,6 +2,9 @@ package interface_adapter.display_friends;
 
 import java.util.ArrayList;
 
+/**
+ * Represents state for displaying friends to a user.
+ */
 public class DisplayFriendsState {
     private ArrayList<String> friends;
     private String username;
