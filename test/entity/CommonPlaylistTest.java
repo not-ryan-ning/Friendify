@@ -10,13 +10,13 @@ import java.util.HashMap;
 import static org.junit.Assert.*;
 
 /**
- * Testing file for CommonUser Class
+ * Testing file for CommonPlaylist Class
  */
 public class CommonPlaylistTest {
     private PlaylistFactory playlistFactory;
 
     /**
-     * Create empty profile and playlists objects as we are only testing User behaviour
+     * Create Playlist factory
      */
     @Before
     public void init() {
