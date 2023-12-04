@@ -21,6 +21,16 @@ public class CommonPlaylistTest {
     @Before
     public void init() {
         this.playlistFactory = new CommonPlaylistFactory();
+    }
 
+    /**
+     * Test that Playlist can be created
+     */
+    @Test
+    public void testPlaylistCreatedProperly() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0 ,0.0, 0.0, new ArrayList<>());
+
+        assertNotNull(playlist);
     }
 }
