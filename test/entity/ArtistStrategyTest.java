@@ -84,4 +84,24 @@ public class ArtistStrategyTest {
                 df.format(matchingStrategy.getSimilarityScore(playlist1, playlist2))), 0.0001);
     }
 
+    /**
+     * Test 0% similarity between artist in both playlists, should output 0.0 - most dissimilar
+     */
+    @Test
+    public void testNoSimilarity() {
+        HashMap<String, Integer> artist1 = new HashMap<>();
+        artist1.put("Valley", 2);
+
+        HashMap<String, Integer> artist2 = new HashMap<>();
+        artist2.put("NIKI", 1);
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
+                0.0, 0.0, 0.0, 0.0,
+                new ArrayList<>());
+
+        assertEquals(0.0, matchingStrategy.getSimilarityScore(playlist1, playlist2), 0.0001);
+    }
+
 }
