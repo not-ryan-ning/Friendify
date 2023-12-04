@@ -115,4 +115,18 @@ public class CommonUserTest {
 
         assertEquals(customRequests, user.getRequests());
     }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetPlaylist() {
+        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                1.0, 1.0, 2.0, 3.0, new ArrayList<>());
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+        user.setPlaylist(customPlaylist);
+
+        assertEquals(customPlaylist, user.getPlaylist());
+    }
 }
