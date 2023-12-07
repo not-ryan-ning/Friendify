@@ -1,6 +1,6 @@
 package use_case.accept_request;
 
-import data_access.MockFileUserDataAccessObject;
+import data_access.accept_request.MockFileUserDataAccessObject;
 import entity.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 
 public class AcceptRequestUseCaseTest {
     private UserFactory userFactory;
@@ -36,12 +37,14 @@ public class AcceptRequestUseCaseTest {
 
     @Test
     // Test interactor can be initialized
-    public void testInteractorCreatedProperly() {
+    public void testInitialization() {
         AcceptRequestInteractor interactor = new AcceptRequestInteractor(mockAcceptRequestFileUserDA0,
-                mockAcceptRequestPresenter);
+               mockAcceptRequestPresenter);
 
     }
 
+    @Test
+    // Test that use case correctly updates respective information
     public void testInteractorLogic() {
         // user2 has requested user1's friendship
         // user1 accepts user2 as a friend
@@ -78,4 +81,6 @@ public class AcceptRequestUseCaseTest {
                         mockAcceptRequestFileUserDA0).getAccounts().get("Alabaster").getFriends());
 
     }
+
+
 }
