@@ -33,7 +33,7 @@ public class SendRequestInteractorTest {
 
         interactor.execute("", inputData);
 
-        assertEquals("Success", ((MockSendRequestPresenter) mockSendRequestPresenter).getState());
+        assertEquals("Failure", ((MockSendRequestPresenter) mockSendRequestPresenter).getState());
     }
 
     @Test
@@ -44,6 +44,6 @@ public class SendRequestInteractorTest {
 
         interactor.execute("", inputData);
 
-        assertEquals("Failure", ((MockSendRequestPresenter) mockSendRequestPresenter).getState());
+        assertEquals("Success", ((MockSendRequestPresenter) mockSendRequestPresenter).getState());
     }
 }

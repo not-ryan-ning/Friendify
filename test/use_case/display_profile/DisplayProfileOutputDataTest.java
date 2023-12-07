@@ -7,17 +7,19 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class DisplayOutputDataTest {
-    private String bio;
-    private ArrayList<String> topThreeArtists;
-    private String spotifyHandle;
+public class DisplayProfileOutputDataTest {
     private DisplayProfileOutputData outputData;
 
     @Before
     public void init() {
         ArrayList<String> topThree = new ArrayList<>();
         topThree.add("artist1");
-        this.outputData = new DisplayProfileOutputData("bio", topThree, "@spotifyHandle");
+        this.outputData = new DisplayProfileOutputData("username","bio", topThree, "@spotifyHandle");
+    }
+
+    @Test
+    public void testGetUsername() {
+        assertEquals("username", outputData.getUsername());
     }
 
     @Test

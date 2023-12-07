@@ -15,7 +15,7 @@ public class AcceptRequestOutputDataTest {
     public void init() {
         ArrayList<String> requests = new ArrayList<>();
         requests.add("NormalPersonName");
-        this.outputData = new AcceptRequestOutputData(requests);
+        this.outputData = new AcceptRequestOutputData(requests, "user");
     }
 
     @Test
@@ -23,5 +23,10 @@ public class AcceptRequestOutputDataTest {
         ArrayList<String> requests = new ArrayList<>();
         requests.add("NormalPersonName");
         assertEquals(requests, outputData.getRequests());
+    }
+
+    @Test
+    public void testGetAcceptedUsername() {
+        assertEquals("user", outputData.getAcceptedUsername());
     }
 }

@@ -10,9 +10,6 @@ import java.util.HashMap;
 
 public class MockChoosePlaylistPlaylistDataAccessObject implements ChoosePlaylistPlaylistDataAccessInterface {
 
-    private PlaylistFactory playlistFactory;
-
-
     @Override
     public void storePlaylist(Playlist playlist) {
 
@@ -26,10 +23,9 @@ public class MockChoosePlaylistPlaylistDataAccessObject implements ChoosePlaylis
     @Override
     public Playlist getPlaylist(String playlistId) {
         if (playlistId.equals("check")) {
-            this.playlistFactory = new CommonPlaylistFactory();
-            Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+            PlaylistFactory playlistFactory = new CommonPlaylistFactory();
+            return playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                     0.0, 0.0, 0.0, 1.0, new ArrayList<>());
-            return playlist;
         }
 
         return null;

@@ -17,6 +17,11 @@ public class MockSignupPresenter implements SignupOutputBoundary {
         this.currentState = "Failure";
     }
 
+    @Override
+    public void prepareLoginView() {
+
+    }
+
     public String getState() {
         return currentState;
     }

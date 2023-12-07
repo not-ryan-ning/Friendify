@@ -26,7 +26,7 @@ public class AuthorizeInteractorTest {
 
     @Test
     public void testExecuteSuccess() {
-        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject(true);
+        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject("true");
         AuthorizeInteractor interactor = new AuthorizeInteractor(mockSpotifyAuthenticationDAO,
                 mockAuthorizePresenter);
 
@@ -37,7 +37,7 @@ public class AuthorizeInteractorTest {
 
     @Test
     public void testExecuteFail() {
-        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject(false);
+        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject("false");
 
         AuthorizeInteractor interactor = new AuthorizeInteractor(mockSpotifyAuthenticationDAO,
                 mockAuthorizePresenter);
@@ -49,7 +49,19 @@ public class AuthorizeInteractorTest {
 
     @Test
     public void testAccessData() {
-        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject(false);
+        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject("false");
+
+        AuthorizeInteractor interactor = new AuthorizeInteractor(mockSpotifyAuthenticationDAO,
+                mockAuthorizePresenter);
+
+        interactor.execute("");
+
+        assertEquals("Failure", ((MockAuthorizePresenter) mockAuthorizePresenter).getState());
+    }
+
+    @Test
+    public void testExecuteThrowsIO() {
+        this.mockSpotifyAuthenticationDAO = new MockSpotifyAuthenticationDataAccessObject("asd");
 
         AuthorizeInteractor interactor = new AuthorizeInteractor(mockSpotifyAuthenticationDAO,
                 mockAuthorizePresenter);

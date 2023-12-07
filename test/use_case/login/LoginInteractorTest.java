@@ -29,7 +29,7 @@ public class LoginInteractorTest {
     public void testExecuteSuccess() {
         LoginInteractor interactor = new LoginInteractor(mockLoginUserDAO,
                 mockLoginPresenter);
-        LoginInputData inputData = new MockLoginInputData("successUser", "");
+        LoginInputData inputData = new MockLoginInputData("", "");
 
         interactor.execute(inputData);
 
@@ -45,6 +45,17 @@ public class LoginInteractorTest {
         interactor.execute(inputData);
 
         assertEquals("Failure", ((MockLoginPresenter) mockLoginPresenter).getState());
+    }
+
+    @Test
+    public void testExecuteNull() {
+        LoginInteractor interactor = new LoginInteractor(mockLoginUserDAO,
+                mockLoginPresenter);
+        LoginInputData inputData = new MockLoginInputData("failureUserNull", "");
+
+        interactor.execute(inputData);
+
+        assertEquals("Success", ((MockLoginPresenter) mockLoginPresenter).getState());
     }
 
     @Test

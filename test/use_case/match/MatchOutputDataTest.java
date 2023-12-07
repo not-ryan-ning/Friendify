@@ -3,7 +3,7 @@ package use_case.match;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,14 +12,14 @@ public class MatchOutputDataTest {
 
     @Before
     public void init() {
-        HashMap<String, Double> map = new HashMap<>();
+        LinkedHashMap<String, Double> map = new LinkedHashMap<>();
         map.put("1", 1.0);
         this.outputData = new MatchOutputData(map);
     }
 
     @Test
     public void testGetTopSimilarUsers() {
-        HashMap<String, Double> map = new HashMap<>();
+        LinkedHashMap<String, Double> map = new LinkedHashMap<>();
         map.put("1", 1.0);
         assertEquals(map, outputData.getTopSimilarUsers());
     }
