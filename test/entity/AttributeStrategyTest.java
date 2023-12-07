@@ -6,7 +6,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class AttributeStrategyTest {
     private PlaylistFactory factory;
@@ -25,10 +26,11 @@ public class AttributeStrategyTest {
     public void testStrategyCreatedProperly() {
         MatchingStrategy matchingStrategy = new AttributeStrategy();
 
+        assertNotNull(matchingStrategy);
     }
 
     @Test
-    // Test 100% similarity between two playlists, should return 1.0 (most similar)
+    // Test the basic case where both playlists are matching and should return 1.0 similarity score (most similar)
     public void testFullSimilarity() {
         Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 1.0, 1.0,

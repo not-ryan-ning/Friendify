@@ -1,6 +1,6 @@
 package use_case.accept_request;
 
-import data_access.MockFileUserDataAccessObject;
+import data_access.accept_request.MockFileUserDataAccessObject;
 import entity.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,16 +9,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class AcceptRequestUseCaseTest {
+
+
+public class AcceptRequestInteractorTest {
     private UserFactory userFactory;
     private ProfileFactory profileFactory;
     private PlaylistFactory playlistFactory;
     private Profile emptyProfile;
     private Playlist emptyPlaylist;
-    private AcceptRequestFileUserDataAccessInterface mockAcceptRequestFileUserDA0;
+    private AcceptRequestUserDataAccessInterface mockAcceptRequestFileUserDA0;
     private AcceptRequestOutputBoundary mockAcceptRequestPresenter;
 
     @Before
@@ -36,12 +37,15 @@ public class AcceptRequestUseCaseTest {
 
     @Test
     // Test interactor can be initialized
-    public void testInteractorCreatedProperly() {
+    public void testInitialization() {
         AcceptRequestInteractor interactor = new AcceptRequestInteractor(mockAcceptRequestFileUserDA0,
-                mockAcceptRequestPresenter);
+               mockAcceptRequestPresenter);
 
+        assertNotNull(interactor);
     }
 
+    @Test
+    // Test that use case correctly updates respective information
     public void testInteractorLogic() {
         // user2 has requested user1's friendship
         // user1 accepts user2 as a friend
@@ -60,9 +64,9 @@ public class AcceptRequestUseCaseTest {
 
         AcceptRequestInteractor interactor = new AcceptRequestInteractor(mockAcceptRequestFileUserDA0,
                 mockAcceptRequestPresenter);
-        AcceptRequestInputData acceptRequestInputData = new AcceptRequestInputData(user1.getUsername(), user2.getUsername());
+        AcceptRequestInputData acceptRequestInputData = new AcceptRequestInputData(user2.getUsername());
 
-        interactor.execute(acceptRequestInputData);
+        interactor.execute("John", acceptRequestInputData);
 
         // Test that user1 has added user2 to their friend list
         assertEquals(user2List,
@@ -76,6 +80,31 @@ public class AcceptRequestUseCaseTest {
         assertEquals(user1List,
                 ((MockFileUserDataAccessObject)
                         mockAcceptRequestFileUserDA0).getAccounts().get("Alabaster").getFriends());
-
     }
+    @Test
+    public void testAlreadyFriends() {
+        // user2 has requested user1's friendship
+        // user1 accepts user2 as a friend
+        // user2 is already a friend
+        // Initialize 2 arrays with a single user in it, user1 or user2
+        ArrayList<String> user1List = new ArrayList<>();
+        user1List.add("John");
+        ArrayList<String> user2List = new ArrayList<>();
+        user2List.add("Alabaster");
+
+        User user1 = userFactory.create("John", "password", emptyProfile, emptyPlaylist,
+                new ArrayList<>(List.of("Alabaster")), new ArrayList<>(List.of("Alabaster")));
+        User user2 = userFactory.create("Alabaster", "password", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+        ((MockFileUserDataAccessObject) mockAcceptRequestFileUserDA0).putUser(user1);
+        ((MockFileUserDataAccessObject) mockAcceptRequestFileUserDA0).putUser(user2);
+
+        AcceptRequestInteractor interactor = new AcceptRequestInteractor(mockAcceptRequestFileUserDA0,
+                mockAcceptRequestPresenter);
+        AcceptRequestInputData acceptRequestInputData = new AcceptRequestInputData(user2.getUsername());
+
+        interactor.execute("John", acceptRequestInputData);
+    }
+
+
 }

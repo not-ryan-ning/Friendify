@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Testing file for CommonUser Class
@@ -15,7 +16,6 @@ import static org.junit.Assert.*;
 public class CommonUserTest {
     private UserFactory userFactory;
     private ProfileFactory profileFactory;
-    private PlaylistFactory playlistFactory;
     private Profile emptyProfile;
     private Playlist emptyPlaylist;
 
@@ -26,11 +26,12 @@ public class CommonUserTest {
     public void init() {
         this.userFactory = new CommonUserFactory();
         this.profileFactory = new CommonProfileFactory();
-        this.playlistFactory = new CommonPlaylistFactory();
+        PlaylistFactory playlistFactory = new CommonPlaylistFactory();
 
         this.emptyProfile = profileFactory.create("", new ArrayList<>(), "");
         this.emptyPlaylist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0 ,0.0, 0.0, new ArrayList<>());
+
     }
 
     /**
@@ -71,7 +72,7 @@ public class CommonUserTest {
      */
     @Test
     public void testGetProfile() {
-        Profile customProfile = profileFactory.create("hello!", new ArrayList<>(), "@spotifyUser123");
+        Profile customProfile = new CommonProfile("hello!", new ArrayList<>(), "@spotifyUser123");
         User user = userFactory.create("", "", customProfile, emptyPlaylist,
                 new ArrayList<>(), new ArrayList<>());
 
@@ -83,7 +84,7 @@ public class CommonUserTest {
      */
     @Test
     public void testGetPlaylist() {
-        Playlist customPlaylist = playlistFactory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 2.0, 3.0, new ArrayList<>());
         User user = userFactory.create("", "", emptyProfile, customPlaylist,
                 new ArrayList<>(), new ArrayList<>());
@@ -119,8 +120,21 @@ public class CommonUserTest {
      * Testing setter methods
      */
     @Test
+    public void testSetProfile() {
+        Profile profile = profileFactory.create("hello!", new ArrayList<>(), "");
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+        user.setProfile(profile);
+
+        assertEquals(profile, user.getProfile());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
     public void testSetPlaylist() {
-        Playlist customPlaylist = playlistFactory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist customPlaylist = new CommonPlaylist("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 1.0, 2.0, 3.0, new ArrayList<>());
         User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
                 new ArrayList<>(), new ArrayList<>());
@@ -128,4 +142,32 @@ public class CommonUserTest {
 
         assertEquals(customPlaylist, user.getPlaylist());
     }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetFriends() {
+        ArrayList<String> friends = new ArrayList<>(List.of("friend1"));
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+        user.setFriends(friends);
+
+        assertEquals(friends, user.getFriends());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetRequests() {
+        ArrayList<String> requests = new ArrayList<>(List.of("request1"));
+        User user = userFactory.create("", "", emptyProfile, emptyPlaylist,
+                new ArrayList<>(), new ArrayList<>());
+        user.setRequests(requests);
+
+        assertEquals(requests, user.getRequests());
+    }
+
+
 }

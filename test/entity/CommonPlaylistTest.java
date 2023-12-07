@@ -3,24 +3,26 @@ package entity;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- * Testing file for CommonPlaylist Class
+ * Testing file for CommonUser Class
  */
 public class CommonPlaylistTest {
     private PlaylistFactory playlistFactory;
 
     /**
-     * Create Playlist factory
+     * Create empty profile and playlists objects as we are only testing User behaviour
      */
     @Before
     public void init() {
         this.playlistFactory = new CommonPlaylistFactory();
+
     }
 
     /**
@@ -87,7 +89,7 @@ public class CommonPlaylistTest {
      * Testing getter methods
      */
     @Test
-    public void testGetAcoustciness() {
+    public void testGetAcoustiness() {
         Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 1.0, 0.0, 0.0, 0.0, new ArrayList<>());
 
@@ -135,6 +137,120 @@ public class CommonPlaylistTest {
         ArrayList<String> topThree = new ArrayList<>(Arrays.asList("artist1", "artist2", "artist3"));
         Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 1.0, topThree);
+
+        assertEquals(topThree, playlist.getTopThreeArtists());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetPlaylistId() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setPlaylistId("123");
+
+        assertEquals("123", playlist.getPlaylistId());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetTitles() {
+        ArrayList<String> titles = new ArrayList<>(Arrays.asList("title1", "title2", "title3"));
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setTitles(titles);
+
+        assertEquals(titles, playlist.getTitles());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetArtists() {
+        HashMap<String, Integer> artists = new HashMap<>();
+        artists.put("artist1", 1);
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setArtists(artists);
+
+        assertEquals(artists, playlist.getArtists());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetGenres() {
+        HashMap<String, Integer> genres = new HashMap<>();
+        genres.put("genre1", 1);
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setGenres(genres);
+
+        assertEquals(genres, playlist.getGenres());
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetAcousticness() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setAcousticness(1.0);
+
+        assertEquals(1.0, playlist.getAcousticness(), 0.0001);
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetEnergy() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setEnergy(1.0);
+
+        assertEquals(1.0, playlist.getEnergy(), 0.0001);
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetInstrumentalness() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setInstrumentalness(1.0);
+
+        assertEquals(1.0, playlist.getInstrumentalness(), 0.0001);
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetValence() {
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setValence(1.0);
+
+        assertEquals(1.0, playlist.getValence(), 0.0001);
+    }
+
+    /**
+     * Testing setter methods
+     */
+    @Test
+    public void testSetTopThreeArtists() {
+        ArrayList<String> topThree = new ArrayList<>(Arrays.asList("artists1", "artists2", "artists3"));
+        Playlist playlist = playlistFactory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+                0.0, 0.0, 0.0, 1.0, new ArrayList<>());
+        playlist.setTopThreeArtists(topThree);
 
         assertEquals(topThree, playlist.getTopThreeArtists());
     }
