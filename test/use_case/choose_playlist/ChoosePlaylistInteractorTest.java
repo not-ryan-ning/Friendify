@@ -5,7 +5,6 @@ import data_access.choose_playlist.MockChoosePlaylistSpotifyAPIDataAccessObject;
 import data_access.choose_playlist.MockChoosePlaylistUserDataAccessObject;
 import entity.CommonPlaylistFactory;
 import entity.PlaylistFactory;
-import entity.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,8 +12,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ChoosePlaylistInteractorTest {
-
-    private UserFactory userFactory;
     private PlaylistFactory playlistFactory;
     private ChoosePlaylistUserDataAccessInterface mockChoosePlaylistUserDAO;
     private ChoosePlaylistPlaylistDataAccessInterface mockChoosePlaylistPlaylistDAO;
@@ -28,8 +25,6 @@ public class ChoosePlaylistInteractorTest {
         this.mockChoosePlaylistSpotifyAPIDAO = new MockChoosePlaylistSpotifyAPIDataAccessObject();
         this.playlistFactory = new CommonPlaylistFactory();
         this.mockChoosePlaylistPresenter = new MockChoosePlaylistPresenter();
-        MockChoosePlaylistInputData inputData = new MockChoosePlaylistInputData("", "",
-                "");
     }
 
     /**
@@ -49,6 +44,23 @@ public class ChoosePlaylistInteractorTest {
     @Test
     public void testExecuteSuccess() {
         ChoosePlaylistInputData inputData = new MockChoosePlaylistInputData("1", "name1",
+                "123");
+        ChoosePlaylistInteractor interactor = new ChoosePlaylistInteractor(mockChoosePlaylistUserDAO,
+                mockChoosePlaylistPlaylistDAO,
+                mockChoosePlaylistSpotifyAPIDAO,
+                mockChoosePlaylistPresenter,
+                playlistFactory);
+
+        interactor.execute("", inputData);
+
+        assertEquals("Success", ((MockChoosePlaylistPresenter) mockChoosePlaylistPresenter).getState());
+
+        assertEquals("1", ((MockChoosePlaylistPresenter) mockChoosePlaylistPresenter).getPlaylistName());
+    }
+
+    @Test
+    public void testExecuteSuccessExists() {
+        ChoosePlaylistInputData inputData = new MockChoosePlaylistInputData("check", "name1",
                 "123");
         ChoosePlaylistInteractor interactor = new ChoosePlaylistInteractor(mockChoosePlaylistUserDAO,
                 mockChoosePlaylistPlaylistDAO,
