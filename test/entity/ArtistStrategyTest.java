@@ -7,7 +7,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Testing file for ArtistStrategy Class
  */
@@ -22,7 +24,7 @@ public class ArtistStrategyTest {
     @Before
     public void init() {
         this.factory = new CommonPlaylistFactory();
-        this.matchingStrategy = new AttributeStrategy();
+        this.matchingStrategy = new ArtistStrategy();
     }
 
     /**
@@ -47,10 +49,10 @@ public class ArtistStrategyTest {
         artist2.put("Valley", 3);
         artist2.put("Owl City", 4);
         artist2.put("NIKI", 3);
-        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -71,10 +73,10 @@ public class ArtistStrategyTest {
         artist2.put("Owl City", 1);
         artist2.put("Hippo Campus", 1);
 
-        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -94,10 +96,10 @@ public class ArtistStrategyTest {
 
         HashMap<String, Integer> artist2 = new HashMap<>();
         artist2.put("NIKI", 1);
-        Playlist playlist1 = factory.create("", new ArrayList<>(), artist1, new HashMap<>(),
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), artist1, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("", new ArrayList<>(), artist2, new HashMap<>(),
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), artist2, new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
@@ -109,10 +111,10 @@ public class ArtistStrategyTest {
      */
     @Test
     public void testEmptyPlaylists() {
-        Playlist playlist1 = factory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist playlist1 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
-        Playlist playlist2 = factory.create("", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
+        Playlist playlist2 = factory.create("1", new ArrayList<>(), new HashMap<>(), new HashMap<>(),
                 0.0, 0.0, 0.0, 0.0,
                 new ArrayList<>());
 
