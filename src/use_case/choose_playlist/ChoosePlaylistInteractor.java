@@ -43,7 +43,7 @@ public class ChoosePlaylistInteractor implements ChoosePlaylistInputBoundary {
         User user = userDataAccessObject.get(username);
         Playlist playlist;
 
-        if (! playlistDataAccessObject.isIn(playlistId)) {
+        if (!playlistDataAccessObject.isIn(playlistId)) {
             ArrayList<Object> playlistInfo = spotifyDataAccessObject.getPlaylistInfo(username, playlistId, accessToken);
             ArrayList<String> titles = (ArrayList<String>) playlistInfo.get(0);
             HashMap<String, Integer> artists = (HashMap<String, Integer>) playlistInfo.get(1);
